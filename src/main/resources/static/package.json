@@ -1,0 +1,21 @@
+{
+  "name": "personnel-management",
+  "version": "1.0.0",
+  "description": "manage personnel working time and calculate results",
+  "main": "index.js",
+  "dependencies": {
+    "angular": "^1.5.8",
+    "angular-resource": "^1.5.8",
+    "angular-route": "^1.5.8",
+    "angularjs": "^0.0.1",
+    "bootstrap": "^3.3.7",
+    "jquery": "^3.1.1",
+    "linq.js": "^1.0.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

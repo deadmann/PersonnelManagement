@@ -1,0 +1,47 @@
+<div class="clearfix">
+    <div class="row">
+        <table class="table table-responsive table-striped table-concede">
+            <thead>
+            <tr>
+                <th>
+                    <button class="btn btn-primary" ng-click="positionIndexCtrl.event.insert()">create</button>
+                </th>
+                <th>
+
+                </th>
+                <th>
+                    عنوان سمت
+                </th>
+                <th>
+                    دستمزد جاری
+                </th>
+                <th>
+                    دستمزد بعدی
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="row in positionIndexCtrl.view.positions">
+                <td>
+                    <button class="btn btn-danger" ng-click="positionIndexCtrl.event.remove(row.id)">delete</button>
+                </td>
+                <td>
+                    {{$index + 1}}
+                </td>
+                <td>
+                    {{row.title}}
+                </td>
+                <td>
+                    {{row.getCurrentWage().name}}, {{row.getCurrentWage().price}}
+                </td>
+                <td>
+                    <div ng-if="row.getNextWage() != null">
+                    {{row.getNextWage().name}}, {{row.getNextWage().price}}<br/>
+                    <span style="font-size: 60%">تاریخ انتشار: {{row.getNextWage().startDate}}</span>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
