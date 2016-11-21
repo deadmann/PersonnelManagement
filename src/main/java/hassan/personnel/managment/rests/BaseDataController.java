@@ -23,8 +23,17 @@ public class BaseDataController {
         ULocale local = new ULocale("fa_IR@calendar=persian");
         com.ibm.icu.util.Calendar persianCalendar = Calendar.getInstance(local);
         persianCalendar.clear();
-        persianCalendar.set(monthSelector.getYear(), monthSelector.getMonth(), 1); // Tir(4th month) 10th 1395 equivalent to June 30th 2016
 
-        return persianCalendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+        //persianCalendar.set(monthSelector.getYear(), monthSelector.getMonth(), 1); // Tir(4th month) 10th 1395 equivalent to June 30th 2016
+
+        MonthSelector next = new MonthSelector();
+        next.setYear(monthSelector.getMonth()>=12? monthSelector.getYear() : monthSelector.getYear()+1);
+        next.setMonth(monthSelector.getMonth()>=12? monthSelector.getMonth() +1 :1);
+
+        persianCalendar.set(next.getYear(), monthSelector.getMonth(), 1);
+        persianCalendar.add(Calendar.DAY_OF_MONTH, -1);
+
+        return persianCalendar.get(Calendar.DAY_OF_MONTH);
+        //return persianCalendar.getActualMaximum(Calendar.DAY_OF_MONTH);
     }
 }

@@ -278,4 +278,3 @@ Array.prototype.lastIndexOfMatch = function (searchItem, fnMatch) {
 //            this.unshift(convertedItem);
 //    }
 //}; 
-//# sourceMappingURL=TypedExtensions.js.map

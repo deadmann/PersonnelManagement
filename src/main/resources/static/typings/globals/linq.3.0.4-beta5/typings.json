@@ -1,0 +1,8 @@
+{
+  "resolution": "main",
+  "tree": {
+    "src": "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/984cc66fbff3313eb2f715e41b1281527a6a76ab/linq/linq.3.0.4-Beta5.d.ts",
+    "raw": "registry:dt/linq.3.0.4-beta5#3.0.4-Beta5+20160725165631",
+    "typings": "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/984cc66fbff3313eb2f715e41b1281527a6a76ab/linq/linq.3.0.4-Beta5.d.ts"
+  }
+}

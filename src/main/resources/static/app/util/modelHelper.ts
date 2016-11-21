@@ -1,9 +1,9 @@
 ///<reference path="modelType.ts"/>
-///<reference path="../models/buildingVm.ts"/>
-///<reference path="../models/personVm.ts"/>
-///<reference path="../models/positionVm.ts"/>
-///<reference path="../models/wageVm.ts"/>
-///<reference path="../models/workVm.ts"/>
+///<reference path="../models/entities/buildingVm.ts"/>
+///<reference path="../models/entities/personVm.ts"/>
+///<reference path="../models/entities/positionVm.ts"/>
+///<reference path="../models/entities/wageVm.ts"/>
+///<reference path="../models/entities/workVm.ts"/>
 
 /**
  * Created by Hassan on 11/18/2016.

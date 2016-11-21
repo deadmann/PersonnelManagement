@@ -26,7 +26,7 @@
             // 'save': {method: 'POST'},
             // 'remove': {method: 'DELETE'},
             // 'delete': {method: 'DELETE'}
-        })
+        });
     };
 
     service.$inject = ["$resource"];

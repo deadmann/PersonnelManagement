@@ -1,0 +1,22 @@
+<div class="clearfix">
+    <form ng-submit="save()">
+    <div class="row">
+        <div class="col-md-4">
+            <select class="form-control" ng-options="x as x.text for x in workInsertCtrl.view.years">
+
+            </select>
+        </div>
+        <div class="col-md-4">
+            <select class="form-control" ng-options="x as x.text for x in workInsertCtrl.view.month">
+
+            </select>
+        </div>
+        <div class="col-md-4">
+            <select class="form-control" ng-options="x as x.text for x in workInsertCtrl.view.worker">
+
+            </select>
+        </div>
+    </div>
+
+    </form>
+</div>

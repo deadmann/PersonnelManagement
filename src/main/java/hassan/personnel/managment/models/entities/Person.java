@@ -37,7 +37,7 @@ public class Person {
 //    @JoinColumn(nullable = false, foreignKey = @ForeignKey(name = "position_id"))//referencedColumnName = "positionId")-->Name of the PK
     private Position position;
 
-    @OneToMany
+    @OneToMany(mappedBy = "person")
     private List<Work> works;
 
     public int getId() {

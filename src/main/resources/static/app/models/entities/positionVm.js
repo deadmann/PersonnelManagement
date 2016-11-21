@@ -23,4 +23,3 @@ var PositionVm = (function () {
     };
     return PositionVm;
 }());
-//# sourceMappingURL=positionVm.js.map

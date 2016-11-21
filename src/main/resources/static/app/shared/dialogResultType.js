@@ -10,4 +10,3 @@ var DialogResultType;
     DialogResultType[DialogResultType["No"] = 4] = "No";
     DialogResultType[DialogResultType["Close"] = 5] = "Close";
 })(DialogResultType || (DialogResultType = {}));
-//# sourceMappingURL=dialogResultType.js.map

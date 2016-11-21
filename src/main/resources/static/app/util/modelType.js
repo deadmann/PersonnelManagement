@@ -9,4 +9,3 @@ var ModelType;
     ModelType[ModelType["Wage"] = 3] = "Wage";
     ModelType[ModelType["Work"] = 4] = "Work";
 })(ModelType || (ModelType = {}));
-//# sourceMappingURL=modelType.js.map

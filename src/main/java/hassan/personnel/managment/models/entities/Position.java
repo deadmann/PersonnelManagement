@@ -26,10 +26,10 @@ public class Position {
     @Column(nullable = false, length = 50)
     private String title;
 
-    @OneToMany
+    @OneToMany(mappedBy = "position")
     private List<Wage> wages;
 
-    @OneToMany
+    @OneToMany(mappedBy = "position")
     private List<Person> personnel;
 
     public int getId() {

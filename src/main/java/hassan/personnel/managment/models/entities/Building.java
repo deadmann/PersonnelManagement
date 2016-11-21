@@ -24,7 +24,7 @@ public class Building {
     @Column(nullable = false, length = 50)
     private String name;
 
-    @OneToMany
+    @OneToMany(mappedBy = "building")
     private List<Work> works;
 
     public int getId() {

@@ -8,10 +8,16 @@
 <body>
     <div ng-view=""></div>
 
+    <script src="/js/require.js"></script>
     <script src="/js/jquery.min.js"></script>
     <script src="/js/angular.min.js"></script>
     <script src="/js/angular-route.min.js"></script>
     <script src="/js/lib/customized/angular-resource.js"></script> <!--MIN-->
+    <script src="/js/linq.js"></script>
+
+    <script src="/js/moment/moment.min.js"></script>
+    <script src="/js/moment/moment-jalaali.min.js"></script>
+    <script src="/js/jquery.ui.datepicker.min.js"></script>
 
     <script src="/js/lib/TypedUtility.js"></script>
     <script src="/js/lib/TypedExtensions.js"></script>
@@ -21,15 +27,20 @@
 
     <script src="/app/util/modelType.js"></script>
     <script src="/app/util/modelHelper.js"></script>
+    <script src="/app/util/keyValue.js"></script>
+    <script src="/app/util/dictionary.js"></script>
 
-    <script src="/app/models/buildingVm.js"></script>
-    <script src="/app/models/personVm.js"></script>
-    <script src="/app/models/positionVm.js"></script>
-    <script src="/app/models/wageVm.js"></script>
-    <script src="/app/models/workVm.js"></script>
+    <script src="/app/models/other/monthSelector.js"></script>
+
+    <script src="/app/models/entities/buildingVm.js"></script>
+    <script src="/app/models/entities/personVm.js"></script>
+    <script src="/app/models/entities/positionVm.js"></script>
+    <script src="/app/models/entities/wageVm.js"></script>
+    <script src="/app/models/entities/workVm.js"></script>
 
     <script src="/app/models/dto/positionInsertDto.js"></script>
 
+    <script src="/app/services/baseDataService.js"></script>
     <script src="/app/services/buildingService.js"></script>
     <script src="/app/services/personService.js"></script>
     <script src="/app/services/positionService.js"></script>
@@ -48,5 +59,7 @@
     <script src="/app/pages/wage/wageIndexController.js"></script>
     <script src="/app/pages/wage/wageInsertController.js"></script>
 
+    <script src="/app/pages/work/workIndexController.js"></script>
+    <script src="/app/pages/work/workInsertController.js"></script>
 </body>
 </html>

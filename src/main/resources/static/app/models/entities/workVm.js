@@ -38,4 +38,3 @@ var WorkVm = (function () {
     };
     return WorkVm;
 }());
-//# sourceMappingURL=workVm.js.map

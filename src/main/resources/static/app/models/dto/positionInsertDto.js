@@ -15,4 +15,3 @@ var PositionInsertDto = (function () {
     };
     return PositionInsertDto;
 }());
-//# sourceMappingURL=positionInsertDto.js.map
