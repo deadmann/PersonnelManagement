@@ -38,6 +38,8 @@ class ModelHelper {
     }
 
     public static toArray(obj:Array<any>, type:ModelType):Array<any> {
+        if(obj==undefined || obj == null) return [];
+
         var arr = [];
         var transform = null;
         for (var i = 0; i < obj.length; i++) {

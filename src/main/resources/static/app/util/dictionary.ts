@@ -10,8 +10,6 @@ class Dictionary<TKey, TValue> {
     public constructor() {
         /** @type {Array<KeyValue<TKey, TValue>>} */
         this.list = [];
-
-
     }
 
     public add(key: TKey, value: TValue) {
@@ -37,5 +35,9 @@ class Dictionary<TKey, TValue> {
 
         if (resultItem != null) return resultItem.value;
         return null;
+    }
+
+    public getAllKeyValues(){
+        return this.list;
     }
 }

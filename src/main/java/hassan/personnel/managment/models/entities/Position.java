@@ -1,5 +1,8 @@
 package hassan.personnel.managment.models.entities;
 
+import hassan.personnel.managment.models.interfaces.ViewModel;
+import hassan.personnel.managment.models.vm.PositionVm;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +11,7 @@ import java.util.List;
  * Created by Hassan on 11/16/2016.
  */
 @Entity
-public class Position {
+public class Position implements ViewModel {
 
     public Position(){
         personnel = new ArrayList<Person>();
@@ -31,6 +34,16 @@ public class Position {
 
     @OneToMany(mappedBy = "position")
     private List<Person> personnel;
+
+    public PositionVm getViewModel() {
+        PositionVm positionVm = new PositionVm();
+        positionVm.setId(this.getId());
+        positionVm.setTitle(this.getTitle());
+        positionVm.setPersonnel(null);
+        positionVm.setWages(null);
+
+        return positionVm;
+    }
 
     public int getId() {
         return id;

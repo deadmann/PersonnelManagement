@@ -2,6 +2,8 @@ package hassan.personnel.managment.models.entities;
 
 import com.ibm.icu.util.Calendar;
 import com.ibm.icu.util.ULocale;
+import hassan.personnel.managment.models.interfaces.ViewModel;
+import hassan.personnel.managment.models.vm.WorkVm;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -12,7 +14,7 @@ import java.util.Locale;
  * Created by Hassan on 11/16/2016.
  */
 @Entity
-public class Work {
+public class Work implements ViewModel {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
@@ -33,6 +35,19 @@ public class Work {
     @ManyToOne
 //    @JoinColumn(nullable = false, foreignKey = @ForeignKey(name = "building_id"))
     private Building building;
+
+    public WorkVm getViewModel() {
+        WorkVm workVm = new WorkVm();
+        workVm.setId(this.getId());
+        workVm.setDate(this.getDate());
+        workVm.setWorkPerDay(this.getWorkPerDay());
+
+        workVm.setBuilding(this.getBuilding() != null ? this.getBuilding().getViewModel() : null);
+        workVm.setPerson(this.getPerson() != null ? this.getPerson().getViewModel() : null);
+
+        return workVm;
+    }
+
 
     public long getId() {
         return id;

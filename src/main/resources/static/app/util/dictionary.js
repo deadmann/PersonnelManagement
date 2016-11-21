@@ -28,5 +28,8 @@ var Dictionary = (function () {
             return resultItem.value;
         return null;
     };
+    Dictionary.prototype.getAllKeyValues = function () {
+        return this.list;
+    };
     return Dictionary;
 }());

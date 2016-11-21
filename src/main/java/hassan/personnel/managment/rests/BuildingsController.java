@@ -1,11 +1,13 @@
 package hassan.personnel.managment.rests;
 
 import hassan.personnel.managment.models.entities.Building;
+import hassan.personnel.managment.models.vm.BuildingVm;
 import hassan.personnel.managment.services.BuildingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by Hassan on 11/16/2016.
@@ -18,13 +20,15 @@ public class BuildingsController {
     private BuildingService buildingService;
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    private Building get(@PathVariable int id){
-        return buildingService.getBuilding(id);
+    private BuildingVm get(@PathVariable int id){
+        Building building = buildingService.getBuilding(id);
+        return building.getViewModel();
     }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    private List<Building> getAll(){
-        return  buildingService.getAll();
+    private List<BuildingVm> getAll(){
+        List<Building> buildingList = buildingService.getAll();
+        return buildingList.stream().map(m->m.getViewModel()).collect(Collectors.toList());
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST)

@@ -3004,11 +3004,12 @@
     };
     Grouping.prototype = new ArrayEnumerable();
 
-    // module export
-    if (typeof define === Types.Function && define.amd) { // AMD
-        define("linqjs", [], function () { return Enumerable; });
-    }
-    else if (typeof module !== Types.Undefined && module.exports) { // Node
+    // module export --> I CANT IMPORT THE WAY IT WORK IN *.TS FILES :@ Grrrrr
+    // if (typeof define === Types.Function && define.amd) { // AMD
+    //     define("linqjs", [], function () { return Enumerable; });
+    // }
+    //else
+    if (typeof module !== Types.Undefined && module.exports) { // Node
         module.exports = Enumerable;
     }
     else {

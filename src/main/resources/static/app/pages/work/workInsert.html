@@ -3,17 +3,17 @@
     <div class="row">
         <div class="col-md-4">
             <select class="form-control" ng-options="x as x.text for x in workInsertCtrl.view.years">
-
+                <option disabled selected>لطفا سال را انتخاب کنید</option>
             </select>
         </div>
         <div class="col-md-4">
-            <select class="form-control" ng-options="x as x.text for x in workInsertCtrl.view.month">
-
+            <select class="form-control" ng-options="item as item.value for item in workInsertCtrl.view.months.getAllKeyValues()">
+                <option disabled selected>لطفا ماه را انتخاب کنید</option>
             </select>
         </div>
         <div class="col-md-4">
             <select class="form-control" ng-options="x as x.text for x in workInsertCtrl.view.worker">
-
+                <option disabled selected>لطفا شخص را انتخاب کنید</option>
             </select>
         </div>
     </div>

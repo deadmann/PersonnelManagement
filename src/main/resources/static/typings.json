@@ -1,7 +1,4 @@
 {
-  "dependencies": {
-    "linq": "registry:npm/linq#3.0.5+20160322032703"
-  },
   "globalDependencies": {
     "linq.3.0.4-beta5": "registry:dt/linq.3.0.4-beta5#3.0.4-Beta5+20160725165631"
   }

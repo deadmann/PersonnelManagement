@@ -34,6 +34,8 @@ var ModelHelper = (function () {
         return new WorkVm(obj.id, obj.workPerDay, obj.date, person, building);
     };
     ModelHelper.toArray = function (obj, type) {
+        if (obj == undefined || obj == null)
+            return [];
         var arr = [];
         var transform = null;
         for (var i = 0; i < obj.length; i++) {
