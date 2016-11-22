@@ -12,52 +12,52 @@
             .when("/building", {
                 templateUrl: "/app/pages/building/BuildingIndex.html",
                 controller: "buildingIndexController",
-                controllerAs: "buildingIndexCtrl"
+                controllerAs: "ctrl"
             })
             .when("/building/insert", {
                 templateUrl: "/app/pages/building/buildingInsert.html",
                 controller: "buildingInsertController",
-                controllerAs: "buildingInsertCtrl"
+                controllerAs: "ctrl"
             })
             .when("/person", {
                 templateUrl: "/app/pages/person/personIndex.html",
                 controller: "personIndexController",
-                controllerAs: "personIndexCtrl"
+                controllerAs: "ctrl"
             })
             .when("/person/insert",{
                 templateUrl: "/app/pages/Person/personInsert.html",
                 controller: "personInsertController",
-                controllerAs: "personInsertCtrl"
+                controllerAs: "ctrl"
             })
             .when("/position", {
                 templateUrl: "/app/pages/position/positionIndex.html",
                 controller: "positionIndexController",
-                controllerAs: "positionIndexCtrl"
+                controllerAs: "ctrl"
             })
             .when("/position/insert",{
                 templateUrl: "/app/pages/position/positionInsert.html",
                 controller: "positionInsertController",
-                controllerAs: "positionInsertCtrl"
+                controllerAs: "ctrl"
             })
             .when("/wage", {
                 templateUrl: "/app/pages/wage/wageIndex.html",
                 controller: "wageIndexController",
-                controllerAs: "wageIndexCtrl"
+                controllerAs: "ctrl"
             })
             .when("/wage/insert",{
                 templateUrl: "/app/pages/wage/wageInsert.html",
                 controller: "wageInsertController",
-                controllerAs: "wageInsertCtrl"
+                controllerAs: "ctrl"
             })
             .when("/work", {
                 templateUrl: "/app/pages/work/workIndex.html",
                 controller: "workIndexController",
-                controllerAs: "workIndexCtrl"
+                controllerAs: "ctrl"
             })
             .when("/work/insert",{
                 templateUrl: "/app/pages/work/workInsert.html",
                 controller: "workInsertController",
-                controllerAs: "workInsertCtrl"
+                controllerAs: "ctrl"
             })
             .otherwise({
                 redirectTo: "/"

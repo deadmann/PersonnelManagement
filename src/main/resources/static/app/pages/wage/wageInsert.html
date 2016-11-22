@@ -1,12 +1,12 @@
 <div class="clearfix">
     <div class="row">
-        <form ng-submit="wageInsertCtrl.event.save()">
+        <form ng-submit="ctrl.event.save()">
             <div class="row">
                 <div class="col-md-4">
                     تاریخ شروع
                 </div>
                 <div class="col-md-8">
-                    <input type="text" ng-model="wageInsertCtrl.view.wage.startDate"/>
+                    <input type="text" ng-model="ctrl.view.wage.startDate"/>
                 </div>
             </div>
             <div class="row">
@@ -14,7 +14,7 @@
                     مبلغ دستمزد
                 </div>
                 <div class="col-md-8">
-                    <input type="text" ng-model="wageInsertCtrl.view.wage.price"/>
+                    <input type="text" ng-model="ctrl.view.wage.price"/>
                 </div>
             </div>
             <div class="row">
@@ -22,7 +22,7 @@
                     <button type="submit" class="btn btn-primary">
                         Save
                     </button>
-                    <button type="button" class="btn btn-default" ng-click="wageInsertCtrl.event.cancel()">
+                    <button type="button" class="btn btn-default" ng-click="ctrl.event.cancel()">
                         Cancel
                     </button>
                 </div>

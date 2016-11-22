@@ -1,6 +1,6 @@
 package hassan.personnel.managment.models.vm;
 
-import java.util.Date;
+import java.util.Calendar;
 
 /**
  * Created by Hassan on 11/21/2016.
@@ -8,7 +8,7 @@ import java.util.Date;
 public class WageVm {
     private int id;
 
-    private Date startDate;
+    private Calendar startDate;
 
     private double price;
 
@@ -22,11 +22,11 @@ public class WageVm {
         this.id = id;
     }
 
-    public Date getStartDate() {
+    public Calendar getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(Calendar startDate) {
         this.startDate = startDate;
     }
 

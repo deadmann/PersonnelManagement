@@ -4,7 +4,7 @@
 (function(){
     "use strict";
 
-    var controller = function ($location, buildingService) {
+    var controller = function ($location, buildingsService) {
         var self = this;
 
         self.view={
@@ -14,7 +14,7 @@
 
         self.event={
             save: function() {
-                buildingService.save({}, self.view.building).$promise
+                buildingsService.save({}, self.view.building).$promise
                     .then(function (data) {
                         //self.view.buildings = data;
                         $location.path("/building");
@@ -34,7 +34,7 @@
         initialize();
     };
 
-    controller.$inject = ["$location", "buildingService"];
+    controller.$inject = ["$location", "buildingsService"];
 
     angular.module("personnelManagement")
         .controller("buildingInsertController", controller);

@@ -3,7 +3,7 @@
  */
 (function () {
 
-    var controller = function ($location, positionService) {
+    var controller = function ($location, positionsService) {
         var self = this;
 
         self.view={
@@ -21,7 +21,7 @@
         };
 
         function initialize() {
-            positionService.query().$promise
+            positionsService.query().$promise
                 .then(function (data) {
                     //TODO: INCLUDE WAGES, OR ADD IT ON CLIENT SIDE
                     wageService.query().$promise
@@ -43,7 +43,7 @@
         initialize();
     };
 
-    controller.$inject = ["$location", "positionService"];
+    controller.$inject = ["$location", "positionsService"];
 
     angular.module("personnelManagement")
         .controller("positionIndexController", controller);

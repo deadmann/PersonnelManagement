@@ -4,7 +4,7 @@
             <thead>
             <tr>
                 <th>
-                    <button class="btn btn-primary" ng-click="wageIndexCtrl.event.insert()">create</button>
+                    <button class="btn btn-primary" ng-click="ctrl.event.insert()">create</button>
                 </th>
                 <th>
 
@@ -21,9 +21,9 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="row in wageIndexCtrl.view.wages">
+            <tr ng-repeat="row in ctrl.view.wages">
                 <td>
-                    <button class="btn btn-danger" ng-click="wageIndexCtrl.event.remove(row.id)">delete</button>
+                    <button class="btn btn-danger" ng-click="ctrl.event.remove(row.id)">delete</button>
                 </td>
                 <td>
                     {{$index + 1}}

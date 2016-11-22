@@ -3,7 +3,7 @@
  */
 (function(){
 
-    var controller = function ($location, personService, positionService) {
+    var controller = function ($location, personnelService, positionsService) {
         var self = this;
 
         self.view={
@@ -15,7 +15,7 @@
 
         self.event={
             save: function() {
-                personService.save({}, self.view.personInsert).$promise
+                personnelService.save({}, self.view.personInsert).$promise
                     .then(function (data) {
                         //self.view.buildings = data;
                         $location.path("/person");
@@ -29,7 +29,7 @@
         };
 
         function initialize() {
-            positionService.query().$promise
+            positionsService.query().$promise
                 .then(function (data) {
                     self.view.positions = data;
                 }, function (err) {
@@ -41,7 +41,7 @@
         initialize();
     };
 
-    controller.$inject = ["$location", "personService", "positionService"];
+    controller.$inject = ["$location", "personnelService", "positionsService"];
 
     angular.module("personnelManagement")
         .controller("personInsertController", controller);

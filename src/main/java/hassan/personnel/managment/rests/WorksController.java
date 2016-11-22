@@ -31,6 +31,19 @@ public class WorksController {
         return workList.stream().map(m->m.getViewModel()).collect(Collectors.toList());
     }
 
+    @RequestMapping(value = "/by-person-and-month/{personId}/{year}/{month}")
+    private List<WorkVm> getAllWorksByPersonAndMonth(@PathVariable int personId, @PathVariable int year, @PathVariable int month){
+
+        personId = 1;
+        year = 1395;
+        month = 8;
+
+
+
+        List<Work> workList = workService.getAllByPersonAndDateBetween(personId, year, month);
+        return workList.stream().map(m->m.getViewModel()).collect(Collectors.toList());
+    }
+
     @RequestMapping(value = "", method = RequestMethod.POST)
     private Work save(@RequestBody Work work){
         return workService.save(work);

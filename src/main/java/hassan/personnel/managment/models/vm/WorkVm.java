@@ -1,6 +1,6 @@
 package hassan.personnel.managment.models.vm;
 
-import java.util.Date;
+import java.util.Calendar;
 
 /**
  * Created by Hassan on 11/21/2016.
@@ -10,7 +10,7 @@ public class WorkVm {
 
     private int workPerDay;
 
-    private Date date;
+    private Calendar date;
 
     private PersonVm person;
 
@@ -33,11 +33,11 @@ public class WorkVm {
         this.workPerDay = workPerDay;
     }
 
-    public Date getDate() {
+    public Calendar getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(Calendar date) {
         this.date = date;
     }
 

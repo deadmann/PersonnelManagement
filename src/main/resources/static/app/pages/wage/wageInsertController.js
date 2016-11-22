@@ -3,7 +3,7 @@
  */
 (function(){
 
-    var controller = function ($location, wageService) {
+    var controller = function ($location, wagesService) {
         var self = this;
 
         self.view={
@@ -13,7 +13,7 @@
 
         self.event={
             save: function() {
-                wageService.save({}, self.view.wage).$promise
+                wagesService.save({}, self.view.wage).$promise
                     .then(function (data) {
                         //self.view.buildings = data;
                         $location.path("/wage");
@@ -33,7 +33,7 @@
         initialize();
     };
 
-    controller.$inject = ["$location", "wageService"];
+    controller.$inject = ["$location", "wagesService"];
 
     angular.module("personnelManagement")
         .controller("wageInsertController", controller);

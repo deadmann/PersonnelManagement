@@ -6,9 +6,7 @@ import hassan.personnel.managment.models.interfaces.ViewModel;
 import hassan.personnel.managment.models.vm.WorkVm;
 
 import javax.persistence.*;
-import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.Locale;
 
 /**
  * Created by Hassan on 11/16/2016.
@@ -20,7 +18,7 @@ public class Work implements ViewModel {
 
     private int workPerDay;
 
-    private Date date;
+    private java.util.Calendar date;
 
 //    @Column(name = "person_id")
 //    private int personId;
@@ -65,8 +63,12 @@ public class Work implements ViewModel {
         this.workPerDay = workPerDay;
     }
 
-    public Date getDate() {
+    public java.util.Calendar getDate() {
         return date;
+    }
+
+    public void setDate(java.util.Calendar date) {
+        this.date = date;
     }
 
     public String getPersianDate() {
@@ -82,10 +84,6 @@ public class Work implements ViewModel {
         return "" + persianCalendar.get(Calendar.YEAR)
                 + persianCalendar.get(Calendar.MONTH)
                 + persianCalendar.get(Calendar.DAY_OF_MONTH);
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
     }
 
     //    public int getPersonId() {

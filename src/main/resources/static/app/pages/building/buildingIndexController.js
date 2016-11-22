@@ -5,7 +5,7 @@
 (function(){
     "use strict";
 
-    var controller = function ($location, buildingService) {
+    var controller = function ($location, buildingsService) {
         var self = this;
 
         self.view={
@@ -23,7 +23,7 @@
         };
 
         function initialize() {
-            buildingService.query().$promise
+            buildingsService.query().$promise
                 .then(function (data) {
                     self.view.buildings = data;
                 }, function (err) {
@@ -34,7 +34,7 @@
         initialize();
     };
 
-    controller.$inject = ["$location", "buildingService"];
+    controller.$inject = ["$location", "buildingsService"];
 
     angular.module("personnelManagement")
         .controller("buildingIndexController", controller);

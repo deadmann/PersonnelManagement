@@ -8,6 +8,7 @@
 <body>
     <div ng-view=""></div>
 
+    <!-- BASE LIBRARY -->
     <script src="/js/require.js"></script>
     <script src="/js/jquery.min.js"></script>
     <script src="/js/angular.min.js"></script>
@@ -15,42 +16,57 @@
     <script src="/js/lib/customized/angular-resource.js"></script> <!--MIN-->
     <script src="/js/linq.js"></script>
 
+    <!-- OTHER ADDED LIBRARY -->
     <script src="/js/moment/moment.min.js"></script>
     <script src="/js/moment/moment-jalaali.min.js"></script>
     <script src="/js/jquery.ui.datepicker.min.js"></script>
 
+    <!-- Utility -->
     <script src="/js/lib/TypedUtility.js"></script>
     <script src="/js/lib/TypedExtensions.js"></script>
 
+    <!-- Utility Angular -->
     <script src="/js/lib/angularUtility/app.js"></script>
     <script src="/js/lib/angularUtility/filters/emptyForNull.js"></script>
 
 
-    <script src="/app/app.js"/>
-    <script src="/app/config.js"/>
+    <!-- App -->
+    <script src="/app/app.js"></script>
+    <script src="/app/config.js"></script>
 
+    <!-- App/Util -->
     <script src="/app/util/modelType.js"></script>
     <script src="/app/util/modelHelper.js"></script>
     <script src="/app/util/keyValue.js"></script>
     <script src="/app/util/dictionary.js"></script>
 
+    <!-- App/Models/Unbind/Types -->
+    <script src="/app/models/unbind/types/pageMode.js"/>
+
+    <!-- App/Models/Other -->
     <script src="/app/models/other/monthSelector.js"></script>
 
+    <!-- App/Models/Entities -->
     <script src="/app/models/entities/buildingVm.js"></script>
     <script src="/app/models/entities/personVm.js"></script>
     <script src="/app/models/entities/positionVm.js"></script>
     <script src="/app/models/entities/wageVm.js"></script>
     <script src="/app/models/entities/workVm.js"></script>
 
+    <!-- App/Models/DTO -->
     <script src="/app/models/dto/positionInsertDto.js"></script>
 
+    <!-- App/Services -->
     <script src="/app/services/baseDataService.js"></script>
-    <script src="/app/services/buildingService.js"></script>
-    <script src="/app/services/personService.js"></script>
-    <script src="/app/services/positionService.js"></script>
-    <script src="/app/services/wageService.js"></script>
-    <script src="/app/services/workService.js"></script>
+    <script src="/app/services/buildingsService.js"></script>
+    <script src="/app/services/personnelService.js"></script>
+    <script src="/app/services/positionsService.js"></script>
+    <script src="/app/services/wagesService.js"></script>
+    <script src="/app/services/worksService.js"></script>
 
+    <!-- App/Pages (Directives) -->
+    <!-- App/Pages (Dialog) -->
+    <!-- App/Pages (Controllers) -->
     <script src="/app/pages/building/buildingIndexController.js"></script>
     <script src="/app/pages/building/buildingInsertController.js"></script>
 

@@ -5,22 +5,22 @@
     "use strict";
 
     var service = function ($resource) {
-        return $resource("/rest/works/:id", {
+        return $resource("/rest/wages/:id", {
 
         },{
             "get": {
                 method :"GET",
-                /** @param data {WorkVm} */
+                /** @param data {WageVm} */
                 transformResult: function (data) {
-                    return ModelHelper.toWork(data);
+                    return ModelHelper.toWage(data);
                 }
             },
             "query": {
                 method: "GET",
                 isArray: true,
-                /** @param data {Array<WorkVm>} */
+                /** @param data {Array<WageVm>} */
                 transformResult: function (data) {
-                    return ModelHelper.toArray(data, ModelType.Work);
+                    return ModelHelper.toArray(data, ModelType.Wage);
                 }
             },
             // 'save': {method: 'POST'},
@@ -32,5 +32,5 @@
     service.$inject = ["$resource"];
 
     angular.module("personnelManagement")
-        .service("workService", service);
+        .service("wagesService", service);
 })();

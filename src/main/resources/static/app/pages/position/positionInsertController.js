@@ -3,7 +3,7 @@
  */
 (function(){
 
-    var controller = function ($location, positionService) {
+    var controller = function ($location, positionsService) {
         var self = this;
 
         self.view={
@@ -13,7 +13,7 @@
 
         self.event={
             save: function() {
-                positionService.save({}, self.view.positionInsert).$promise
+                positionsService.save({}, self.view.positionInsert).$promise
                     .then(function (data) {
                         //self.view.buildings = data;
                         $location.path("/position");
@@ -33,7 +33,7 @@
         initialize();
     };
 
-    controller.$inject = ["$location", "positionService"];
+    controller.$inject = ["$location", "positionsService"];
 
     angular.module("personnelManagement")
         .controller("positionInsertController", controller);

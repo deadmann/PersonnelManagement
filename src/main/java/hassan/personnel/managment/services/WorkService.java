@@ -5,6 +5,7 @@ import hassan.personnel.managment.repositories.WorkRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -22,6 +23,10 @@ public class WorkService {
 
     public List<Work> getAll(){
         return (List<Work>) workRepository.findAll();
+    }
+
+    public List<Work> getAllByPersonAndDateBetween(int personId, Calendar startDate, Calendar endDate){
+        return (List<Work>) workRepository.findByPersonAndDateBetween(personId, startDate, endDate);
     }
 
     public Work save(Work work) {

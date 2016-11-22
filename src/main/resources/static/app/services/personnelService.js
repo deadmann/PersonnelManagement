@@ -32,5 +32,5 @@
     service.$inject = ["$resource"];
 
     angular.module("personnelManagement")
-        .service("personService", service);
+        .service("personnelService", service);
 })();

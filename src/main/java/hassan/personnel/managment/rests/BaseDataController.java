@@ -6,10 +6,7 @@ import hassan.personnel.managment.configuration.ConfigurationObject;
 import hassan.personnel.managment.models.other.MonthSelector;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.GregorianCalendar;
 
@@ -43,8 +40,8 @@ public class BaseDataController {
         return ResponseEntity.ok(persianCalendar.get(Calendar.YEAR));
     }
 
-    @RequestMapping(value = "/days-in-month", method = RequestMethod.POST)
-    private ResponseEntity<Integer> getDaysInMonth(@RequestBody MonthSelector monthSelector){
+    @RequestMapping(value = "/days-in-month/{year}/{month}", method = RequestMethod.GET)
+    private ResponseEntity<Integer> getDaysInMonth(@PathVariable int year, @PathVariable int month){
         // Persian to Gregorian
         ULocale local = new ULocale("fa_IR@calendar=persian");
         com.ibm.icu.util.Calendar persianCalendar = Calendar.getInstance(local);
@@ -52,11 +49,10 @@ public class BaseDataController {
 
         //persianCalendar.set(monthSelector.getYear(), monthSelector.getMonth(), 1); // Tir(4th month) 10th 1395 equivalent to June 30th 2016
 
-        MonthSelector next = new MonthSelector();
-        next.setYear(monthSelector.getMonth()>=12? monthSelector.getYear() : monthSelector.getYear()+1);
-        next.setMonth(monthSelector.getMonth()>=12? monthSelector.getMonth() +1 :1);
+        int yearNext = month>=12 ? year : year+1;
+        int monthNext = month>=12 ? month +1 : 1;
 
-        persianCalendar.set(next.getYear(), monthSelector.getMonth(), 1);
+        persianCalendar.set(yearNext, monthNext, 1);
         persianCalendar.add(Calendar.DAY_OF_MONTH, -1);
 
         return ResponseEntity.ok(persianCalendar.get(Calendar.DAY_OF_MONTH));

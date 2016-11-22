@@ -1,22 +1,43 @@
 <div class="clearfix">
-    <form ng-submit="save()">
-    <div class="row">
+    <div class="row" ng-if="ctrl.view.mode == ctrl.type.PageMode.SELECT">
         <div class="col-md-4">
-            <select class="form-control" ng-model="workInsertCtrl.view.selections.year" ng-options="x as x for x in workInsertCtrl.view.years">
-                <option disabled selected>لطفا سال را انتخاب کنید</option>
+            <select class="form-control" ng-model="ctrl.view.headerSelections.year" ng-options="x as x for x in ctrl.view.years">
+                <option value="" disabled selected>لطفا سال را انتخاب کنید</option>
             </select>
         </div>
         <div class="col-md-4">
-            <select class="form-control" ng-model="workInsertCtrl.view.selections.month" ng-options="item as item.value for item in workInsertCtrl.view.months.getAllKeyValues()">
-                <option disabled selected>لطفا ماه را انتخاب کنید</option>
+            <select class="form-control" ng-model="ctrl.view.headerSelections.month" ng-options="item as item.value for item in ctrl.view.months.getAllKeyValues()">
+                <option value="" disabled selected>لطفا ماه را انتخاب کنید</option>
             </select>
         </div>
         <div class="col-md-4">
-            <select class="form-control" ng-model="workInsertCtrl.view.selections.person" ng-options="x as (x.firstname | emptyForNull) + ' ' + (x.lastname | emptyForNull) for x in workInsertCtrl.view.personnel">
-                <option disabled selected>لطفا شخص را انتخاب کنید</option>
+            <select class="form-control" ng-model="ctrl.view.headerSelections.person" ng-options="x as (x.firstname | emptyForNull) + ' ' + (x.lastname | emptyForNull) for x in ctrl.view.personnel">
+                <option value="" disabled selected>لطفا شخص را انتخاب کنید</option>
             </select>
         </div>
+        <button class="btn btn-primary" ng-click="ctrl.event.toEditWorks()">
+            Edit
+        </button>
     </div>
 
-    </form>
+    <div class="row" ng-if="ctrl.view.mode == ctrl.type.PageMode.EDIT">
+        <form ng-submit="save()">
+            <table>
+                <thead>
+                    <tr>
+                        <th ng-repeat="building in ctrl.view.tableSelections.selectedBuildings">
+                            {{building.name}}
+                        </th>
+                        <th>
+                            <select class="form-control" ng-model="ctrl.view.tableSelections.building"
+                                    ng-change="ctrl.event.selectBuilding()"
+                                    ng-options="building as building.name for building in ctrl.view.buildings" >
+                                <option value="" disabled selected>افزودن ساختمان</option>
+                            </select>
+                        </th>
+                    </tr>
+                </thead>
+            </table>
+        </form>
+    </div>
 </div>

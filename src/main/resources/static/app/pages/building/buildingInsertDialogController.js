@@ -4,13 +4,13 @@
 (function () {
     'use strict';
 
+    controller.$inject = ['$location', '$scope', 'personnelService'];
+
     angular
         .module('personnelManagement')
         .controller('buildingInsertDialogController', controller);
 
-    controller.$inject = ['$location', '$scope', 'personsService'];
-
-    function controller($location, $scope, personsService) {
+    function controller($location, $scope, personnelService) {
         /* jshint validthis:true */
         var vm = this;
         vm.title = 'Add New Person';
@@ -28,7 +28,7 @@
 
         vm.Action= {
             save: function () {
-                personsService.save({}, vm.View.Person
+                personnelService.save({}, vm.View.Person
                     , function (data) {
                         $scope.answer(new DialogResult(DialogResultType.Ok, data));
                     }, function (err) {

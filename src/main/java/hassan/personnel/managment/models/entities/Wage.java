@@ -4,6 +4,7 @@ import hassan.personnel.managment.models.interfaces.ViewModel;
 import hassan.personnel.managment.models.vm.WageVm;
 
 import javax.persistence.*;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -15,7 +16,7 @@ public class Wage implements ViewModel {
     public Wage(){
     }
 
-    public Wage(Date startDate, double price, Position position) {
+    public Wage(Calendar startDate, double price, Position position) {
         this.startDate = startDate;
         this.price = price;
         this.position = position;
@@ -26,7 +27,7 @@ public class Wage implements ViewModel {
     private int id;
 
     @Column(nullable = false)
-    private Date startDate;
+    private Calendar startDate;
 
     @Column(nullable = true)
     private double price;
@@ -56,11 +57,11 @@ public class Wage implements ViewModel {
         this.id = id;
     }
 
-    public Date getStartDate() {
+    public Calendar getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(Calendar startDate) {
         this.startDate = startDate;
     }
 

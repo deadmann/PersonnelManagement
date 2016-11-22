@@ -4,7 +4,7 @@
             <thead>
                 <tr>
                     <th>
-                        <button class="btn btn-primary" ng-click="buildingIndexCtrl.event.insert()">create</button>
+                        <button class="btn btn-primary" ng-click="ctrl.event.insert()">create</button>
                     </th>
                     <th>
 
@@ -15,9 +15,9 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="row in buildingIndexCtrl.view.buildings">
+                <tr ng-repeat="row in ctrl.view.buildings">
                     <td>
-                        <button class="btn btn-danger" ng-click="buildingIndexCtrl.event.remove(row.id)">delete</button>
+                        <button class="btn btn-danger" ng-click="ctrl.event.remove(row.id)">delete</button>
                     </td>
                     <td>
                         {{$index + 1}}

@@ -3,7 +3,7 @@
  */
 (function () {
 
-    var controller = function ($location, wageService) {
+    var controller = function ($location, wagesService) {
         var self = this;
 
         self.view={
@@ -21,7 +21,7 @@
         };
 
         function initialize() {
-            wageService.query().$promise
+            wagesService.query().$promise
                 .then(function (data) {
                     self.view.wages = data;
                 }, function (err) {
@@ -32,7 +32,7 @@
         initialize();
     };
 
-    controller.$inject = ["$location", "wageService"];
+    controller.$inject = ["$location", "wagesService"];
 
     angular.module("personnelManagement")
         .controller("wageIndexController", controller);
