@@ -24,15 +24,26 @@
 
         /** @type{{year:Array<number>, months:Dictionary<number, string>,  persons:Array<Person>}} */
         self.view = {
+            selections:{
+                year: null,
+                month: null,
+                person: null
+            },
             years: null,
             months: null,
-            persons: null
+            personnel: null
         };
 
         self.event = {};
 
         function initialize() {
-            self.view.years = [];
+            baseDataService.getCurrentYear().$promise
+                .then(function (data) {
+
+
+                }, function (err) {
+
+                });
 
             var monthDictionary = new Dictionary();
 
@@ -43,7 +54,7 @@
             self.view.months = monthDictionary;
 
             personService.query().$promise.then(function (data) {
-                self.view.persons = data;
+                self.view.personnel = data;
             }, function (err) {
                 alert(err);
             })

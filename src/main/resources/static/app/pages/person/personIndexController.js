@@ -7,7 +7,7 @@
         var self = this;
 
         self.view={
-            persons: []
+            personnel: []
         };
 
         self.event={
@@ -23,7 +23,7 @@
         function initialize() {
             personService.query().$promise
                 .then(function (data) {
-                    self.view.persons = data;
+                    self.view.personnel = data;
                 }, function (err) {
                     alert("An Error Has Occur");
                 });

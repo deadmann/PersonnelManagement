@@ -4,5 +4,5 @@
 (function(){
     'use strict';
 
-    angular.module('personnelManagement', ["ngRoute", "ngResource"]);
+    angular.module('personnelManagement', ["ngRoute", "ngResource",     "angularUtility"]);
 })();

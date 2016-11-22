@@ -2,17 +2,17 @@
     <form ng-submit="save()">
     <div class="row">
         <div class="col-md-4">
-            <select class="form-control" ng-options="x as x.text for x in workInsertCtrl.view.years">
+            <select class="form-control" ng-model="workInsertCtrl.view.selections.year" ng-options="x as x for x in workInsertCtrl.view.years">
                 <option disabled selected>لطفا سال را انتخاب کنید</option>
             </select>
         </div>
         <div class="col-md-4">
-            <select class="form-control" ng-options="item as item.value for item in workInsertCtrl.view.months.getAllKeyValues()">
+            <select class="form-control" ng-model="workInsertCtrl.view.selections.month" ng-options="item as item.value for item in workInsertCtrl.view.months.getAllKeyValues()">
                 <option disabled selected>لطفا ماه را انتخاب کنید</option>
             </select>
         </div>
         <div class="col-md-4">
-            <select class="form-control" ng-options="x as x.text for x in workInsertCtrl.view.worker">
+            <select class="form-control" ng-model="workInsertCtrl.view.selections.person" ng-options="x as (x.firstname | emptyForNull) + ' ' + (x.lastname | emptyForNull) for x in workInsertCtrl.view.personnel">
                 <option disabled selected>لطفا شخص را انتخاب کنید</option>
             </select>
         </div>
