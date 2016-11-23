@@ -3,7 +3,7 @@ package hassan.personnel.managment.rests;
 import com.ibm.icu.util.Calendar;
 import com.ibm.icu.util.ULocale;
 import hassan.personnel.managment.configuration.ConfigurationObject;
-import hassan.personnel.managment.models.other.MonthSelector;
+import hassan.personnel.managment.utility.CalendarHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,8 +17,12 @@ import java.util.GregorianCalendar;
 @RequestMapping("/rest/base-data")
 public class BaseDataController {
 
-    @Autowired
     private ConfigurationObject configurationObject;
+
+    @Autowired
+    public BaseDataController(ConfigurationObject configurationObject) {
+        this.configurationObject=configurationObject;
+    }
 
     @RequestMapping(value = "/start-year", method = RequestMethod.GET)
     private ResponseEntity<Integer> getStartYear(){
@@ -42,20 +46,6 @@ public class BaseDataController {
 
     @RequestMapping(value = "/days-in-month/{year}/{month}", method = RequestMethod.GET)
     private ResponseEntity<Integer> getDaysInMonth(@PathVariable int year, @PathVariable int month){
-        // Persian to Gregorian
-        ULocale local = new ULocale("fa_IR@calendar=persian");
-        com.ibm.icu.util.Calendar persianCalendar = Calendar.getInstance(local);
-        persianCalendar.clear();
-
-        //persianCalendar.set(monthSelector.getYear(), monthSelector.getMonth(), 1); // Tir(4th month) 10th 1395 equivalent to June 30th 2016
-
-        int yearNext = month>=12 ? year : year+1;
-        int monthNext = month>=12 ? month +1 : 1;
-
-        persianCalendar.set(yearNext, monthNext, 1);
-        persianCalendar.add(Calendar.DAY_OF_MONTH, -1);
-
-        return ResponseEntity.ok(persianCalendar.get(Calendar.DAY_OF_MONTH));
-        //return persianCalendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+        return ResponseEntity.ok(CalendarHelper.daysInPersianMonth(year, month));
     }
 }

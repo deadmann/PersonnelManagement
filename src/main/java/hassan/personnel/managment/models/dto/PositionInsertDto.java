@@ -6,7 +6,7 @@ package hassan.personnel.managment.models.dto;
 public class PositionInsertDto {
     private String title;
 
-    private double startPrice;
+    private double startPayment;
 
     public String getTitle() {
         return title;
@@ -16,11 +16,11 @@ public class PositionInsertDto {
         this.title = title;
     }
 
-    public double getStartPrice() {
-        return startPrice;
+    public double getStartPayment() {
+        return startPayment;
     }
 
-    public void setStartPrice(double startPrice) {
-        this.startPrice = startPrice;
+    public void setStartPayment(double startPayment) {
+        this.startPayment = startPayment;
     }
 }

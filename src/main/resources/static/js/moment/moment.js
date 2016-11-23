@@ -2257,7 +2257,7 @@
             return (this.zone() - input) % 60 === 0;
         },
 
-        daysInMonth : function () {
+        days : function () {
             return daysInMonth(this.year(), this.month());
         },
 

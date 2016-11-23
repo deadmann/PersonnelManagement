@@ -13,5 +13,5 @@ import java.util.List;
  */
 @Repository
 public interface WorkRepository extends JpaRepository<Work, Long> {
-    List<Work> findByPersonAndDateBetween(int id, Calendar date1, Calendar date2);
+    List<Work> findByPersonIdAndDateBetween(int id, Calendar date1, Calendar date2);
 }

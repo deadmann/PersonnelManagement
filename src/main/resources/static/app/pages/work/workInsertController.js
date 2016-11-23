@@ -5,7 +5,7 @@
     var controller = function (baseDataService, buildingsService, personnelService, worksService) {
         var self = this;
 
-        var private = {
+        var privateData = {
             /** @type {number|null} */
             startYear:null,
             /** @type {number|null}*/
@@ -36,11 +36,11 @@
         self.view = {
             /** @type {PageMode} */
             mode: PageMode.SELECT,
-            /** @type {{year:number, month:number, person: PersonVm}} */
+            /** @type {{year:number, month:KeyValue<number, string>, person: PersonVm}} */
             headerSelections:{
                 /** @type {number|null} */
                 year: null,
-                /** @type {number|null} */
+                /** @type {KeyValue<number, string>} */
                 month: null,
                 /** @type {PersonVm} */
                 person: null
@@ -59,25 +59,43 @@
                 building: null
             },
             /** @type {Array<BuildingVm>}*/
-            buildings: []
+            buildings: [],
+            /** @type {Array<number>} */
+            days: null
         };
 
         self.event = {
             toEditWorks: function () {
+                //Keep Track Of Running Async Service, And Provide Ability To Run A Method After All Async Finished.
+                var afterToEditWorksAsyncRunnerCounter = 2;
+
+                function afterToEditWorkCallBack(){
+                    if (afterToEditWorksAsyncRunnerCounter == 0){
+                        self.view.mode = PageMode.EDIT;
+                    }
+                }
 
                 baseDataService.getDaysInMonth({
-                    year: self.view.headerSelections.year,
-                    month: self.view.headerSelections.month
+                    param2: self.view.headerSelections.year,
+                    param3: self.view.headerSelections.month.key
                 }).$promise
                     .then(function (data) {
-                        private.daysInMonth = data;
+                        privateData.daysInMonth = data;
+                        self.view.days = Util.Utility.generateRange(1, data, true);
+                        afterToEditWorksAsyncRunnerCounter --;
+                        if(afterToEditWorksAsyncRunnerCounter === 0) afterToEditWorkCallBack();
                     }, function (err) {
                         alert("An Error Occur While Loading Calendar Information");
                     });
 
-                worksService.getAllWorksByPersonAndMonth().$promise
+                worksService.getAllWorksByPersonAndMonth({
+                    param2: self.view.headerSelections.person.id,
+                    param3: self.view.headerSelections.year,
+                    param4: self.view.headerSelections.month.key
+                }).$promise
                     .then(function (data) {
-                        self.view.mode = PageMode.EDIT;
+                        afterToEditWorksAsyncRunnerCounter --;
+                        if(afterToEditWorksAsyncRunnerCounter === 0) afterToEditWorkCallBack();
                     }, function (err) {
                         alert("Cannot Fetch Works Data From Server" + err);
                     });
@@ -107,15 +125,15 @@
             function afterInitializeCallBack(){
                 if (afterInitializeAsyncRunnerCounter == 0){
                     self.view.years = [];
-                    for(var i = private.startYear; i < private.currentYear + 5; i++)
+                    for(var i = privateData.startYear; i < privateData.currentYear + 5; i++)
                         self.view.years.push(i);
-                    self.view.headerSelections.year = private.currentYear
+                    self.view.headerSelections.year = privateData.currentYear
                 }
             }
 
             baseDataService.getStartYear().$promise
                 .then(function (data) {
-                    private.startYear = data;
+                    privateData.startYear = data;
                     afterInitializeAsyncRunnerCounter --;
                     afterInitializeCallBack();
                 }, function (err) {
@@ -124,7 +142,7 @@
 
             baseDataService.getCurrentYear().$promise
                 .then(function (data) {
-                    private.currentYear = data;
+                    privateData.currentYear = data;
                     afterInitializeAsyncRunnerCounter --;
                     afterInitializeCallBack();
                 }, function (err) {
@@ -134,7 +152,7 @@
             var monthDictionary = new Dictionary();
 
             for (var i = 0; i < 12 ; i++) {
-                monthDictionary.add(i + 1, private.monthsNames[i]);
+                monthDictionary.add(i + 1, privateData.monthsNames[i]);
             }
 
             self.view.months = monthDictionary;

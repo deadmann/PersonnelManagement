@@ -5,15 +5,17 @@
     'use strict';
 
     var service = function ($resource) {
-        return $resource("/rest/base-data/:param1/:param2/:param3",{
-
+        return $resource("/rest/base-data/:param1/:param2/:param3", {
+            // "param1" : "@param1",
+            // "param2" : "@param2",
+            // "param3" : "@param3"
         },{
             "getDaysInMonth": {
                 method: "GET",
-                params:{
+                params: {
                     param1: "days-in-month",
-                    param2: "@year",
-                    param3: "@month"
+                    param2: "@param2",//@year
+                    param3: "@param3"//@month
                 },
                 transformResponse: function (data) {
                     return {value: parseInt(data)}

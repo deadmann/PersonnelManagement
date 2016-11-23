@@ -1,3 +1,4 @@
+<div class="container">
 <div class="clearfix">
     <div class="row" ng-if="ctrl.view.mode == ctrl.type.PageMode.SELECT">
         <div class="col-md-4">
@@ -22,9 +23,12 @@
 
     <div class="row" ng-if="ctrl.view.mode == ctrl.type.PageMode.EDIT">
         <form ng-submit="save()">
-            <table>
+            <table class="table table-bordered table-condensed table-striped table-hower">
                 <thead>
                     <tr>
+                        <th>
+
+                        </th>
                         <th ng-repeat="building in ctrl.view.tableSelections.selectedBuildings">
                             {{building.name}}
                         </th>
@@ -37,7 +41,22 @@
                         </th>
                     </tr>
                 </thead>
+                <tbody>
+                    <tr ng-repeat="day in ctrl.view.days">
+                        <td>
+                            {{day}}
+                        </td>
+                        <td ng-repeat="building in ctrl.view.tableSelections.selectedBuildings">
+                            {{building.name}}
+                        </td>
+                        <td>
+                            &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
             </table>
         </form>
     </div>
+</div>
+
 </div>

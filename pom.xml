@@ -74,6 +74,12 @@
 			<artifactId>spring-boot-starter-web-services</artifactId>
 		</dependency>
 
+		<!-- Newly Added, Maybe Not Configured -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-log4j</artifactId>
+		</dependency>
+
 		<!--For Persian Calendar, and Globalization Stuff-->
 		<dependency>
 			<groupId>com.ibm.icu</groupId>
@@ -128,5 +134,21 @@
 		</plugins>
 	</build>
 
+	<!--
+		Configure Log4j
+		http://stackoverflow.com/questions/29225777/log4j-properties-in-spring-boot
+	-->
+	<filters>
+		<filter>src/main/resources/application.properties</filter> <!-- Give access to application.properties params -->
+	</filters>
+	<resources>
+		<resource>
+			<directory>src/main/resources</directory>
+			<includes>
+				<include>log4j.properties</include>
+			</includes>
+			<filtering>true</filtering>
+		</resource>
+	</resources>
 
 </project>

@@ -11,11 +11,11 @@ import hassan.personnel.managment.services.WageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+import sun.util.resources.LocaleData;
 
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Hassan on 11/17/2016.
@@ -56,8 +56,8 @@ public class DatabaseSeeder implements CommandLineRunner {
 
         List<Wage> wageList = new ArrayList<Wage>(){
             {
-                add(new Wage(Date.valueOf(LocalDate.now()), 1000.0, positionList.get(1)));
-                add(new Wage(Date.valueOf(LocalDate.now()), 1200.0, positionList.get(0)));
+                add(new Wage(Calendar.getInstance(), 1000.0, positionList.get(1)));
+                add(new Wage(Calendar.getInstance(), 1200.0, positionList.get(0)));
             }
         };
         wageService.save(wageList);

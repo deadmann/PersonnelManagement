@@ -6,11 +6,10 @@ import hassan.personnel.managment.models.dto.PositionInsertDto;
 import hassan.personnel.managment.models.vm.PositionVm;
 import hassan.personnel.managment.services.PositionService;
 import hassan.personnel.managment.services.WageService;
+import hassan.personnel.managment.utility.CalendarHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Date;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -43,7 +42,7 @@ public class PositionsController {
         Position position = new Position(positionInsert.getTitle());
         position = positionService.save(position);
 
-        Wage wage = new Wage(Date.valueOf(LocalDate.MIN), positionInsert.getStartPrice(), position);
+        Wage wage = new Wage(CalendarHelper.getMinimum(), positionInsert.getStartPayment(), position);
         return wageService.save(wage).getPosition();
     }
 

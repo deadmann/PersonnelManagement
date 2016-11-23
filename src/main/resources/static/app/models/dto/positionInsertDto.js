@@ -2,16 +2,16 @@
  * Created by Hassan on 11/19/2016.
  */
 var PositionInsertDto = (function () {
-    function PositionInsertDto(title, startPrice) {
+    function PositionInsertDto(title, startPayment) {
         this.setup();
         if (title != undefined)
             this.title = title;
-        if (startPrice != undefined)
-            this.startPrice = startPrice;
+        if (startPayment != undefined)
+            this.startPayment = startPayment;
     }
     PositionInsertDto.prototype.setup = function () {
         this.title = null;
-        this.startPrice = 0;
+        this.startPayment = 0;
     };
     return PositionInsertDto;
 }());

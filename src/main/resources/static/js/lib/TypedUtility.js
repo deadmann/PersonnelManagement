@@ -187,6 +187,27 @@ var Util;
         Utility.padRight = function (val, len, sign) {
             return val + Array(len - String(val).length + 1).join(sign || "0");
         };
+        /**
+         * Generate array of numbers that are within the given range
+         * @param start {number} start number
+         * @param end {number} end number
+         * @param includeEnd {boolean} true if we want to include last number, otherwise we generate until the end number
+         * @return {Array<number>} Array of numbers that are within the range
+         */
+        Utility.generateRange = function (start, end, includeEnd) {
+            var result = [];
+            for (var i = start; (start <= end)
+                ? (includeEnd == false) ? (i < end) : (i <= end)
+                : (includeEnd == false) ? (i > end) : (i >= end); (start <= end) ? i++ : i--) {
+                result.push(i);
+            }
+            return result;
+        };
+        /**
+         * Escape a regex string
+         * @param str
+         * @return {any|string|void|ILocationService}
+         */
         Utility.escapeRegExp = function (str) {
             return str.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
         };

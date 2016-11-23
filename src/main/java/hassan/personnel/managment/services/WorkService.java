@@ -25,8 +25,8 @@ public class WorkService {
         return (List<Work>) workRepository.findAll();
     }
 
-    public List<Work> getAllByPersonAndDateBetween(int personId, Calendar startDate, Calendar endDate){
-        return (List<Work>) workRepository.findByPersonAndDateBetween(personId, startDate, endDate);
+    public List<Work> getAllByPersonIdAndDateBetween(int personId, Calendar startDate, Calendar endDate){
+        return (List<Work>) workRepository.findByPersonIdAndDateBetween(personId, startDate, endDate);
     }
 
     public Work save(Work work) {

@@ -3,16 +3,16 @@
  */
 class PositionInsertDto{
     public title:string;
-    public startPrice:number;
+    public startPayment:number;
 
-    constructor(title: string, startPrice: number) {
+    constructor(title: string, startPayment: number) {
         this.setup();
         if(title!=undefined) this.title = title;
-        if(startPrice!=undefined) this.startPrice = startPrice;
+        if(startPayment!=undefined) this.startPayment = startPayment;
     }
 
     private setup() {
         this.title = null;
-        this.startPrice = 0;
+        this.startPayment = 0;
     }
 }
