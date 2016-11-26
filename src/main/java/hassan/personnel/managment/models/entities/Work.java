@@ -18,6 +18,7 @@ public class Work implements ViewModel {
 
     private int workPerDay;
 
+    @Temporal(TemporalType.TIMESTAMP)
     private java.util.Calendar date;
 
 //    @Column(name = "person_id")

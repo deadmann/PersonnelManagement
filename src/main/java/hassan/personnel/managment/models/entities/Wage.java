@@ -26,6 +26,7 @@ public class Wage implements ViewModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
     private Calendar startDate;
 

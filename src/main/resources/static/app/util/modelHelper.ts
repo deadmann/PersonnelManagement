@@ -37,6 +37,10 @@ class ModelHelper {
         return new WorkVm(obj.id, obj.workPerDay, obj.date, person, building);
     }
 
+    public static toWorkPerDayDto(obj:any):WorkPerDayDto {
+        return new WorkPerDayDto(obj.id, obj.personId, obj.year, obj.month, obj.day, obj.buildingId, obj.workingHours);
+    }
+
     public static toArray(obj:Array<any>, type:ModelType):Array<any> {
         if(obj==undefined || obj == null) return [];
 
@@ -58,6 +62,9 @@ class ModelHelper {
                     break;
                 case ModelType.Work:
                     transform = ModelHelper.toWork(obj[i]);
+                    break;
+                case ModelType.WorkPerDayDto:
+                    transform = ModelHelper.toWorkPerDayDto(obj[i]);
                     break;
                 default:
                     throw new Error("This Model Type, Does Not Exists");

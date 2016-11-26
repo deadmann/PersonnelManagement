@@ -55,9 +55,9 @@ module Util {
 
         /**
          * Remove Item From Array, And Returns List Of Deleted Items
-         * @param itemList {*[]}
-         * @param searchItem {*}
-         * @param fnMatch {function}
+         * @param itemList{Array<any>} list of items that we want to search in
+         * @param searchItem {*} item we use to match data
+         * @param fnMatch {function} if defined this function will be used to match two models, other wise object reference will be used. firstItem come from array and second is searchItem
          * @param removeOption {string} 'first' (default), 'last', 'all'
          * @returns {*[]} returns Deleted Items
          */
@@ -80,6 +80,13 @@ module Util {
             }
         }
 
+        /**
+         * Find item using Match function.
+         * @param arr{Array<any>} list of items that we want to search in
+         * @param searchItem {*} item we use to match data
+         * @param fnMatch {function} if defined this function will be used to match two models, other wise object reference will be used. firstItem come from array and second is searchItem
+         * @returns {*|null} returns matched item
+         */
         public static find(arr:Array<any>, searchItem:any, fnMatch?:Function) {
             for (var i = 0; i < arr.length; i++) {
                 if (fnMatch) {
@@ -117,6 +124,13 @@ module Util {
             return !Utility.hasDuplicates(arr);
         }
 
+        /**
+         * returns true if the matched item exists within the array, otherwise returns false
+         * @param items {Array<any>} list of items that we want to search in
+         * @param searchItem {*} item we use to match data
+         * @param fnMatch {function} if defined this function will be used to match two models, other wise object reference will be used. firstItem come from array and second is searchItem
+         * @returns {boolean}
+         */
         public static contains(items:any[], searchItem:any, fnMatch?:Function) {
             var flag:boolean = false;
             for (var i:number = 0; i < items.length; i++) {
@@ -133,6 +147,13 @@ module Util {
             return flag;
         }
 
+        /**
+         * returns index of searched item at first found position, otherwise returns -1
+         * @param items {Array<any>} list of items that we want to search in
+         * @param searchItem {*|null} item we use to match data / null if want to match with global or other accessible data
+         * @param fnMatch {function} if defined this function will be used to match two models, other wise object reference will be used. firstItem come from array and second is searchItem
+         * @returns {number}
+         */
         public static indexOf(items:any[], searchItem:any, fnMatch?:Function) {
             //If we don't have specific match function, we can use array indexOf if exists
             if (!fnMatch && Array.prototype.indexOf) {
@@ -152,6 +173,13 @@ module Util {
             return -1;
         }
 
+        /**
+         * returns index of searched item at last found position, otherwise returns -1
+         * @param items {Array<any>} list of items that we want to search in
+         * @param searchItem {*|null} item we use to match data / null if want to match with global or other accessible data
+         * @param fnMatch {function} if defined this function will be used to match two models, other wise object reference will be used. firstItem come from array and second is searchItem
+         * @returns {number}
+         */
         public static lastIndexOf(items:any[], searchItem:any, fnMatch?:Function) {
             //If we don't have specific match function, we can use array lastIndexOf if exists
             if (!fnMatch && Array.prototype.lastIndexOf) {

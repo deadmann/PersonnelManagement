@@ -26,7 +26,9 @@
                 "دی",
                 "بهمن",
                 "اسفند"
-            ]
+            ],
+            /** @type {Array<WorkPerDayDto>} */
+            workPerDays: []
         };
 
         self.type = {
@@ -60,8 +62,109 @@
             },
             /** @type {Array<BuildingVm>}*/
             buildings: [],
+            /** @type {Array<Array<number|null|undefined>>} - [Building][Day]*/
+            buildingDayWorks: [],
             /** @type {Array<number>} */
             days: null
+        };
+
+        self.method = {
+            //Data that should rest or list that should be empty when month/year/person changes
+            resetDataForms: function () {
+                privateData.workPerDays = []; //--> TODO: Should check server again and re-map (for Enable Update/Edit)
+                self.view.buildingDayWorks = []; //--> TODO: Refill From Previous Item (for Enable Update/Edit)
+                self.view.tableSelections.selectedBuildings = [];
+            },
+            /** Map WorkPerDayDto to BuildingDayWorks Object */
+            mapWpdToBdw: function () {
+                Enumerable.from(privateData.workPerDays)
+                    .forEach(/**@param wpd {WorkPerDayDto}*/function (wpd) {
+                        if (!Enumerable.from(self.view.tableSelections.selectedBuildings)
+                                .any(/** @param w {BuildingVm} */function (w) {
+                                    return w.id == wpd.buildingId;
+                                })) {
+                            var building = Enumerable.from(self.view.buildings)
+                                .first(/** @param w {BuildingVm} */function (w) {
+                                    return w.id == wpd.buildingId;
+                                });
+                            self.view.tableSelections.selectedBuildings.push(building);
+                        }
+
+                        if(Util.Utility.isNullOrUndefined(self.view.buildingDayWorks)) self.view.buildingDayWorks = [];
+                        if(Util.Utility.isNullOrUndefined(self.view.buildingDayWorks[wpd.buildingId])) self.view.buildingDayWorks[wpd.buildingId] = [];
+                        self.view.buildingDayWorks[wpd.buildingId][wpd.day] = wpd.workingHours;
+                    });
+            },
+            /** Map BuildingDayWorks to WorkPerDayDto Object */
+            mapBdwToWpd: function () {
+                var wpdEnumerable = Enumerable.from(privateData.workPerDays);
+
+                //Iterate in Selected Buildings
+                Enumerable.from(self.view.tableSelections.selectedBuildings).forEach(/** @param building {BuildingVm} */function(building){
+                    //Iterate in Available Days
+                    Enumerable.from(self.view.days).forEach(/** @param dayOfMonth {number} */function(dayOfMonth) {
+                        //Check if TextBox Data is not Null (Improve Performance, Both Calculate Less and Sending Less Data To Server)
+                        if(! Util.Utility.isNullOrUndefined(self.view.buildingDayWorks[building.id])
+                            && ! Util.Utility.isNullOrUndefined(self.view.buildingDayWorks[building.id][dayOfMonth])) {
+                            //Index of match in workPerDays
+                            var indexInWpd = privateData.workPerDays.indexOfMatch(null,/** @param w {WorkPerDayDto} */function (w) {
+                                    return w.day == dayOfMonth && w.buildingId == building.id;
+                                });
+                            if(indexInWpd != -1){
+                                privateData.workPerDays[indexInWpd].workingHours = self.view.buildingDayWorks[building.id][dayOfMonth];
+                            }
+                            else{
+                                privateData.workPerDays.push(new WorkPerDayDto(
+                                    null,
+                                    self.view.headerSelections.person.id,
+                                    self.view.headerSelections.year,
+                                    self.view.headerSelections.month.key,
+                                    dayOfMonth,
+                                    building.id,
+                                    self.view.buildingDayWorks[building.id][dayOfMonth]
+                                ))
+                            }
+                        }else{
+                            //remove item from wpd list
+                            privateData.workPerDays.remove(null, /** @param w {WorkPerDayDto} */ function (w) {
+                                return w.day == dayOfMonth && w.buildingId == building.id
+                            },'all');
+                        }
+                    });
+                });
+            },
+            /** @param day {number} */
+            getSumDays: function (day) {
+                var total = 0;
+                for (var i = 0; i< self.view.tableSelections.selectedBuildings.length; i++){
+                    //Since it's two dimensional Array, we need to check each dimension separately
+                    if(! Util.Utility.isNullOrUndefined(self.view.buildingDayWorks[self.view.tableSelections.selectedBuildings[i].id])
+                        && !Util.Utility.isNullOrUndefined(self.view.buildingDayWorks[self.view.tableSelections.selectedBuildings[i].id][day]))
+                        total += self.view.buildingDayWorks[self.view.tableSelections.selectedBuildings[i].id][day];
+                }
+                return total;
+            },
+            /** @param building {BuildingVm}*/
+            getSumBuildings: function(building){
+                var total = 0;
+                for (var i = 0; i< self.view.days.length; i++){
+                    if(!Util.Utility.isNullOrUndefined(self.view.buildingDayWorks[building.id])
+                        && !Util.Utility.isNullOrUndefined(self.view.buildingDayWorks[building.id][self.view.days[i]]))
+                        total += self.view.buildingDayWorks[building.id][self.view.days[i]];
+                }
+                return total;
+            },
+            getSumTotal: function () {
+                var total = 0;
+                for(var i = 0; i<self.view.tableSelections.selectedBuildings.length;i++) {
+                    for (var j = 0; j < self.view.days.length; j++) {
+                        if (!Util.Utility.isNullOrUndefined(self.view.buildingDayWorks[self.view.tableSelections.selectedBuildings[i].id])
+                            && !Util.Utility.isNullOrUndefined(self.view.buildingDayWorks[self.view.tableSelections.selectedBuildings[i].id][self.view.days[j]]))
+                            total += self.view.buildingDayWorks[self.view.tableSelections.selectedBuildings[i].id][self.view.days[j]];
+                    }
+                }
+                return total;
+            }
         };
 
         self.event = {
@@ -72,6 +175,7 @@
                 function afterToEditWorkCallBack(){
                     if (afterToEditWorksAsyncRunnerCounter == 0){
                         self.view.mode = PageMode.EDIT;
+                        self.method.mapWpdToBdw();
                     }
                 }
 
@@ -88,12 +192,13 @@
                         alert("An Error Occur While Loading Calendar Information");
                     });
 
-                worksService.getAllWorksByPersonAndMonth({
+                worksService.getWorkPerDaysByPersonAndMonth({
                     param2: self.view.headerSelections.person.id,
                     param3: self.view.headerSelections.year,
                     param4: self.view.headerSelections.month.key
                 }).$promise
                     .then(function (data) {
+                        privateData.workPerDays = data;
                         afterToEditWorksAsyncRunnerCounter --;
                         if(afterToEditWorksAsyncRunnerCounter === 0) afterToEditWorkCallBack();
                     }, function (err) {
@@ -102,6 +207,9 @@
             },
             toSelectMode: function () {
                 self.view.mode = PageMode.SELECT;
+                self.method.resetDataForms();
+                privateData.daysInMonth = null;
+                self.view.days = null;
             },
             selectBuilding:function () {
                 var eBuildings = Enumerable.from(self.view.tableSelections.selectedBuildings);
@@ -115,6 +223,22 @@
                     alert("This Building Already Exists.");
                 }
                 self.view.tableSelections.building = null; //Reset To Null
+            },
+            clearData: function(){
+                self.method.resetDataForms();
+            },
+            save: function () {
+                self.method.mapBdwToWpd();
+                worksService.saveWorkPerDaysClearPersonMonth({
+                    param1:self.view.headerSelections.person.id,
+                    param2:self.view.headerSelections.year,
+                    param3:self.view.headerSelections.month.key
+                }, privateData.workPerDays).$promise
+                    .then(function (data) {
+                        alert("success");
+                    }, function (err) {
+                        alert("An error occur while saving data");
+                    })
             }
         };
 
@@ -127,7 +251,7 @@
                     self.view.years = [];
                     for(var i = privateData.startYear; i < privateData.currentYear + 5; i++)
                         self.view.years.push(i);
-                    self.view.headerSelections.year = privateData.currentYear
+                    self.view.headerSelections.year = privateData.currentYear;
                 }
             }
 

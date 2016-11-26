@@ -5,6 +5,5 @@
 var AngularUtility;
 (function (AngularUtility) {
     "use strict";
-    //constructor(){
     angular.module("angularUtility", []);
 })(AngularUtility || (AngularUtility = {}));

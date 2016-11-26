@@ -37,7 +37,30 @@
                     return ModelHelper.toArray(data, ModelType.Work)
                 }
             },
+            "getWorkPerDaysByPersonAndMonth":{
+                method: "GET",
+                isArray: true,
+                params: {
+                    param1: "work-per-days-by-person-and-month",
+                    param2: "@param2",//@personId
+                    param3: "@param3",//@year
+                    param4: "@param4"//@month
+                },
+                /** @param data {Array<WorkPerDayDto>} */
+                transformResult: function (data) {
+                    return ModelHelper.toArray(data, ModelType.WorkPerDayDto);
+                }
+            },
             // 'save': {method: 'POST'},
+            "saveWorkPerDaysClearPersonMonth": {
+                method: "POST",
+                params: {
+                    param1: "/save-work-per-days-clear-person-month/{personId}/{year}/{month}",
+                    param2: "@param2",//@personId
+                    param3: "@param3",//@year
+                    param4: "@param4"//@month
+                }
+            }
             // 'remove': {method: 'DELETE'},
             // 'delete': {method: 'DELETE'}
         })

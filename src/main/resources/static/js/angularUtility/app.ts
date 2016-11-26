@@ -4,7 +4,6 @@
 //class AngularUtility{
 module AngularUtility{
         "use strict";
-    //constructor(){
+
         angular.module("angularUtility", []);
-    //}
 }

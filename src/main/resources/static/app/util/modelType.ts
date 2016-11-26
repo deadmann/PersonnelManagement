@@ -6,5 +6,7 @@ enum ModelType{
     Person,
     Position,
     Wage,
-    Work
+    Work,
+
+    WorkPerDayDto,
 }

@@ -1,4 +1,3 @@
-<div class="container">
 <div class="clearfix">
     <div class="row" ng-if="ctrl.view.mode == ctrl.type.PageMode.SELECT">
         <div class="col-md-4">
@@ -7,7 +6,7 @@
             </select>
         </div>
         <div class="col-md-4">
-            <select class="form-control" ng-model="ctrl.view.headerSelections.month" ng-options="item as item.value for item in ctrl.view.months.getAllKeyValues()">
+            <select class="form-control" ng-model="ctrl.view.headerSelections.month" ng-options="item as (item.key + ' - ' + item.value) for item in ctrl.view.months.getAllKeyValues()">
                 <option value="" disabled selected>لطفا ماه را انتخاب کنید</option>
             </select>
         </div>
@@ -22,7 +21,19 @@
     </div>
 
     <div class="row" ng-if="ctrl.view.mode == ctrl.type.PageMode.EDIT">
-        <form ng-submit="save()">
+        <div class="col-md-4">
+            <span>برج:</span>
+            <span ng-bind="ctrl.view.headerSelections.month.key +' - '+ ctrl.view.headerSelections.month.value"></span>
+        </div>
+        <div class="col-md-4">
+            <span>سال:</span>
+            <span ng-bind="ctrl.view.headerSelections.year"></span>
+        </div>
+        <div class="col-md-4">
+            <span>نام پرسنل:</span>
+            <span ng-bind="ctrl.view.headerSelections.person.firstname + ' ' + ctrl.view.headerSelections.person.lastname"></span>
+        </div>
+        <form ng-submit="ctrl.event.save()">
             <table class="table table-bordered table-condensed table-striped table-hower">
                 <thead>
                     <tr>
@@ -33,7 +44,8 @@
                             {{building.name}}
                         </th>
                         <th>
-                            <select class="form-control" ng-model="ctrl.view.tableSelections.building"
+                            <label style="display:none" for="buildingSelectionDropDown"></label>
+                            <select id="buildingSelectionDropDown" class="form-control" ng-model="ctrl.view.tableSelections.building"
                                     ng-change="ctrl.event.selectBuilding()"
                                     ng-options="building as building.name for building in ctrl.view.buildings" >
                                 <option value="" disabled selected>افزودن ساختمان</option>
@@ -47,16 +59,40 @@
                             {{day}}
                         </td>
                         <td ng-repeat="building in ctrl.view.tableSelections.selectedBuildings">
-                            {{building.name}}
+                            <label style="display:none" for="{{building.id}}-{{day}}"></label>
+                            <input id="{{building.id}}-{{day}}" type="number"
+                                   class="form-control input-sm" ng-model="ctrl.view.buildingDayWorks[building.id][day]"
+                            placeholder="
+{{ctrl.view.headerSelections.year}}/{{ctrl.view.headerSelections.month.key}}{{day}} {{building.name}} -
+{{ctrl.view.headerSelections.person.firstname}} {{ctrl.view.headerSelections.person.lastname | emptyForNull}}" />
                         </td>
                         <td>
-                            &nbsp;
+                            <span class="text-success" ng-bind="ctrl.method.getSumDays(day)"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            مجموع
+                        </td>
+                        <td ng-repeat="building in ctrl.view.tableSelections.selectedBuildings">
+                            <span class="text-success" ng-bind="ctrl.method.getSumBuildings(building)"></span>
+                        </td>
+                        <td>
+                            <span class="text-danger" ng-bind="ctrl.method.getSumTotal()"></span>
                         </td>
                     </tr>
                 </tbody>
             </table>
+
+            <button type="submit" class="btn btn-primary">
+                ذخیره اطلاعات
+            </button>
+            <button type="button" class="btn btn-danger" ng-click="ctrl.event.toSelectMode()">
+                بازگشت
+            </button>
+            <button type="button" class="btn btn-warning" ng-click="ctrl.event.clearData()">
+                خالی کردن فرم
+            </button>
         </form>
     </div>
-</div>
-
 </div>

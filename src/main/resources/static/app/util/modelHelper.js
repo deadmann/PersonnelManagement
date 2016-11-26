@@ -33,6 +33,9 @@ var ModelHelper = (function () {
         var building = ModelHelper.toBuilding(obj.building);
         return new WorkVm(obj.id, obj.workPerDay, obj.date, person, building);
     };
+    ModelHelper.toWorkPerDayDto = function (obj) {
+        return new WorkPerDayDto(obj.id, obj.personId, obj.year, obj.month, obj.day, obj.buildingId, obj.workingHours);
+    };
     ModelHelper.toArray = function (obj, type) {
         if (obj == undefined || obj == null)
             return [];
@@ -54,6 +57,9 @@ var ModelHelper = (function () {
                     break;
                 case ModelType.Work:
                     transform = ModelHelper.toWork(obj[i]);
+                    break;
+                case ModelType.WorkPerDayDto:
+                    transform = ModelHelper.toWorkPerDayDto(obj[i]);
                     break;
                 default:
                     throw new Error("This Model Type, Does Not Exists");
