@@ -38,7 +38,10 @@ public class DatabaseSeeder implements CommandLineRunner {
 
     @Override
     public void run(String... strings) throws Exception {
-        List<Building> buildingList = new ArrayList<Building>(){
+        if(!buildingService.getAll().isEmpty())
+            return;
+
+       List<Building> buildingList = new ArrayList<Building>(){
             {
                 add(new Building("Azarbaijani"));
                 add(new Building("Dadgostari"));

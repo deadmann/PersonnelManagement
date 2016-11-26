@@ -11,6 +11,7 @@ import java.util.List;
  * Created by Hassan on 11/16/2016.
  */
 @Entity
+@Table(name = "Position")
 public class Position implements ViewModel {
 
     public Position(){

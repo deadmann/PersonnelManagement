@@ -32,11 +32,12 @@
                     {{row.title}}
                 </td>
                 <td>
-                    {{row.getCurrentWage().name}}, {{row.getCurrentWage().price}}
+                    {{row.getCurrentWage().id}}- {{row.getCurrentWage().price}}<br/>
+                    <span style="font-size: 60%">تاریخ انتشار: {{row.getNextWage().startDate}}</span>
                 </td>
                 <td>
                     <div ng-if="row.getNextWage() != null">
-                    {{row.getNextWage().name}}, {{row.getNextWage().price}}<br/>
+                    {{row.getNextWage().id}}- {{row.getNextWage().price}}<br/>
                     <span style="font-size: 60%">تاریخ انتشار: {{row.getNextWage().startDate}}</span>
                     </div>
                 </td>

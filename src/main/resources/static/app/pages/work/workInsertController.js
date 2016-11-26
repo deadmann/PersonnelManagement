@@ -230,9 +230,9 @@
             save: function () {
                 self.method.mapBdwToWpd();
                 worksService.saveWorkPerDaysClearPersonMonth({
-                    param1:self.view.headerSelections.person.id,
-                    param2:self.view.headerSelections.year,
-                    param3:self.view.headerSelections.month.key
+                    param2:self.view.headerSelections.person.id,
+                    param3:self.view.headerSelections.year,
+                    param4:self.view.headerSelections.month.key
                 }, privateData.workPerDays).$promise
                     .then(function (data) {
                         alert("success");

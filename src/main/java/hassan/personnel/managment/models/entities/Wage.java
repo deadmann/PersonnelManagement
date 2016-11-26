@@ -11,6 +11,7 @@ import java.util.Date;
  * Created by Hassan on 11/16/2016.
  */
 @Entity
+@Table(name = "Wage")
 public class Wage implements ViewModel {
 
     public Wage(){

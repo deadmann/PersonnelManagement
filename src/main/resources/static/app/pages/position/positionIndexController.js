@@ -3,7 +3,7 @@
  */
 (function () {
 
-    var controller = function ($location, positionsService) {
+    var controller = function ($location, positionsService, wagesService) {
         var self = this;
 
         self.view={
@@ -23,27 +23,42 @@
         function initialize() {
             positionsService.query().$promise
                 .then(function (data) {
-                    //TODO: INCLUDE WAGES, OR ADD IT ON CLIENT SIDE
-                    wageService.query().$promise
+                    /**@type {Array<PositionVm>}*/
+                    var joinedPositions = [];
+                    wagesService.query().$promise
                         .then(function (dataW) {
-                            var res = Enumerable.From(data).Join(dataW, "","", function (x, y) {
-                                if(x.wages==undefined ||  x.wages==null){
-                                    x.wages = [];
+                            var dataEnum = Enumerable.from(data);
+                            var res = dataEnum.join(dataW, /**@param outer {PositionVm}*/ function (outer) {
+                                return outer.id
+                            }, /**@param inner {WageVm}*/function (inner) {
+                                return inner.position.id
+                            }, function (x, y) {
+                                var foundPosition = Enumerable.from(joinedPositions)
+                                    .firstOrDefault(
+                                        function (w) {
+                                            return w.id == x.id;
+                                        }, null);
+                                if (foundPosition == null) {
+                                    foundPosition = new PositionVm(x.id, x.title, [], []);
+                                    joinedPositions.push(foundPosition);
                                 }
-                                x.wages.push(y);
-                                return x;
-                            });
+                                foundPosition.wages.push(y);
+                                return {position: x, wage: y};
+                            }).toArray(); //I do this, since i need to force other function to perform, while i don't use the result.
+
+                            self.view.positions = joinedPositions;
+                        }, function (err) {
+                            alert("An Error Has Occur While Fetching Wages");
                         });
-                    //self.view.positions = data;
                 }, function (err) {
-                    alert("An Error Has Occur");
+                    alert("An Error Has Occur While Fetching Positions");
                 });
         }
 
         initialize();
     };
 
-    controller.$inject = ["$location", "positionsService"];
+    controller.$inject = ["$location", "positionsService", "wagesService"];
 
     angular.module("personnelManagement")
         .controller("positionIndexController", controller);

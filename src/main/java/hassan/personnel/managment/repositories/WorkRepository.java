@@ -2,6 +2,7 @@ package hassan.personnel.managment.repositories;
 
 import hassan.personnel.managment.models.entities.Work;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.Calendar;
@@ -13,5 +14,5 @@ import java.util.List;
  */
 @Repository
 public interface WorkRepository extends JpaRepository<Work, Long> {
-    List<Work> findByPersonIdAndDateBetween(int id, Calendar date1, Calendar date2);
+    List<Work> findByPersonIdAndDateGreaterThanEqualAndDateLessThan(int id, Calendar date1, Calendar date2);
 }

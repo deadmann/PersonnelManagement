@@ -24,4 +24,30 @@ class PositionVm {
         this.wages = [];
         this.personnel = [];
     }
+
+    public getCurrentWage():WageVm{
+        if(Util.Utility.isNullOrUndefined(this.wages)){
+            throw new Error("Wage within position is null or undefined");
+        }
+
+        return Enumerable.from(this.wages)
+            .where((w:WageVm)=>w.startDate.getTime() < new Date().getTime()) //Get All Previous Dates Wages
+            .maxBy((m:WageVm)=>m.startDate.getTime()); //Show The Biggest Date Wage
+    }
+
+    public getNextWage():WageVm{
+        if(Util.Utility.isNullOrUndefined(this.wages)){
+            throw new Error("Wage within position is null or undefined");
+        }
+        var current = this.getCurrentWage();
+
+        var afterCurrentEnum = Enumerable.from(this.wages)
+            .where((w:WageVm)=>w.startDate.getTime() > current.startDate.getTime());
+
+        if (!afterCurrentEnum.any()) {
+            return null;
+        }
+
+        return afterCurrentEnum.minBy((m: WageVm)=>m.startDate.getTime());
+    }
 }

@@ -11,6 +11,7 @@ import java.util.List;
  * Created by Hassan on 11/16/2016.
  */
 @Entity
+@Table(name = "Building")
 public class Building implements ViewModel {
     public Building(String name) {
         this.name = name;

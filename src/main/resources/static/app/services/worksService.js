@@ -55,7 +55,7 @@
             "saveWorkPerDaysClearPersonMonth": {
                 method: "POST",
                 params: {
-                    param1: "/save-work-per-days-clear-person-month/{personId}/{year}/{month}",
+                    param1: "save-work-per-days-clear-person-month",
                     param2: "@param2",//@personId
                     param3: "@param3",//@year
                     param4: "@param4"//@month

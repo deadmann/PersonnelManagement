@@ -1,6 +1,7 @@
 package hassan.personnel.managment.rests;
 
 import com.ibm.icu.util.Calendar;
+import hassan.personnel.managment.exceptionalResponses.InvalidDataException;
 import hassan.personnel.managment.models.dto.WorkPerDayDto;
 import hassan.personnel.managment.models.entities.Building;
 import hassan.personnel.managment.models.entities.Person;
@@ -88,12 +89,12 @@ public class WorksController {
     }
 
     @RequestMapping(value = "/save-work-per-days-clear-person-month/{personId}/{year}/{month}", method = RequestMethod.POST)
-    private ResponseEntity save(@RequestBody List<WorkPerDayDto> workPerDays, @PathVariable int personId, @PathVariable int year, @PathVariable int month){
+    private ResponseEntity save(@RequestBody List<WorkPerDayDto> workPerDays, @PathVariable int personId, @PathVariable int year, @PathVariable int month) throws InvalidDataException {
         //Remove Old Item From Server...
 
         List<Work> works = workPerDayToWork(workPerDays);
 
-        workService.save(works);
+        workService.updatePersonMonthWorks(works, personId, year, month);
 
         LOGGER.info("New list of work are saved");
 

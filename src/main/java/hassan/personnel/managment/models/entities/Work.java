@@ -12,6 +12,7 @@ import java.util.GregorianCalendar;
  * Created by Hassan on 11/16/2016.
  */
 @Entity
+@Table(name = "Work")
 public class Work implements ViewModel {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
