@@ -3,9 +3,10 @@ package hassan.personnel.managment;
 import org.apache.log4j.Logger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.support.SpringBootServletInitializer;
 
 @SpringBootApplication
-public class DemoApplication {
+public class DemoApplication { //extends SpringBootServletInitializer {
 
 	final static Logger logger = Logger.getLogger(DemoApplication.class);
 
