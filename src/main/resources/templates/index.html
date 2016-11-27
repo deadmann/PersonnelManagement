@@ -3,16 +3,27 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Title</title>
-    <link href="/css/lib/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/css/site.css" rel="stylesheet" type="text/css"/>
+    <link href="/css/lib/bootstrap-rtl.min.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 
-    <a href="#/building" class="btn btn-default">ساختمان ها</a>
-    <a href="#/position"  class="btn btn-default">سمت ها</a>
-    <a href="#/person" class="btn btn-default">اشخاص</a>
-    <!--<a href="#/wage"  class="btn btn-default">دستمزد ها</a>-->
-    <a href="#/work"  class="btn btn-default">کارکرد</a>
+<nav class="navbar navbar-default">
+    <div class="container">
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+                <li><a href="#/building">ساختمان ها</a></li>
+                <li><a href="#/position">سمت ها</a></li>
+                <li><a href="#/person">اشخاص</a></li>
+                <!--<li><a href="#/wage"  class="btn btn-default">دستمزد ها</a></li>-->
+                <li><a href="#/work/insert">کارکرد</a></li>
 
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
     <div class="container">
         <!-- SINGLE PAGE CONTAINER -->
         <div ng-view=""></div>
@@ -21,6 +32,7 @@
     <!-- BASE LIBRARY -->
     <!--<script src="/js/require.js"></script>-->
     <script src="/js/lib/jquery.min.js"></script>
+    <script src="/js/lib/bootstrap-rtl.min.js"></script>
     <script src="/js/lib/angular.min.js"></script>
     <script src="/js/lib/angular-route.min.js"></script>
     <script src="/js/customized/angular-resource.js"></script> <!--MIN-->

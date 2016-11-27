@@ -1,11 +1,8 @@
 <div class="clearfix">
     <div class="row">
-        <table class="table table-responsive table-striped table-concede">
+        <table class="table table-bordered table-responsive table-striped table-concede">
             <thead>
-            <tr>
-                <th>
-                    <button class="btn btn-primary" ng-click="ctrl.event.insert()">create</button>
-                </th>
+            <tr class="active">
                 <th>
 
                 </th>
@@ -18,13 +15,14 @@
                 <th>
                     دستمزد بعدی
                 </th>
+                <th>
+                    <button class="btn btn-primary btn-sm" ng-click="ctrl.event.insert()">create</button>
+                </th>
             </tr>
             </thead>
             <tbody>
             <tr ng-repeat="row in ctrl.view.positions">
-                <td>
-                    <button class="btn btn-danger" ng-click="ctrl.event.remove(row.id)">delete</button>
-                </td>
+
                 <td>
                     {{$index + 1}}
                 </td>
@@ -40,6 +38,9 @@
                     {{row.getNextWage().id}}- {{row.getNextWage().price}}<br/>
                     <span style="font-size: 60%">تاریخ انتشار: {{row.getNextWage().startDate}}</span>
                     </div>
+                </td>
+                <td>
+                    <button class="btn btn-danger btn-sm" ng-click="ctrl.event.remove(row.id)">delete</button>
                 </td>
             </tr>
             </tbody>

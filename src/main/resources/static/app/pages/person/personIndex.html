@@ -1,11 +1,8 @@
 <div class="clearfix">
     <div class="row">
-        <table class="table table-responsive table-striped table-concede">
+        <table class="table table-bordered table-responsive table-striped table-concede">
             <thead>
-            <tr>
-                <th>
-                    <button class="btn btn-primary" ng-click="ctrl.event.insert()">create</button>
-                </th>
+            <tr class="active">
                 <th>
 
                 </th>
@@ -18,13 +15,14 @@
                 <th>
                     سمت
                 </th>
+                <th>
+                    <button class="btn btn-primary btn-sm" ng-click="ctrl.event.insert()">create</button>
+                </th>
             </tr>
             </thead>
             <tbody>
             <tr ng-repeat="row in ctrl.view.personnel">
-                <td>
-                    <button class="btn btn-danger" ng-click="ctrl.event.remove(row.id)">delete</button>
-                </td>
+
                 <td>
                     {{$index + 1}}
                 </td>
@@ -36,6 +34,9 @@
                 </td>
                 <td>
                     {{row.position.title}}
+                </td>
+                <td>
+                    <button class="btn btn-danger btn-sm" ng-click="ctrl.event.remove(row.id)">delete</button>
                 </td>
             </tr>
             </tbody>

@@ -10,7 +10,7 @@
                 templateUrl: "/app/pages/home/index.html"
             })
             .when("/building", {
-                templateUrl: "/app/pages/building/BuildingIndex.html",
+                templateUrl: "/app/pages/building/buildingIndex.html",
                 controller: "buildingIndexController",
                 controllerAs: "ctrl"
             })
