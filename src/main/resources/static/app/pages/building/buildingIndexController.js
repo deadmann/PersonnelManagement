@@ -19,6 +19,14 @@
             remove:function (id) {
                 //var removeItem = Enumerable.From(buildings).FirstOrDefault(null,w=>w.id ==id);
                 //buildings.splice()
+                buildingsService.remove({id:id}).$promise
+                    .then(function (data) {
+                        self.view.buildings.remove(null, function (item, empty) {
+                            return item == id;
+                        }, 'all');
+                    }, function (err) {
+                       alert("An error has occur while removing data");
+                    });
             }
         };
 
