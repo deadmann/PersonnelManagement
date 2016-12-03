@@ -34,4 +34,9 @@ public class PersonService {
     }
 
 
+    public Person remove(int id) {
+        Person person = personRepository.findOne(id);
+        personRepository.delete(id);
+        return person;
+    }
 }

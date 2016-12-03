@@ -35,4 +35,9 @@ public class PersonnelController {
     private Person save(@RequestBody Person person){
         return personService.save(person);
     }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    private Person remove(@PathVariable int id){
+        return personService.remove(id);
+    }
 }

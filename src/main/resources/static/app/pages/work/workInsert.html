@@ -1,23 +1,25 @@
 <div class="clearfix">
     <div class="row" ng-if="ctrl.view.mode == ctrl.type.PageMode.SELECT">
-        <div class="col-md-4">
+        <div class="col-md-3">
             <select class="form-control" ng-model="ctrl.view.headerSelections.year" ng-options="x as x for x in ctrl.view.years">
                 <option value="" disabled selected>لطفا سال را انتخاب کنید</option>
             </select>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <select class="form-control" ng-model="ctrl.view.headerSelections.month" ng-options="item as (item.key + ' - ' + item.value) for item in ctrl.view.months.getAllKeyValues()">
                 <option value="" disabled selected>لطفا ماه را انتخاب کنید</option>
             </select>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <select class="form-control" ng-model="ctrl.view.headerSelections.person" ng-options="x as (x.firstname | emptyForNull) + ' ' + (x.lastname | emptyForNull) for x in ctrl.view.personnel">
                 <option value="" disabled selected>لطفا شخص را انتخاب کنید</option>
             </select>
         </div>
-        <button class="btn btn-primary" ng-click="ctrl.event.toEditWorks()">
-            Edit
-        </button>
+        <div class="col-md-3">
+            <button class="btn btn-primary" ng-click="ctrl.event.toEditWorks()">
+                Edit
+            </button>
+        </div>
     </div>
 
     <div class="row" ng-if="ctrl.view.mode == ctrl.type.PageMode.EDIT">

@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * Created by Hassan on 11/18/2016.
  */
 @Controller
-@RequestMapping("/pm/")
+@RequestMapping("/pm")
 public class PersonnelManagement {
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = "", method = RequestMethod.GET)
     private String index(){
         return "index";
     }

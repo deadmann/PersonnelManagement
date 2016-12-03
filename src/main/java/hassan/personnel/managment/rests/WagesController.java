@@ -35,4 +35,9 @@ public class WagesController {
     private Wage save(@RequestBody Wage wage){
         return wageService.save(wage);
     }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    private Wage remove(@PathVariable int id){
+        return wageService.remove(id);
+    }
 }

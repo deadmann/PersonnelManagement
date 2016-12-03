@@ -36,7 +36,13 @@ public class PositionService {
 
 
 
-    public List<Position> getAllPositionFetchWate(){
+    public List<Position> getAllPositionFetchWage(){
         return positionRepository.findAllPositionFetchWage();
+    }
+
+    public Position remove(int id) {
+        Position position = positionRepository.findOne(id);
+        positionRepository.delete(id);
+        return position;
     }
 }

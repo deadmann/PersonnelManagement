@@ -32,4 +32,9 @@ public class BuildingService {
         return buildingRepository.save(iterable);
     }
 
+    public Building remove(int id) {
+        Building building = buildingRepository.findOne(id);
+        buildingRepository.delete(id);
+        return building;
+    }
 }

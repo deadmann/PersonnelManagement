@@ -41,7 +41,7 @@ public class Person implements ViewModel {
 //    @JoinColumn(nullable = false, foreignKey = @ForeignKey(name = "position_id"))//referencedColumnName = "positionId")-->Name of the PK
     private Position position;
 
-    @OneToMany(mappedBy = "person")
+    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
     private List<Work> works;
 
     public PersonVm getViewModel() {

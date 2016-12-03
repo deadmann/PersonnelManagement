@@ -31,16 +31,12 @@ public class BaseDataController {
 
     @RequestMapping(value = "/current-year", method = RequestMethod.GET)
     private ResponseEntity<Integer> getCurrentYear(){
-        Calendar currentDate = Calendar.getInstance();
-
-        java.util.Calendar gc = GregorianCalendar.getInstance();
-        gc.set(currentDate.get(Calendar.YEAR), currentDate.get(Calendar.MONTH), currentDate.get(Calendar.DAY_OF_MONTH));
+        //Returns Persian on Persian Systems, Gregorian on Gregorian's :-s
+        //Calendar currentDate = Calendar.getInstance();
 
         ULocale local = new ULocale("fa_IR@calendar=persian");
         Calendar persianCalendar = Calendar.getInstance(local);
-        persianCalendar.clear();
 
-        persianCalendar.setTime(gc.getTime());
         return ResponseEntity.ok(persianCalendar.get(Calendar.YEAR));
     }
 

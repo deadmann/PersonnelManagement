@@ -88,6 +88,11 @@ public class WorksController {
         return workService.save(work);
     }
 
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public Work remove(@PathVariable Long id){
+        return workService.remove(id);
+    }
+
     @RequestMapping(value = "/save-work-per-days-clear-person-month/{personId}/{year}/{month}", method = RequestMethod.POST)
     private ResponseEntity save(@RequestBody List<WorkPerDayDto> workPerDays, @PathVariable int personId, @PathVariable int year, @PathVariable int month) throws InvalidDataException {
         //Remove Old Item From Server...

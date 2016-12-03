@@ -83,4 +83,9 @@ public class WorkService {
         return workRepository.save(iterable);
     }
 
+    public Work remove(Long id) {
+        Work work = workRepository.findOne(id);
+        workRepository.delete(id);
+        return work;
+    }
 }

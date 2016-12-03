@@ -3,6 +3,7 @@ package hassan.personnel.managment.utility;
 import com.ibm.icu.util.ULocale;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 /**
@@ -71,7 +72,9 @@ public class CalendarHelper {
 
     public static Calendar getMinimum(){
         Calendar calendar = new GregorianCalendar();
-        calendar.setTimeInMillis(-9223372036854775808L);
+        //calendar.setTimeInMillis(-9223372036854775808L);
+        //calendar.setTime(new Date(Long.MIN_VALUE));
+        calendar.set(0, 0, 0);
         return calendar;
     }
 }

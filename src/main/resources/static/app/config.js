@@ -25,7 +25,7 @@
                 controllerAs: "ctrl"
             })
             .when("/person/insert",{
-                templateUrl: "/app/pages/Person/personInsert.html",
+                templateUrl: "/app/pages/person/personInsert.html",
                 controller: "personInsertController",
                 controllerAs: "ctrl"
             })

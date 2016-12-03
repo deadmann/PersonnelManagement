@@ -1,11 +1,11 @@
 package hassan.personnel.managment.models.entities;
 
-import com.ibm.icu.util.Calendar;
 import com.ibm.icu.util.ULocale;
 import hassan.personnel.managment.models.interfaces.ViewModel;
 import hassan.personnel.managment.models.vm.WorkVm;
 
 import javax.persistence.*;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 /**
@@ -19,7 +19,7 @@ public class Work implements ViewModel {
 
     private int workPerDay;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private java.util.Calendar date;
 
 //    @Column(name = "person_id")
@@ -65,7 +65,7 @@ public class Work implements ViewModel {
         this.workPerDay = workPerDay;
     }
 
-    public java.util.Calendar getDate() {
+    public Calendar getDate() {
         return date;
     }
 
@@ -73,13 +73,14 @@ public class Work implements ViewModel {
         this.date = date;
     }
 
+    @Transient
     public String getPersianDate() {
         ULocale local = new ULocale("fa_IR@calendar=persian");
-        Calendar persianCalendar = Calendar.getInstance(local);
+        com.ibm.icu.util.Calendar persianCalendar = com.ibm.icu.util.Calendar.getInstance(local);
         persianCalendar.clear();
 
-        java.util.Calendar gc = GregorianCalendar.getInstance();
-        gc.set(2016, java.util.Calendar.JUNE, 30);
+        Calendar gc = GregorianCalendar.getInstance();
+        gc.set(2016, Calendar.JUNE, 30);
 
         persianCalendar.setTime(gc.getTime());
 

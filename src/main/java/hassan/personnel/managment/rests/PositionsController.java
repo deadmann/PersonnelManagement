@@ -46,10 +46,14 @@ public class PositionsController {
         return wageService.save(wage).getPosition();
     }
 
-
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    private Position remove(@PathVariable int id){
+        return positionService.remove(id);
+    }
 
     @RequestMapping(value = "/fetch-wage", method = RequestMethod.GET)
     private List<Position> fetchWage(){
-        return positionService.getAllPositionFetchWate();
+        List<Position> values = this.positionService.getAllPositionFetchWage();
+        return values;
     }
 }

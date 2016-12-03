@@ -21,6 +21,15 @@ var PositionVm = (function () {
         this.wages = [];
         this.personnel = [];
     };
+    PositionVm.prototype.isCurrentTheFirstWage = function () {
+        if (Util.Utility.isNullOrUndefined(this.wages)) {
+            throw new Error("Wage within position is null or undefined");
+        }
+        var min = Enumerable.from(this.wages)
+            .minBy(function (m) { return m.startDate.getTime(); });
+        var current = this.getCurrentWage();
+        return min == current;
+    };
     PositionVm.prototype.getCurrentWage = function () {
         if (Util.Utility.isNullOrUndefined(this.wages)) {
             throw new Error("Wage within position is null or undefined");

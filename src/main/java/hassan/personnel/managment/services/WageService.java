@@ -21,7 +21,7 @@ public class WageService {
     }
 
     public List<Wage> getAll(){
-        return (List<Wage>) wageRepository.findAll();
+        return wageRepository.findAll();
     }
 
     public Wage save(Wage wage) {
@@ -32,4 +32,9 @@ public class WageService {
         return wageRepository.save(iterable);
     }
 
+    public Wage remove(int id) {
+        Wage wage = wageRepository.findOne(id);
+        wageRepository.delete(id);
+        return wage;
+    }
 }

@@ -25,6 +25,18 @@ class PositionVm {
         this.personnel = [];
     }
 
+    public isCurrentTheFirstWage():boolean{
+        if(Util.Utility.isNullOrUndefined(this.wages)){
+            throw new Error("Wage within position is null or undefined");
+        }
+
+        var min = Enumerable.from(this.wages)
+            .minBy((m:WageVm)=>m.startDate.getTime());
+        var current = this.getCurrentWage();
+
+        return min == current;
+    }
+
     public getCurrentWage():WageVm{
         if(Util.Utility.isNullOrUndefined(this.wages)){
             throw new Error("Wage within position is null or undefined");

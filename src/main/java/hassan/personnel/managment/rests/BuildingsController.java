@@ -28,7 +28,7 @@ public class BuildingsController {
     @RequestMapping(value = "", method = RequestMethod.GET)
     private List<BuildingVm> getAll(){
         List<Building> buildingList = buildingService.getAll();
-        return buildingList.stream().map(m->m.getViewModel()).collect(Collectors.toList());
+        return buildingList.stream().map(Building::getViewModel).collect(Collectors.toList());
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST)
@@ -36,5 +36,8 @@ public class BuildingsController {
         return buildingService.save(building);
     }
 
-
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    private Building remove(@PathVariable int id){
+        return buildingService.remove(id);
+    }
 }

@@ -31,12 +31,16 @@
                 </td>
                 <td>
                     {{row.getCurrentWage().id}}- {{row.getCurrentWage().price}}<br/>
-                    <span style="font-size: 60%">تاریخ انتشار: {{row.getNextWage().startDate}}</span>
+                    <span ng-if="! row.isCurrentTheFirstWage()" style="font-size: 60%">
+                        تاریخ انتشار: {{row.getNextWage().startDate}}
+                    </span>
                 </td>
                 <td>
                     <div ng-if="row.getNextWage() != null">
-                    {{row.getNextWage().id}}- {{row.getNextWage().price}}<br/>
-                    <span style="font-size: 60%">تاریخ انتشار: {{row.getNextWage().startDate}}</span>
+                        {{row.getNextWage().id}}- {{row.getNextWage().price}}<br/>
+                        <span style="font-size: 60%">
+                            تاریخ انتشار: {{row.getNextWage().startDate}}
+                        </span>
                     </div>
                 </td>
                 <td>
