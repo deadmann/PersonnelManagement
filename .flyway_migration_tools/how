@@ -1,0 +1,8 @@
+Since we already have our DB:
+
+we set 'flyway.baselineVersion' and 'flyway.baselineDescription' in configuration file
+
+Then we use:
+- flyway baseline
+- flyway migrate
+- if didn't went well: flyway repair

@@ -10,12 +10,12 @@ public class WorkPerDayDto {
     private int month;
     private int day;
     private int buildingId;
-    private int workingHours;
+    private float workingHours;
 
     public WorkPerDayDto() {
     }
 
-    public WorkPerDayDto(long workId, int personId, int year, int month, int day, int buildingId, int workingHours) {
+    public WorkPerDayDto(long workId, int personId, int year, int month, int day, int buildingId, float workingHours) {
         this.workId = workId;
         this.personId = personId;
         this.year = year;
@@ -73,11 +73,11 @@ public class WorkPerDayDto {
         this.buildingId = buildingId;
     }
 
-    public int getWorkingHours() {
+    public float getWorkingHours() {
         return workingHours;
     }
 
-    public void setWorkingHours(int workingHours) {
+    public void setWorkingHours(float workingHours) {
         this.workingHours = workingHours;
     }
 }

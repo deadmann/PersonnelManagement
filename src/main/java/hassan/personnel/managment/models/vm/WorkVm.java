@@ -8,7 +8,7 @@ import java.util.Calendar;
 public class WorkVm {
     private long id;
 
-    private int workPerDay;
+    private float workPerDay;
 
     private Calendar date;
 
@@ -25,11 +25,11 @@ public class WorkVm {
         this.id = id;
     }
 
-    public int getWorkPerDay() {
+    public float getWorkPerDay() {
         return workPerDay;
     }
 
-    public void setWorkPerDay(int workPerDay) {
+    public void setWorkPerDay(float workPerDay) {
         this.workPerDay = workPerDay;
     }
 

@@ -38,7 +38,7 @@ public class Wage implements ViewModel {
 //    private int postionId;
 
     @ManyToOne
-    //    @JoinColumn(nullable = false, foreignKey = @ForeignKey(name = "wage_id"))
+    @JoinColumn(nullable = false, foreignKey = @ForeignKey(name = "FK_WAGE_POSITION"))//Name of the FK Constraint
     private Position position;
 
     public WageVm getViewModel() {

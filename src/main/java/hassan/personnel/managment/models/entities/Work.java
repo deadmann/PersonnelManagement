@@ -17,7 +17,7 @@ public class Work implements ViewModel {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private int workPerDay;
+    private float workPerDay;
 
     @Temporal(TemporalType.DATE)
     private java.util.Calendar date;
@@ -29,11 +29,11 @@ public class Work implements ViewModel {
 //    private int buildingId;
 
     @ManyToOne
-//    @JoinColumn(nullable = false, foreignKey = @ForeignKey(name = "person_id"))
+    @JoinColumn(nullable = false, foreignKey = @ForeignKey(name = "FK_WORK_PERSON"))//Name of the FK Constraint
     private Person person;
 
     @ManyToOne
-//    @JoinColumn(nullable = false, foreignKey = @ForeignKey(name = "building_id"))
+    @JoinColumn(nullable = false, foreignKey = @ForeignKey(name = "FK_WORK_BUILDING"))//Name of the FK Constraint
     private Building building;
 
     public WorkVm getViewModel() {
@@ -57,11 +57,11 @@ public class Work implements ViewModel {
         this.id = id;
     }
 
-    public int getWorkPerDay() {
+    public float getWorkPerDay() {
         return workPerDay;
     }
 
-    public void setWorkPerDay(int workPerDay) {
+    public void setWorkPerDay(float workPerDay) {
         this.workPerDay = workPerDay;
     }
 

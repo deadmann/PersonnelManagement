@@ -17,7 +17,7 @@
         </div>
         <div class="col-md-3">
             <button class="btn btn-primary" ng-click="ctrl.event.toEditWorks()">
-                Edit
+                ویرایش
             </button>
         </div>
     </div>
@@ -62,7 +62,7 @@
                         </td>
                         <td ng-repeat="building in ctrl.view.tableSelections.selectedBuildings">
                             <label style="display:none" for="{{building.id}}-{{day}}"></label>
-                            <input id="{{building.id}}-{{day}}" type="number"
+                            <input id="{{building.id}}-{{day}}" type="number" min="0" max="20" step="any"
                                    class="form-control input-sm" ng-model="ctrl.view.buildingDayWorks[building.id][day]"
                             placeholder="
 {{ctrl.view.headerSelections.year}}/{{ctrl.view.headerSelections.month.key}}{{day}} {{building.name}} -
