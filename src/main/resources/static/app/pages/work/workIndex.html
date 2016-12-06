@@ -1,0 +1,41 @@
+<div class="clearfix">
+    <div class="row" ng-if="ctrl.view.mode == ctrl.type.PageMode.SELECT">
+        <div class="col-md-3">
+            <input class="form-control" ng-model="ctrl.view.headerSelections.startDate" jq-date-picker=""/>
+        </div>
+        <div class="col-md-3">
+            <input class="form-control" ng-model="ctrl.view.headerSelections.endDate" jq-date-picker=""/>
+        </div>
+        <div class="col-md-3">
+            <select class="form-control" ng-model="ctrl.view.headerSelections.person" ng-options="x as (x.firstname | emptyForNull) + ' ' + (x.lastname | emptyForNull) for x in ctrl.view.personnel">
+                <option value="" disabled selected>لطفا شخص را انتخاب کنید</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <button class="btn btn-primary" ng-disabled="!ctrl.view.isHeaderLoaded" ng-click="ctrl.event.toViewWorks()">
+                نمایش
+            </button>
+        </div>
+    </div>
+
+    <div class="row" ng-if="ctrl.view.mode == ctrl.type.PageMode.VIEW">
+        <div class="col-md-4">
+            <span>برج:</span>
+            <span ng-bind="ctrl.view.headerSelections.month.key +' - '+ ctrl.view.headerSelections.month.value"></span>
+        </div>
+        <div class="col-md-4">
+            <span>سال:</span>
+            <span ng-bind="ctrl.view.headerSelections.year"></span>
+        </div>
+        <div class="col-md-4">
+            <span>نام پرسنل:</span>
+            <span ng-bind="ctrl.view.headerSelections.person.firstname + ' ' + ctrl.view.headerSelections.person.lastname"></span>
+        </div>
+        <div class="row" ng-repeat="building in buildings">
+            <div class="col-xs-8">
+                <span ng-bind="building"></span>
+            </div>
+            <div class="col-xs-4"></div>
+        </div>
+    </div>
+</div>
