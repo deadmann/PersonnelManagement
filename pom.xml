@@ -78,7 +78,17 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
-			<!--<scope>provided</scope>-->
+			<!--<scope>provided</scope>--><!-- To be used within tomcat, otherwise generate error -->
+		</dependency>
+
+		<!-- Fast Reloading -->
+        <!-- Setting >> Compiler >> Check Make Compiler Automatically.
+            Ctrl+shift+A >> type: registry >> search for compiler.automake.allow.when.app.running >> set to true
+        -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<optional>true</optional>
 		</dependency>
 
 		<!--For Persian Calendar, and Globalization Stuff-->

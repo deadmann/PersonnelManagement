@@ -1,3 +1,4 @@
+///<reference path="../models/datePickerConfig.ts"/>
 /**
  * Created by Hassan on 12/6/2016.
  */
@@ -8,18 +9,29 @@ var AngularUtility;
         function JqDatePickerDirective() {
             this.restrict = 'A';
             this.require = 'ngModel';
+            this.scope = {
+                datePickerConfig: '=?'
+            };
             this.link = function (scope, element, attrs, ngModel) {
-                element.datepicker({
-                    minDate: 'D',
-                    dateFormat: 'yy-mm-dd',
-                    numberOfMonths: 2,
-                    showButtonPanel: true,
-                    onSelect: function (date) {
-                        ngModel.$setViewValue(date);
-                        ngModel.$render();
-                        scope.$apply();
-                    }
+                var datePickerConfig = !Util.Utility.isNullOrUndefined(scope.datePickerConfig)
+                    ? scope.datePickerConfig
+                    : new AngularUtility.DatePickerConfig();
+                datePickerConfig.onSelect = function (date) {
+                    ngModel.$setViewValue(date);
+                    ngModel.$render();
+                    scope.$apply();
+                };
+                scope.$watch(function () {
+                    return scope.datePickerConfig.minDate;
+                }, function (newVal, oldVal) {
+                    element.datepicker('option', 'minDate', newVal);
                 });
+                scope.$watch(function () {
+                    return scope.datePickerConfig.maxDate;
+                }, function (newVal, oldVal) {
+                    element.datepicker('option', 'maxDate', newVal);
+                });
+                element.datepicker(datePickerConfig);
             };
         }
         JqDatePickerDirective.instance = function () {

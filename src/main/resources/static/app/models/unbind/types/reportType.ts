@@ -2,7 +2,8 @@
  * Created by Hassan on 12/6/2016.
  */
 enum ReportType{
-    None,
-    ByPerson,
-    ByBuilding
+    NONE,
+    BY_PERSON,
+    BY_BUILDING,
+    BY_POSITION
 }

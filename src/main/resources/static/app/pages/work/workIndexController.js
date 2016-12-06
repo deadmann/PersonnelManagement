@@ -2,8 +2,11 @@
  * Created by Hassan on 11/20/2016.
  */
 (function () {
-    var controller = function (baseDataService, buildingsService, personnelService, worksService) {
+    var controller = function ($scope, baseDataService, buildingsService, personnelService, worksService) {
+        //Basic Definition
         var self = this;
+        var DatePickerConfig = AngularUtility.DatePickerConfig;
+
 
         var privateData = {
             /** @type {number|null} */
@@ -47,16 +50,29 @@
                 startDate: null,
                 /** @type {KeyValue<number, string>} */
                 endDate: null,
+                /** @type {ReportType} */
+                reportType: ReportType.NONE,
                 /** @type {PersonVm} */
-                person: null
+                person: null,
+
             },
             /** @type {Array<number>} */
             years: null,
+            /** @type {Dictionary<ReportType, string>} */
+            reportTypes: null,
             /** @type {Array<PersonVm>} */
             personnel: null,
             /** @type {Array<BuildingVm>} */
-            buildings: null
+            buildings: null,
+            /** @type {DatePickerConfig} */
+            startDateConfig: null,
+            /** @type {DatePickerConfig} */
+            endDateConfig:null
             ,
+        };
+
+        self.method = {
+
         };
 
         self.event = {
@@ -64,6 +80,34 @@
 
             }
         };
+
+        $scope.$watch(
+            "ctrl.view.headerSelections.startDate"
+            , function(newVal, oldVal){
+                if(Util.Utility.isNullOrUndefined(newVal)){
+                    self.view.endDateConfig.minDate = undefined;
+                }else{
+                    if(moment(newVal, 'jYYYY-jM-jD').isValid()){
+                        //var minDate = new Date(newVal);
+                        self.view.endDateConfig.minDate = newVal;
+                    }
+                }
+            }
+        );
+
+        $scope.$watch(
+            "ctrl.view.headerSelections.endDate"
+            , function(newVal, oldVal) {
+                if (Util.Utility.isNullOrUndefined(newVal)) {
+                    self.view.startDateConfig.maxDate = undefined;
+                } else {
+                    if (moment(newVal, 'jYYYY-jM-jD').isValid()) {
+                        //var maxDate = new Date(m);
+                        self.view.startDateConfig.maxDate = newVal;
+                    }
+                }
+            }
+        );
 
         function initialize() {
             //Keep Track Of Running Async Service, And Provide Ability To Run A Method After All Async Finished.
@@ -82,6 +126,17 @@
                     self.view.isHeaderLoaded = true;
                 }
             }
+
+            function getDefaultDatePickerConfig() {
+                var startConfig = new DatePickerConfig();
+                startConfig.dateFormat = "yy-mm-dd";
+                startConfig.numberOfMonths = 1;
+                startConfig.showButtonPanel = true;
+                return startConfig;
+            }
+
+            self.view.startDateConfig = getDefaultDatePickerConfig();
+            self.view.endDateConfig =  getDefaultDatePickerConfig();
 
             //System Start Year
             baseDataService.getStartYear().$promise
@@ -108,6 +163,13 @@
             }
             self.view.months = monthDictionary;
 
+            //Report Type List
+            var reportDictionary = new Dictionary();
+            reportDictionary.add(ReportType.BY_PERSON, "بر اساس شخص");
+            reportDictionary.add(ReportType.BY_BUILDING, "بر اساس ساختمان");
+            reportDictionary.add(ReportType.BY_POSITION, "بر اساس سمت");
+            self.view.reportTypes = reportDictionary;
+
             //Personnel
             personnelService.query().$promise.then(function (data) {
                 self.view.personnel = data;
@@ -128,7 +190,7 @@
         initialize();
     };
 
-    controller.$inject = ["baseDataService", "buildingsService", "personnelService", "worksService"];
+    controller.$inject = ["$scope", "baseDataService", "buildingsService", "personnelService", "worksService"];
 
     angular.module("personnelManagement")
         .controller("workIndexController", controller);
