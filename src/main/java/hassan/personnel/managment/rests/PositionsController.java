@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/rest/positions")
 public class PositionsController {
 
-    final static org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(WorksController.class);
+    private final static org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(WorksController.class);
 
     @Autowired
     private PositionService positionService;
@@ -42,7 +42,7 @@ public class PositionsController {
     @RequestMapping(value = "", method = RequestMethod.GET)
     private List<PositionVm> getAll(){
         List<Position> positionList = positionService.getAll();
-        return positionList.stream().map(m->m.getViewModel()).collect(Collectors.toList());
+        return positionList.stream().map(Position::getViewModel).collect(Collectors.toList());
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST)
@@ -79,7 +79,13 @@ public class PositionsController {
     }
 
     @RequestMapping(value = "/fetch-wage", method = RequestMethod.GET)
-    private List<Position> fetchWage(){
+    private List<PositionVm> fetchWage(){
+        List<Position> positionList = positionService.getAll();
+        return positionList.stream().map(Position::getViewModelWithWages).collect(Collectors.toList());
+    }
+
+    // Sample of Custom Query
+    private List<Position> querySampleFetchWage(){
         List<Position> values = this.positionService.getAllPositionFetchWage();
         return values;
     }

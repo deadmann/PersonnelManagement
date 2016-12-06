@@ -1,6 +1,7 @@
 package hassan.personnel.managment.rests;
 
 import com.ibm.icu.util.Calendar;
+import com.ibm.icu.util.ULocale;
 import hassan.personnel.managment.exceptionalResponses.ConflictException;
 import hassan.personnel.managment.exceptionalResponses.InvalidDataException;
 import hassan.personnel.managment.exceptionalResponses.NotFoundException;
@@ -52,7 +53,7 @@ public class WorksController {
     }
 
     @RequestMapping(value = "/by-person-and-month/{personId}/{year}/{month}")
-    private List<WorkVm> getAllWorksByPersonAndMonth(@PathVariable int personId, @PathVariable int year, @PathVariable int month) {
+    private List<WorkVm> getWorksByPersonAndMonth(@PathVariable int personId, @PathVariable int year, @PathVariable int month) {
         int nextYear = month == 12 ? year + 1 : year;
         int nextMonth = month == 12 ? 1 : month+1;
 
@@ -60,7 +61,7 @@ public class WorksController {
         Calendar endDate = CalendarHelper.createPersian(nextYear, nextMonth, 1);
 
         List<Work> workList =
-                workService.getAllByPersonIdAndDateBetween(personId,
+                workService.getWorksByPersonIdAndDateBetween(personId,
                         CalendarHelper.toGregorian(startDate),
                         CalendarHelper.toGregorian(endDate));
 
@@ -68,8 +69,8 @@ public class WorksController {
     }
 
     @RequestMapping(value = "/work-per-days-by-person-and-month/{personId}/{year}/{month}")
-    private ResponseEntity<List<WorkPerDayDto>> getWorkPerDay(@PathVariable int personId, @PathVariable int year, @PathVariable int month) {
-        List<WorkVm> works = getAllWorksByPersonAndMonth(personId, year, month);
+    private ResponseEntity<List<WorkPerDayDto>> getWorkPerDaysByPersonAndMonth(@PathVariable int personId, @PathVariable int year, @PathVariable int month) {
+        List<WorkVm> works = getWorksByPersonAndMonth(personId, year, month);
         List<WorkPerDayDto> workPerDays = new ArrayList<>();
         works.forEach((work)->{
             Calendar pc = CalendarHelper.toPersian(work.getDate());
@@ -85,6 +86,78 @@ public class WorksController {
         });
 
         return ResponseEntity.ok(workPerDays);
+    }
+
+    @RequestMapping(value = "/by-person-and-date-between/{personId}/{startDate}/{endDate}")
+    private ResponseEntity<List<WorkVm>> getWorksByPersonAndDateBetween(@PathVariable("personId") Integer personId, @PathVariable("startDate") String startDate, @PathVariable("endDate") String endDate) {
+        String[] startDateParts = startDate.split("[-]");
+        String[] endDateParts = endDate.split("[-]");
+
+        Calendar pcStart = CalendarHelper.createPersian(
+                Integer.valueOf(startDateParts[0]),
+                Integer.valueOf(startDateParts[1]),
+                Integer.valueOf(startDateParts[2]));
+
+        Calendar pcEnd = CalendarHelper.createPersian(
+                Integer.valueOf(endDateParts[0]),
+                Integer.valueOf(endDateParts[1]),
+                Integer.valueOf(endDateParts[2]));
+
+        List<Work> workList =
+                workService.getWorksByPersonIdAndDateBetween(personId,
+                        CalendarHelper.toGregorian(pcStart),
+                        CalendarHelper.toGregorian(pcEnd));
+
+        List<WorkVm> workVms = workList.stream().map(Work::getViewModel).collect(Collectors.toList());
+        return ResponseEntity.ok(workVms);
+    }
+
+    @RequestMapping(value = "/by-building-and-date-between/{buildingId}/{startDate}/{endDate}")
+    private ResponseEntity<List<WorkVm>> getWorksByBuildingAndDateBetween(@PathVariable("buildingId") Integer buildingId, @PathVariable("startDate") String startDate, @PathVariable("endDate") String endDate) {
+        String[] startDateParts = startDate.split("[-]");
+        String[] endDateParts = endDate.split("[-]");
+
+        Calendar pcStart = CalendarHelper.createPersian(
+                Integer.valueOf(startDateParts[0]),
+                Integer.valueOf(startDateParts[1]),
+                Integer.valueOf(startDateParts[2]));
+
+        Calendar pcEnd = CalendarHelper.createPersian(
+                Integer.valueOf(endDateParts[0]),
+                Integer.valueOf(endDateParts[1]),
+                Integer.valueOf(endDateParts[2]));
+
+        List<Work> workList =
+                workService.getWorksByBuildingIdAndDateBetween(buildingId,
+                        CalendarHelper.toGregorian(pcStart),
+                        CalendarHelper.toGregorian(pcEnd));
+
+        List<WorkVm> workVms = workList.stream().map(Work::getViewModel).collect(Collectors.toList());
+        return ResponseEntity.ok(workVms);
+    }
+
+    @RequestMapping(value = "/by-position-and-date-between/{positionId}/{startDate}/{endDate}")
+    private ResponseEntity<List<WorkVm>> getWorksByPositionAndDateBetween(@PathVariable("positionId") Integer positionId, @PathVariable("startDate") String startDate, @PathVariable("endDate") String endDate) {
+        String[] startDateParts = startDate.split("[-]");
+        String[] endDateParts = endDate.split("[-]");
+
+        Calendar pcStart = CalendarHelper.createPersian(
+                Integer.valueOf(startDateParts[0]),
+                Integer.valueOf(startDateParts[1]),
+                Integer.valueOf(startDateParts[2]));
+
+        Calendar pcEnd = CalendarHelper.createPersian(
+                Integer.valueOf(endDateParts[0]),
+                Integer.valueOf(endDateParts[1]),
+                Integer.valueOf(endDateParts[2]));
+
+        List<Work> workList =
+                workService.getWorksByPersonPositionIdAndDateBetween(positionId,
+                        CalendarHelper.toGregorian(pcStart),
+                        CalendarHelper.toGregorian(pcEnd));
+
+        List<WorkVm> workVms = workList.stream().map(Work::getViewModel).collect(Collectors.toList());
+        return ResponseEntity.ok(workVms);
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST)

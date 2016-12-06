@@ -2,6 +2,7 @@ package hassan.personnel.managment.models.entities;
 
 import hassan.personnel.managment.models.interfaces.ViewModel;
 import hassan.personnel.managment.models.vm.PositionVm;
+import hassan.personnel.managment.models.vm.WageVm;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -42,6 +43,31 @@ public class Position implements ViewModel {
         positionVm.setTitle(this.getTitle());
         positionVm.setPersonnel(null);
         positionVm.setWages(null);
+
+        return positionVm;
+    }
+
+    /**
+     * This Method Returns position along with its wages, but wages don't have back reference to their position
+     * @return List of PositionVm
+     */
+    public PositionVm getViewModelWithWages() {
+        PositionVm positionVm = new PositionVm();
+        positionVm.setId(this.getId());
+        positionVm.setTitle(this.getTitle());
+        positionVm.setPersonnel(null);
+
+        List<WageVm> wages = new ArrayList<WageVm>();
+        for (Wage wage :
+                this.getWages()) {
+            WageVm wageVm = new WageVm();
+            wageVm.setId(wage.getId());
+            wageVm.setPrice(wage.getPrice());
+            wageVm.setStartDate(wage.getStartDate());
+            wageVm.setPosition(null);
+            wages.add(wageVm);
+        }
+        positionVm.setWages(wages);
 
         return positionVm;
     }

@@ -39,6 +39,20 @@ var AngularUtility;
         };
         return JqDatePickerDirective;
     }());
+    var DatePickerConfigDirective = (function () {
+        function DatePickerConfigDirective() {
+            this.restrict = 'A';
+            this.require = 'jqDatePicker';
+            this.link = function (scope, element, attrs, ngModel) {
+                //...
+            };
+        }
+        DatePickerConfigDirective.instance = function () {
+            return new DatePickerConfigDirective();
+        };
+        return DatePickerConfigDirective;
+    }());
     angular.module("angularUtility")
-        .directive("jqDatePicker", JqDatePickerDirective.instance);
+        .directive("jqDatePicker", JqDatePickerDirective.instance)
+        .directive("DatePickerConfig", DatePickerConfigDirective.instance);
 })(AngularUtility || (AngularUtility = {}));

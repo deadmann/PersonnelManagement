@@ -40,7 +40,6 @@
             mode: PageMode.SELECT,
             /** @type {boolean} - if all required data are received from server */
             isHeaderLoaded: false,
-            /** @type {{year:number, month:KeyValue<number, string>, person: PersonVm}} */
             headerSelections:{
                 /** @type {number|null} */
                 year: null,

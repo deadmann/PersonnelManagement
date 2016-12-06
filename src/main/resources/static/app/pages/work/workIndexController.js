@@ -2,7 +2,7 @@
  * Created by Hassan on 11/20/2016.
  */
 (function () {
-    var controller = function ($scope, baseDataService, buildingsService, personnelService, worksService) {
+    var controller = function ($scope, baseDataService, buildingsService, personnelService, positionsService, worksService) {
         //Basic Definition
         var self = this;
         var DatePickerConfig = AngularUtility.DatePickerConfig;
@@ -44,7 +44,6 @@
             mode: PageMode.SELECT,
             /** @type {boolean} - if all required data are received from server */
             isHeaderLoaded: false,
-            /** @type {{year:number, month:KeyValue<number, string>, person: PersonVm}} */
             headerSelections:{
                 /** @type {number|null} */
                 startDate: null,
@@ -54,7 +53,10 @@
                 reportType: ReportType.NONE,
                 /** @type {PersonVm} */
                 person: null,
-
+                /** @type {BuildingVm} */
+                building: null,
+                /** @type {PositionVm} */
+                position:null
             },
             /** @type {Array<number>} */
             years: null,
@@ -64,20 +66,95 @@
             personnel: null,
             /** @type {Array<BuildingVm>} */
             buildings: null,
+            /** @type {Array<PositionVm>} */
+            positions: null,
             /** @type {DatePickerConfig} */
             startDateConfig: null,
             /** @type {DatePickerConfig} */
             endDateConfig:null
             ,
+            works: null,
+            workBuildingsByPerson: null,
+            //workPersonsByBuilding: null,
+            //workPersonBuildingsByPosition:null
         };
 
         self.method = {
+            viewByPerson:function () {
+                //TODO: NOT TESTED .................. GRRRRRRRRRRRRRR
+                self.view.mode = PageMode.VIEW;
+                var distinctBuilding = Enumerable.from(self.view.works)
+                    .distinct(/** @param work {WorkVm} */function (work) {
+                        return work.building.id;
+                    }).select(/** @param work {WorkVm} */function (work) {
+                        return work.building;
+                    }).toArray();
 
+                var worksGroupByBuilding = Enumerable.from(self.view.works)
+                    .distinct(/** @param work {WorkVm} */function (work) {
+                        return work.building;
+                    }).select(/** @param work {WorkVm} */function (work) {
+                        return work;
+                    }).toArray();
+            },
+            viewByBuilding:function () {
+                self.view.mode = PageMode.VIEW;
+
+            },
+            viewByPosition:function () {
+                self.view.mode = PageMode.VIEW;
+
+            }
         };
 
         self.event = {
-            view: function () {
-
+            toViewWorks: function () {
+                var startDate = self.view.headerSelections.startDate.replaceAll("/", "-");
+                var endDate = self.view.headerSelections.endDate.replaceAll("/", "-");
+                switch (self.view.headerSelections.reportType) {
+                    case ReportType.BY_PERSON:
+                        var personId = self.view.headerSelections.person.id;
+                        worksService.getWorksByPersonAndDateBetween({
+                            param2: personId,
+                            param3: startDate,
+                            param4: endDate
+                        }).$promise
+                            .then(function (data) {
+                                self.view.works = data;
+                            }, function (err) {
+                                alert("An Error Occur While Fetching Work Data");
+                            });
+                        self.method.viewByPerson();
+                        break;
+                    case ReportType.BY_BUILDING:
+                        var buildingId = self.view.headerSelections.building.id;
+                        worksService.getWorksByBuildingAndDateBetween({
+                            param2: buildingId,
+                            param3: startDate,
+                            param4: endDate
+                        }).$promise
+                            .then(function (data) {
+                                self.view.works = data;
+                            }, function (err) {
+                                alert("An Error Occur While Fetching Work Data");
+                            });
+                        self.method.viewByBuilding();
+                        break;
+                    case ReportType.BY_POSITION:
+                        var positionId = self.view.headerSelections.position.id;
+                        worksService.getWorksByPositionAndDateBetween({
+                            param2: positionId,
+                            param3: startDate,
+                            param4: endDate
+                        }).$promise
+                            .then(function (data) {
+                                self.view.works = data;
+                            }, function (err) {
+                                alert("An Error Occur While Fetching Work Data");
+                            });
+                        self.method.viewByPosition();
+                        break;
+                }
             }
         };
 
@@ -111,7 +188,7 @@
 
         function initialize() {
             //Keep Track Of Running Async Service, And Provide Ability To Run A Method After All Async Finished.
-            var afterInitializeAsyncRunnerCounter = 4;
+            var afterInitializeAsyncRunnerCounter = 5;
 
             function afterInitializeCallBack(){
 
@@ -129,7 +206,7 @@
 
             function getDefaultDatePickerConfig() {
                 var startConfig = new DatePickerConfig();
-                startConfig.dateFormat = "yy-mm-dd";
+                startConfig.dateFormat = "yy/mm/dd";
                 startConfig.numberOfMonths = 1;
                 startConfig.showButtonPanel = true;
                 return startConfig;
@@ -166,8 +243,8 @@
             //Report Type List
             var reportDictionary = new Dictionary();
             reportDictionary.add(ReportType.BY_PERSON, "بر اساس شخص");
-            reportDictionary.add(ReportType.BY_BUILDING, "بر اساس ساختمان");
-            reportDictionary.add(ReportType.BY_POSITION, "بر اساس سمت");
+            //reportDictionary.add(ReportType.BY_BUILDING, "بر اساس ساختمان");
+            //reportDictionary.add(ReportType.BY_POSITION, "بر اساس سمت");
             self.view.reportTypes = reportDictionary;
 
             //Personnel
@@ -185,12 +262,20 @@
             },function (err) {
                 alert("An Error Has Occur While Fetching Buildings Data." + err);
             });
+
+            //Positions
+            positionsService.query().$promise.then(function (data) {
+                self.view.positions = data;
+                afterInitializeCallBack();
+            },function (err) {
+                alert("An Error Has Occur While Fetching Positions Data." + err);
+            });
         }
 
         initialize();
     };
 
-    controller.$inject = ["$scope", "baseDataService", "buildingsService", "personnelService", "worksService"];
+    controller.$inject = ["$scope", "baseDataService", "buildingsService", "personnelService", "positionsService", "worksService"];
 
     angular.module("personnelManagement")
         .controller("workIndexController", controller);

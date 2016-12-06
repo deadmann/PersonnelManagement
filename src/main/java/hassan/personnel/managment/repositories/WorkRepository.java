@@ -15,4 +15,6 @@ import java.util.List;
 @Repository
 public interface WorkRepository extends JpaRepository<Work, Long> {
     List<Work> findByPersonIdAndDateGreaterThanEqualAndDateLessThan(int id, Calendar date1, Calendar date2);
+    List<Work> findByBuildingIdAndDateGreaterThanEqualAndDateLessThan(int id, Calendar date1, Calendar date2);
+    List<Work> findByPersonPositionIdAndDateGreaterThanEqualAndDateLessThan(int id, Calendar date1, Calendar date2);
 }

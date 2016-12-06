@@ -23,6 +23,14 @@
                     return ModelHelper.toArray(data, ModelType.Position);
                 }
             },
+            "queryFetchWages": {
+                method: "GET",
+                isArray: true,
+                /** @param data {Array<PositionVm>} */
+                transformResult: function (data) {
+                    return ModelHelper.toArray(data, ModelType.Position);
+                }
+            },
             // 'save': {method: 'POST'},
             // 'remove': {method: 'DELETE'},
             // 'delete': {method: 'DELETE'}

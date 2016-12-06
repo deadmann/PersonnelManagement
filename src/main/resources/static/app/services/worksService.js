@@ -23,7 +23,53 @@
                     return ModelHelper.toArray(data, ModelType.Work);
                 }
             },
-            "getAllWorksByPersonAndMonth": {
+            /** We should supply personId(param2), startDate(@param3) as yyyy-mm-dd, and endDate(@param4) as yyyy-mm-dd for it to work  */
+            "getWorksByPersonAndDateBetween":{
+                method: "GET",
+                isArray: true,
+                params: {
+                    param1: "by-person-and-date-between",
+                    param2: "@param2",//@personId
+                    param3: "@param3",//@startDate
+                    param4: "@param4"//@endDate
+                },
+                /** @param data {Array<WorkVm>} */
+                transformResult: function (data) {
+                    return ModelHelper.toArray(data, ModelType.Work);
+                }
+            },
+            /** We should supply buildingId(param2), startDate(@param3) as yyyy-mm-dd, and endDate(@param4) as yyyy-mm-dd for it to work  */
+            "getWorksByBuildingAndDateBetween":{
+                method: "GET",
+                isArray: true,
+                params: {
+                    param1: "by-building-and-date-between",
+                    param2: "@param2",//@buildingId
+                    param3: "@param3",//@startDate
+                    param4: "@param4"//@endDate
+                },
+                /** @param data {Array<WorkVm>} */
+                transformResult: function (data) {
+                    return ModelHelper.toArray(data, ModelType.Work);
+                }
+            },
+            /** We should supply positionId(param2), startDate(@param3) as yyyy-mm-dd, and endDate(@param4) as yyyy-mm-dd for it to work  */
+            "getWorksByPositionAndDateBetween":{
+                method: "GET",
+                isArray: true,
+                params: {
+                    param1: "by-position-and-date-between",
+                    param2: "@param2",//@positionId
+                    param3: "@param3",//@startDate
+                    param4: "@param4"//@endDate
+                },
+                /** @param data {Array<WorkVm>} */
+                transformResult: function (data) {
+                    return ModelHelper.toArray(data, ModelType.Work);
+                }
+            },
+            /** We should supply personId(param2), year(@param3), and month(@param4) for it to work  */
+            "getWorksByPersonAndMonth": {
                 method: "GET",
                 isArray: true,
                 params: {
@@ -37,6 +83,7 @@
                     return ModelHelper.toArray(data, ModelType.Work)
                 }
             },
+            /** We should supply personId(param2), year(@param3), and month(@param4) for it to work  */
             "getWorkPerDaysByPersonAndMonth":{
                 method: "GET",
                 isArray: true,
@@ -52,6 +99,7 @@
                 }
             },
             // 'save': {method: 'POST'},
+            /** We should supply personId(param2), year(@param3), and month(@param4) for it to work  */
             "saveWorkPerDaysClearPersonMonth": {
                 method: "POST",
                 params: {

@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
@@ -32,14 +31,36 @@ public class WorkService {
     }
 
     /**
-     *
-     * @param personId
-     * @param startDate Inclusive
-     * @param endDate Exclusive
-     * @return
+     * Returns All Work Data For A Specific Person Between Specified Dates, Which the Start Date is Inclusive and the End Date is Exclusive
+     * @param personId Id of The Person
+     * @param inclusiveStartDate Inclusive
+     * @param exclusiveEndDate Exclusive
+     * @return Returns List of Work Entities
      */
-    public List<Work> getAllByPersonIdAndDateBetween(int personId, Calendar startDate, Calendar endDate){
-        return workRepository.findByPersonIdAndDateGreaterThanEqualAndDateLessThan(personId, startDate, endDate);
+    public List<Work> getWorksByPersonIdAndDateBetween(int personId, Calendar inclusiveStartDate, Calendar exclusiveEndDate){
+        return workRepository.findByPersonIdAndDateGreaterThanEqualAndDateLessThan(personId, inclusiveStartDate, exclusiveEndDate);
+    }
+
+    /**
+     * Returns All Work Data For A Specific Building Between Specified Dates, Which the Start Date is Inclusive and the End Date is Exclusive
+     * @param buildingId Id of The Person
+     * @param inclusiveStartDate Inclusive
+     * @param exclusiveEndDate Exclusive
+     * @return Returns List of Work Entities
+     */
+    public List<Work> getWorksByBuildingIdAndDateBetween(int buildingId, Calendar inclusiveStartDate, Calendar exclusiveEndDate){
+        return workRepository.findByBuildingIdAndDateGreaterThanEqualAndDateLessThan(buildingId, inclusiveStartDate, exclusiveEndDate);
+    }
+
+    /**
+     * Returns All Work Data For All Person With Specific Position Between Specified Dates, Which the Start Date is Inclusive and the End Date is Exclusive
+     * @param positionId Id of The Person
+     * @param inclusiveStartDate Inclusive
+     * @param exclusiveEndDate Exclusive
+     * @return Returns List of Work Entities
+     */
+    public List<Work> getWorksByPersonPositionIdAndDateBetween(int positionId, Calendar inclusiveStartDate, Calendar exclusiveEndDate){
+        return workRepository.findByPersonPositionIdAndDateGreaterThanEqualAndDateLessThan(positionId, inclusiveStartDate, exclusiveEndDate);
     }
 
     public Work save(Work work) {
