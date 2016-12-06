@@ -3,5 +3,6 @@
  */
 enum PageMode{
     SELECT,
-    EDIT
+    EDIT,
+    VIEW
 }
