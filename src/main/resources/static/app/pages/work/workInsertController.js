@@ -38,6 +38,8 @@
         self.view = {
             /** @type {PageMode} */
             mode: PageMode.SELECT,
+            /** @type {boolean} - if all required data are received from server */
+            isHeaderLoaded: false,
             /** @type {{year:number, month:KeyValue<number, string>, person: PersonVm}} */
             headerSelections:{
                 /** @type {number|null} */
@@ -244,51 +246,59 @@
 
         function initialize() {
             //Keep Track Of Running Async Service, And Provide Ability To Run A Method After All Async Finished.
-            var afterInitializeAsyncRunnerCounter = 2;
+            var afterInitializeAsyncRunnerCounter = 4;
 
             function afterInitializeCallBack(){
+
+                afterInitializeAsyncRunnerCounter --;
+
                 if (afterInitializeAsyncRunnerCounter == 0){
                     self.view.years = [];
                     for(var i = privateData.startYear; i < privateData.currentYear + 5; i++)
                         self.view.years.push(i);
                     self.view.headerSelections.year = privateData.currentYear;
+
+                    self.view.isHeaderLoaded = true;
                 }
             }
 
+            //System Start Year
             baseDataService.getStartYear().$promise
                 .then(function (data) {
                     privateData.startYear = data;
-                    afterInitializeAsyncRunnerCounter --;
                     afterInitializeCallBack();
                 }, function (err) {
                     alert("An Error Occur While Loading System Base Data From Server");
                 });
 
+            //Current Year
             baseDataService.getCurrentYear().$promise
                 .then(function (data) {
                     privateData.currentYear = data;
-                    afterInitializeAsyncRunnerCounter --;
                     afterInitializeCallBack();
                 }, function (err) {
                     alert("An Error Occur While Loading System Base Data From Server");
                 });
 
+            //Month Lists
             var monthDictionary = new Dictionary();
-
             for (var i = 0; i < 12 ; i++) {
                 monthDictionary.add(i + 1, privateData.monthsNames[i]);
             }
-
             self.view.months = monthDictionary;
 
+            //Personnel
             personnelService.query().$promise.then(function (data) {
                 self.view.personnel = data;
+                afterInitializeCallBack();
             }, function (err) {
                 alert("An Error Has Occur While Fetching Personnel Data." + err);
             });
 
+            //Buildings
             buildingsService.query().$promise.then(function (data) {
                 self.view.buildings = data;
+                afterInitializeCallBack();
             },function (err) {
                 alert("An Error Has Occur While Fetching Buildings Data." + err);
             });

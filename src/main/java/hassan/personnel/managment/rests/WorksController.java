@@ -1,7 +1,9 @@
 package hassan.personnel.managment.rests;
 
 import com.ibm.icu.util.Calendar;
+import hassan.personnel.managment.exceptionalResponses.ConflictException;
 import hassan.personnel.managment.exceptionalResponses.InvalidDataException;
+import hassan.personnel.managment.exceptionalResponses.NotFoundException;
 import hassan.personnel.managment.models.dto.WorkPerDayDto;
 import hassan.personnel.managment.models.entities.Building;
 import hassan.personnel.managment.models.entities.Person;
@@ -11,6 +13,8 @@ import hassan.personnel.managment.services.WorkService;
 import hassan.personnel.managment.utility.CalendarHelper;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -89,9 +93,19 @@ public class WorksController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public Work remove(@PathVariable Long id){
-        return workService.remove(id);
+    public WorkVm remove(@PathVariable Long id) throws NotFoundException, ConflictException {
+        Work work = null;
+        try {
+            work = workService.remove(id);
+            return work.getViewModel();
+        }catch (DataIntegrityViolationException ex){
+            throw new ConflictException(ex.getMessage());
+        }catch (EmptyResultDataAccessException ex){
+            throw new NotFoundException("Requested Item Does Not Found");
+        }
     }
+
+
 
     @RequestMapping(value = "/save-work-per-days-clear-person-month/{personId}/{year}/{month}", method = RequestMethod.POST)
     private ResponseEntity save(@RequestBody List<WorkPerDayDto> workPerDays, @PathVariable int personId, @PathVariable int year, @PathVariable int month) throws InvalidDataException {

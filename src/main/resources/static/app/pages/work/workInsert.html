@@ -16,7 +16,7 @@
             </select>
         </div>
         <div class="col-md-3">
-            <button class="btn btn-primary" ng-click="ctrl.event.toEditWorks()">
+            <button class="btn btn-primary" ng-disabled="!ctrl.view.isHeaderLoaded" ng-click="ctrl.event.toEditWorks()">
                 ویرایش
             </button>
         </div>

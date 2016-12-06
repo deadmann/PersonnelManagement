@@ -30,10 +30,10 @@ public class Position implements ViewModel {
     @Column(nullable = false, length = 50)
     private String title;
 
-    @OneToMany(mappedBy = "position", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "position")//, cascade = CascadeType.ALL)
     private List<Wage> wages;
 
-    @OneToMany(mappedBy = "position", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "position")//, cascade = CascadeType.ALL)
     private List<Person> personnel;
 
     public PositionVm getViewModel() {

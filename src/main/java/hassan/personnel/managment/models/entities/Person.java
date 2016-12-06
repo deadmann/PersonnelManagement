@@ -41,7 +41,7 @@ public class Person implements ViewModel {
     @JoinColumn(nullable = false, foreignKey = @ForeignKey(name = "FK_PERSON_POSITION"))//Name of the FK Constraint
     private Position position;
 
-    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "person")//, cascade = CascadeType.ALL)
     private List<Work> works;
 
     public PersonVm getViewModel() {

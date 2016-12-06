@@ -28,7 +28,7 @@ public class Building implements ViewModel {
     @Column(nullable = false, length = 50)
     private String name;
 
-    @OneToMany(mappedBy = "building", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "building")//, cascade = CascadeType.ALL)
     private List<Work> works;
 
     public BuildingVm getViewModel(){

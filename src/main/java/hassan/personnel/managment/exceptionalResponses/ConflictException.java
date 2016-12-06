@@ -11,26 +11,25 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * http://stackoverflow.com/questions/16232833/how-to-respond-with-http-400-error-in-a-spring-mvc-responsebody-method-returnin
  * http://stackoverflow.com/questions/24292373/spring-boot-rest-controller-how-to-return-different-http-status-codes
  */
-@ResponseStatus(code = HttpStatus.NOT_FOUND, reason = "Not Found")
-public class NotFoundException extends Exception {
+@ResponseStatus(code = HttpStatus.CONFLICT, reason = "Data Has Conflict With One Or More Records")
+public class ConflictException extends Exception {
 
-    public NotFoundException() {
+    public ConflictException() {
     }
 
-    public NotFoundException(String message) {
+    public ConflictException(String message) {
         super(message);
     }
 
-    public NotFoundException(String message, Throwable cause) {
+    public ConflictException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public NotFoundException(Throwable cause) {
+    public ConflictException(Throwable cause) {
         super(cause);
     }
 
-    protected NotFoundException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+    protected ConflictException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 }
-

@@ -1,9 +1,13 @@
 package hassan.personnel.managment.rests;
 
+import hassan.personnel.managment.exceptionalResponses.ConflictException;
+import hassan.personnel.managment.exceptionalResponses.NotFoundException;
 import hassan.personnel.managment.models.entities.Person;
 import hassan.personnel.managment.models.vm.PersonVm;
 import hassan.personnel.managment.services.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,7 +41,15 @@ public class PersonnelController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    private Person remove(@PathVariable int id){
-        return personService.remove(id);
+    private PersonVm remove(@PathVariable int id) throws NotFoundException, ConflictException {
+        Person person = null;
+        try {
+            person = personService.remove(id);
+            return person.getViewModel();
+        }catch (DataIntegrityViolationException ex){
+            throw new ConflictException(ex.getMessage());
+        }catch (EmptyResultDataAccessException ex){
+            throw new NotFoundException("Requested Item Does Not Found");
+        }
     }
 }

@@ -20,12 +20,18 @@
                 //var removeItem = Enumerable.From(buildings).FirstOrDefault(null,w=>w.id ==id);
                 //buildings.splice()
                 buildingsService.remove({id:id}).$promise
-                    .then(function (data) {
+                    .then(function (data) { //-->Returned Item From Server
                         self.view.buildings.remove(null, function (item, empty) {
-                            return item == id;
+                            return item.id == data.id;
                         }, 'all');
                     }, function (err) {
-                       alert("An error has occur while removing data");
+                        if(err.status===404){
+                            alert("آیتم مورد نظر ‍یدا نشد");
+                        }else if(err.status===409){
+                            alert("آیتم انتخابی توسط آیتم های دیگری مورد استفاده است");
+                        } else {
+                            alert("یک خطای ناشناس در هنگام حذف آتم رخ داده است");
+                        }
                     });
             }
         };

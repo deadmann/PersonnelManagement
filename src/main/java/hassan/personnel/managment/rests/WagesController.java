@@ -1,9 +1,13 @@
 package hassan.personnel.managment.rests;
 
+import hassan.personnel.managment.exceptionalResponses.ConflictException;
+import hassan.personnel.managment.exceptionalResponses.NotFoundException;
 import hassan.personnel.managment.models.entities.Wage;
 import hassan.personnel.managment.models.vm.WageVm;
 import hassan.personnel.managment.services.WageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,7 +41,15 @@ public class WagesController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    private Wage remove(@PathVariable int id){
-        return wageService.remove(id);
+    private WageVm remove(@PathVariable int id) throws NotFoundException, ConflictException {
+        Wage wage = null;
+        try {
+            wage = wageService.remove(id);
+            return wage.getViewModel();
+        }catch (DataIntegrityViolationException ex){
+            throw new ConflictException(ex.getMessage());
+        }catch (EmptyResultDataAccessException ex){
+            throw new NotFoundException("Requested Item Does Not Found");
+        }
     }
 }
