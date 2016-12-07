@@ -74,40 +74,94 @@
             endDateConfig:null
             ,
             works: null,
+            /** @type {Array<{key:number, building:BuildingVm, works: Array<WorkVm>, sum: number}> | null} */
             workBuildingsByPerson: null,
-            //workPersonsByBuilding: null,
+            /** @type {Array<{key:number, building:PersonVm, works: Array<WorkVm>, sum: number}> | null} */
+            workPersonsByBuilding: null,
             //workPersonBuildingsByPosition:null
         };
 
         self.method = {
-            viewByPerson:function () {
-                //TODO: NOT TESTED .................. GRRRRRRRRRRRRRR
+            toView:function(){
                 self.view.mode = PageMode.VIEW;
-                var distinctBuilding = Enumerable.from(self.view.works)
-                    .distinct(/** @param work {WorkVm} */function (work) {
-                        return work.building.id;
-                    }).select(/** @param work {WorkVm} */function (work) {
-                        return work.building;
-                    }).toArray();
-
-                var worksGroupByBuilding = Enumerable.from(self.view.works)
-                    .distinct(/** @param work {WorkVm} */function (work) {
-                        return work.building;
-                    }).select(/** @param work {WorkVm} */function (work) {
-                        return work;
-                    }).toArray();
+            },
+            toSelect:function(){
+                self.view.mode = PageMode.SELECT;
+            },
+            viewByPerson:function (){
+                self.view.workBuildingsByPerson = Enumerable.from(self.view.works)
+                    .groupBy(
+                        /** @param work {WorkVm} */
+                        function (work) {
+                            return work.building.id;
+                        },
+                        null,// function(work){return work;},
+                        /**
+                         * @param key {BuildingVm}
+                         * @param group {Grouping}*/  //Enumerable
+                        function (key, group) {
+                            /** @type {Array<WorkVm>} */
+                            var groupWorks = group.toArray();
+                            var buildingSample =
+                                new BuildingVm(
+                                    groupWorks[0].building.id,
+                                    groupWorks[0].building.name,
+                                    groupWorks //Work that the building refer too
+                                );
+                            return {
+                                key: key,
+                                building: buildingSample,
+                                works: groupWorks,
+                                sum: group.sum("s=>s.workPerDay")
+                            };
+                        })
+                    .select("x=>x").toArray();
             },
             viewByBuilding:function () {
-                self.view.mode = PageMode.VIEW;
-
+                self.view.workPersonsByBuilding = Enumerable.from(self.view.works)
+                    .groupBy(
+                        /** @param work {WorkVm} */
+                        function (work) {
+                            return work.person.id;
+                        },
+                        null,// function(work){return work;},
+                        /**
+                         * @param key {PersonVm}
+                         * @param group {Grouping}*/  //Enumerable
+                        function (key, group) {
+                            /** @type {Array<WorkVm>} */
+                            var groupWorks = group.toArray();
+                            var personSample =
+                                new PersonVm(
+                                    groupWorks[0].person.id,
+                                    groupWorks[0].person.firstname,
+                                    groupWorks[0].person.lastname,
+                                    new PositionVm(
+                                        groupWorks[0].person.position.id,
+                                        groupWorks[0].person.position.title,
+                                        null,
+                                        Enumerable.from(groupWorks).select("s=>s.person").toArray()
+                                    ),
+                                    groupWorks //Work that the person refer too
+                                );
+                            return {
+                                key: key,
+                                person: personSample,
+                                works: groupWorks,
+                                sum: group.sum("s=>s.workPerDay")
+                            };
+                        })
+                    .select("x=>x").toArray();
             },
             viewByPosition:function () {
-                self.view.mode = PageMode.VIEW;
 
             }
         };
 
         self.event = {
+            toSelect: function () {
+                self.method.toSelect();
+            },
             toViewWorks: function () {
                 var startDate = self.view.headerSelections.startDate.replaceAll("/", "-");
                 var endDate = self.view.headerSelections.endDate.replaceAll("/", "-");
@@ -121,10 +175,11 @@
                         }).$promise
                             .then(function (data) {
                                 self.view.works = data;
+                                self.method.viewByPerson();
+                                self.method.toView();
                             }, function (err) {
                                 alert("An Error Occur While Fetching Work Data");
                             });
-                        self.method.viewByPerson();
                         break;
                     case ReportType.BY_BUILDING:
                         var buildingId = self.view.headerSelections.building.id;
@@ -135,10 +190,11 @@
                         }).$promise
                             .then(function (data) {
                                 self.view.works = data;
+                                self.method.viewByBuilding();
+                                self.method.toView();
                             }, function (err) {
                                 alert("An Error Occur While Fetching Work Data");
                             });
-                        self.method.viewByBuilding();
                         break;
                     case ReportType.BY_POSITION:
                         var positionId = self.view.headerSelections.position.id;
@@ -149,10 +205,11 @@
                         }).$promise
                             .then(function (data) {
                                 self.view.works = data;
+                                self.method.viewByPosition();
+                                self.method.toView();
                             }, function (err) {
                                 alert("An Error Occur While Fetching Work Data");
                             });
-                        self.method.viewByPosition();
                         break;
                 }
             }
@@ -243,7 +300,7 @@
             //Report Type List
             var reportDictionary = new Dictionary();
             reportDictionary.add(ReportType.BY_PERSON, "بر اساس شخص");
-            //reportDictionary.add(ReportType.BY_BUILDING, "بر اساس ساختمان");
+            reportDictionary.add(ReportType.BY_BUILDING, "بر اساس ساختمان");
             //reportDictionary.add(ReportType.BY_POSITION, "بر اساس سمت");
             self.view.reportTypes = reportDictionary;
 

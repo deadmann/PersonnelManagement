@@ -1,51 +1,49 @@
 /**
  * Created by Hassan on 11/18/2016.
  */
-(function () {
-    'use strict';
+(function(){
+    "use strict";
 
-    controller.$inject = ['$location', '$scope', 'personnelService'];
+    var controller = function ($scope, buildingsService, toaster) {
+        var self = this;
 
-    angular
-        .module('personnelManagement')
-        .controller('buildingInsertDialogController', controller);
-
-    function controller($location, $scope, personnelService) {
-        /* jshint validthis:true */
-        var vm = this;
-        vm.title = 'Add New Person';
-
-        vm.View = {
-            /**
-             * @type {SectionVM}
-             */
-            Section: null,
-            /**
-             * @type {PersonVM}
-             */
-            Person:null
+        self.view={
+            /** @type {BuildingVm}*/
+            building: null
         };
 
-        vm.Action= {
-            save: function () {
-                personnelService.save({}, vm.View.Person
-                    , function (data) {
-                        $scope.answer(new DialogResult(DialogResultType.Ok, data));
-                    }, function (err) {
-                        alert("cannot save data. " + err);
-                    });
+        self.event={
+            close: function () {
+                $scope.closeThisDialog();
             },
-            cancel: function () {
-                $scope.answer(new DialogResult(DialogResultType.Cancel, null));
+            save: function() {
+                buildingsService.save({}, self.view.building).$promise
+                    .then(function (data) {
+                        toaster.pop({
+                            type: "success",
+                            title: "توضیحات",
+                            body: "ساختمان " + self.view.building.name + " با موفقیت افزوده شد"
+                        });
+                        $scope.confirm(data);
+                    }, function (err) {
+                        toaster.pop({
+                            type: "error",
+                            title: "خطا",
+                            body: "یک خطای ناشناس در هنگام افزودن ساختمان " + self.view.building.name + " رخ داده است"
+                        });
+                    });
             }
         };
 
-        activate();
-
-        function activate() {
-            vm.View.Section = $scope.Modal.PassedData.Section;
-            vm.View.Person = new PersonVM();
-            vm.View.Person.SectionId = vm.View.Section.Id;
+        function initialize() {
+            self.view.building = new BuildingVm();
         }
-    }
+
+        initialize();
+    };
+
+    controller.$inject = ["$scope", "buildingsService", "toaster"];
+
+    angular.module("personnelManagement")
+        .controller("buildingInsertDialogController", controller);
 })();

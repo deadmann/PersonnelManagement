@@ -1,39 +1,27 @@
-<md-dialog aria-label="Mango (Fruit)" ng-controller="buildingInsertDialogController as buildingInsertDialogCtrl">
-    <form ng-cloak>
-        <md-toolbar>
-            <div class="md-toolbar-tools">
-                <h2>Add Person</h2>
-                <span flex></span>
-                <md-button class="md-icon-button" ng-click="pc.Action.cancel()">
-                    <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
-                </md-button>
-            </div>
-        </md-toolbar>
-
-        <md-dialog-content>
-            <div>
-                <md-input-container>
-                    <label>First Name</label>
-                    <input ng-model="pc.View.Person.FirstName" md-autofocus="">
-                </md-input-container>
-                <md-input-container>
-                    <label>Last Name</label>
-                    <input ng-model="pc.View.Person.LastName">
-                </md-input-container>
-            </div>
-        </md-dialog-content>
-
-        <md-dialog-actions layout="row">
-            <md-button href="http://en.wikipedia.org/wiki/Mango" target="_blank">
-                More on Wikipedia
-            </md-button>
-            <span flex></span>
-            <md-button ng-click="pc.Action.cancel()">
-                Cancel
-            </md-button>
-            <md-button ng-click="pc.Action.save()">
-                Save
-            </md-button>
-        </md-dialog-actions>
-    </form>
-</md-dialog>
+<div class="clearfix">
+    <div class="row col-md-6">
+        <div class="clearfix">
+            <form ng-submit="insCtrl.event.save()">
+                <div class="row">
+                    <div class="col-md-4">
+                        نام ساختمان
+                    </div>
+                    <div class="col-md-8">
+                        <input class="form-control" type="text" ng-model="insCtrl.view.building.name"/>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-primary">
+                            ذخیره اطلاعات
+                        </button>
+                        <button type="button" class="btn btn-default btn-sm" ng-click="insCtrl.event.close()">
+                            انصراف
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

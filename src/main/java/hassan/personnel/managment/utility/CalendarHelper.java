@@ -58,16 +58,24 @@ public class CalendarHelper {
         return gregorianCalendar;
     }
 
-    public static com.ibm.icu.util.Calendar createPersian(int year, int month, int day){
+    public static com.ibm.icu.util.Calendar createPersianUnfixedMonth(int year, int month, int day){
         ULocale local = new ULocale("fa_IR@calendar=persian");
         com.ibm.icu.util.Calendar persianCalendar = com.ibm.icu.util.Calendar.getInstance(local);
         persianCalendar.clear();
-        persianCalendar.set(year, month-1, day); //FIX MONTH IN CALENDAR (0 .. 11)
+        persianCalendar.set(year, month, day); //MONTH IN CALENDAR (0 .. 11)
         return persianCalendar;
     }
 
+    public static com.ibm.icu.util.Calendar createPersian(int year, int month, int day){
+        return createPersianUnfixedMonth(year, month - 1, day); //FIX MONTH IN CALENDAR (0 .. 11)
+    }
+
+    public static Calendar createGregorianUnfixedMonth(int year, int month, int day){
+        return new GregorianCalendar(year, month, day);//MONTH IN CALENDAR (0 .. 11)
+    }
+
     public static Calendar createGregorian(int year, int month, int day){//FIX MONTH IN CALENDAR (0 .. 11)
-        return new GregorianCalendar(year, month - 1, day);
+        return createGregorianUnfixedMonth(year, month - 1, day);
     }
 
     public static Calendar getMinimum(){

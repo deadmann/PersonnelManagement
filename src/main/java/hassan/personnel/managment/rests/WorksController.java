@@ -78,7 +78,7 @@ public class WorksController {
                     work.getId(),
                     work.getPerson().getId(),
                     pc.get(Calendar.YEAR),
-                    pc.get(Calendar.MONTH),
+                    pc.get(Calendar.MONTH)+1, //Return To Page 0 Based Month As 1 Based One
                     pc.get(Calendar.DAY_OF_MONTH),
                     work.getBuilding().getId(),
                     work.getWorkPerDay()

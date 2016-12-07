@@ -5,7 +5,7 @@
 (function(){
     "use strict";
 
-    var controller = function ($location, buildingsService) {
+    var controller = function ($location, ngDialog, buildingsService) {
         var self = this;
 
         self.view={
@@ -13,10 +13,51 @@
         };
 
         self.event={
-            insert: function () {
-                $location.path("/building/insert")
+            showInsertDialog: function () {
+                var promise = ngDialog.openConfirm({
+                    template: '/app/pages/building/buildingInsertDialog.html',
+                    controller: 'buildingInsertDialogController',
+                    controllerAs: 'insCtrl',
+                    //plain: true, -- Mean use of plain String as HTML
+                    showClose: true,
+                    closeByDocument: true,
+                    closeByEscape: true
+                });
+                promise.then(/** @param data {BuildingVm} */function (data) {
+                    self.view.buildings.push(data);
+                }, function (err) {
+                    //ignore
+                });
             },
-            remove:function (id) {
+            /*insert: function () {
+                $location.path("/building/insert")
+            },*/
+            showRemoveDialog: function(id) {
+                var promise = ngDialog.openConfirm({
+                    template: '/app/pages/building/buildingDeleteDialog.html',
+                    controller: 'buildingDeleteDialogController',
+                    controllerAs: 'dltCtrl',
+                    resolve: {
+                        selectedItem: function () {
+                            return Enumerable.from(self.view.buildings).first(function (f) {
+                                return f.id == id;
+                            });
+                        }
+                    },
+                    //plain: true, -- Mean use of plain String as HTML
+                    showClose: true,
+                    closeByDocument: true,
+                    closeByEscape: true
+                });
+                promise.then(/** @param data {BuildingVm} */function (data) {
+                    self.view.buildings.remove(null, function (item, empty) {
+                        return item.id == data.id;
+                    }, 'all');
+                }, function (err) {
+                    //ignore
+                });
+            },
+            /*remove:function (id) {
                 //var removeItem = Enumerable.From(buildings).FirstOrDefault(null,w=>w.id ==id);
                 //buildings.splice()
                 buildingsService.remove({id:id}).$promise
@@ -33,7 +74,7 @@
                             alert("یک خطای ناشناس در هنگام حذف آتم رخ داده است");
                         }
                     });
-            }
+            }*/
         };
 
         function initialize() {
@@ -48,7 +89,7 @@
         initialize();
     };
 
-    controller.$inject = ["$location", "buildingsService"];
+    controller.$inject = ["$location", "ngDialog", "buildingsService"];
 
     angular.module("personnelManagement")
         .controller("buildingIndexController", controller);

@@ -43,9 +43,6 @@ var AngularUtility;
         function DatePickerConfigDirective() {
             this.restrict = 'A';
             this.require = 'jqDatePicker';
-            this.link = function (scope, element, attrs, ngModel) {
-                //...
-            };
         }
         DatePickerConfigDirective.instance = function () {
             return new DatePickerConfigDirective();
@@ -54,5 +51,5 @@ var AngularUtility;
     }());
     angular.module("angularUtility")
         .directive("jqDatePicker", JqDatePickerDirective.instance)
-        .directive("DatePickerConfig", DatePickerConfigDirective.instance);
+        .directive("datePickerConfig", DatePickerConfigDirective.instance);
 })(AngularUtility || (AngularUtility = {}));

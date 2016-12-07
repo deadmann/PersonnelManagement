@@ -6,6 +6,11 @@
     <link href="/css/lib/bootstrap-rtl.min.css" rel="stylesheet" type="text/css"/>
     <link href="/css/lib/jquery-ui/jquery-ui.min.css" rel="stylesheet" type="text/css"/>
     <link href="/css/lib/jquery-ui/theme/blitzer/jquery-ui.theme.css" rel="stylesheet" type="text/css"/>
+
+    <link href="/css/lib/ngDialog.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/css/lib/ngDialog-theme-default.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/css/lib/toaster.min.css" rel="stylesheet" type="text/css"/>
+
     <link href="/css/site.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
@@ -20,8 +25,8 @@
                 <li><a href="#/position">سمت ها</a></li>
                 <li><a href="#/person">اشخاص</a></li>
                 <!--<li><a href="#/wage"  class="btn btn-default">دستمزد ها</a></li>-->
-                <li><a href="#/work">کارکرد</a></li>
-
+                <li><a href="#/work/insert">کارکرد</a></li>
+                <li><a href="#/work">گزارش کارکرد</a></li>
             </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
@@ -29,7 +34,14 @@
     <div class="container">
         <!-- SINGLE PAGE CONTAINER -->
         <div ng-view=""></div>
+
+        <toaster-container toaster-options="{'position-class': 'toast-bottom-left'}"></toaster-container>
     </div>
+
+
+
+
+
 
     <!-- BASE LIBRARY -->
     <!--<script src="/js/require.js"></script>-->
@@ -40,9 +52,13 @@
     <script src="/js/lib/angular.min.js"></script>
     <script src="/js/lib/angular-route.min.js"></script>
     <script src="/js/customized/angular-resource.js"></script> <!--MIN-->
+    <script src="/js/lib/angular-animate.min.js"></script>
     <script src="/js/lib/linq.js"></script>
 
     <!-- OTHER ADDED LIBRARY -->
+    <script src="/js/lib/ngDialog.min.js"></script>
+    <script src="/js/lib/toaster.min.js"></script>
+
     <script src="/js/lib/jquery-migrate-1to2-for-datepicker.js"></script>
     <script src="/js/lib/jquery-ui.min.js"></script>
     <script src="/js/lib/jquery.ui.datepicker-cc-fa.min.js"></script><!--Localize JQuery-->
@@ -99,6 +115,9 @@
 
     <!-- App/Pages (Directives) -->
     <!-- App/Pages (Dialog) -->
+    <script src="/app/pages/building/buildingDeleteDialogController.js"></script>
+    <script src="/app/pages/building/buildingInsertDialogController.js"></script>
+
     <!-- App/Pages (Controllers) -->
     <script src="/app/pages/building/buildingIndexController.js"></script>
     <script src="/app/pages/building/buildingInsertController.js"></script>

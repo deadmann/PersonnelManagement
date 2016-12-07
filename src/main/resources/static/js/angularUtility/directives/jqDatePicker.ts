@@ -67,17 +67,13 @@ module AngularUtility {
     }
 
     class DatePickerConfigDirective implements ng.IDirective {
-        link: angular.IDirectiveLinkFn|angular.IDirectivePrePost;
+        //link: angular.IDirectiveLinkFn|angular.IDirectivePrePost;
         require: string|string[]|{[controller:string]:string};
         restrict: string;
 
         constructor() {
             this.restrict = 'A';
             this.require = 'jqDatePicker';
-
-            this.link = function (scope: IDatePickerScope, element: IDatePickerElement, attrs: IDatePickerAttributes, ngModel: INgModelController) {
-                //...
-            }
         }
 
         static instance(): ng.IDirective {
@@ -87,5 +83,5 @@ module AngularUtility {
 
     angular.module("angularUtility")
         .directive("jqDatePicker", JqDatePickerDirective.instance)
-        .directive("DatePickerConfig", DatePickerConfigDirective.instance);
+        .directive("datePickerConfig", DatePickerConfigDirective.instance);
 }
