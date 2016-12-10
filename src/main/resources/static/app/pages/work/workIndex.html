@@ -1,42 +1,59 @@
 <div class="clearfix">
     <div class="row" ng-if="ctrl.view.mode == ctrl.type.PageMode.SELECT">
         <form ng-submit="ctrl.event.toViewWorks()">
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <input class="form-control" ng-model="ctrl.view.headerSelections.startDate"
                        jq-date-picker="" date-picker-config="ctrl.view.startDateConfig"
-                       required="required"/>
+                       required="required"
+                       placeholder="از تاریخ"
+                />
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <input class="form-control" ng-model="ctrl.view.headerSelections.endDate"
                        jq-date-picker="" date-picker-config="ctrl.view.endDateConfig"
-                       required="required"/>
+                       required="required"
+                       placeholder="تا تاریخ"
+                />
             </div>
             <div class="col-md-3">
-                <select class="form-control" ng-model="ctrl.view.headerSelections.reportType"
+                <label for="selectReportType" style="display:none"></label>
+                <select id="selectReportType" class="form-control" ng-model="ctrl.view.headerSelections.reportType"
                         ng-options="report.key as report.value for report in ctrl.view.reportTypes.getAllKeyValues()"
                         required="required">
-                    <option value="" disabled selected>لطفا حالت گزارش را انتخاب کنید</option>
+                    <option value="" disabled selected>لطفا نوع گزارش را مشخص کنید</option>
                 </select>
+            </div>
+            <div class="col-md-3">
+                <label for="selectReportValueNone" style="display:none"></label>
+                <select id="selectReportValueNone" ng-if="ctrl.view.headerSelections.reportType == ctrl.type.ReportType.NONE" class="form-control">
+                        <option value="" disabled>نوع گزارش مشخص نشده است</option>
+                </select>
+                <label for="selectReportValuePerson" style="display:none"></label>
                 <select ng-if="ctrl.view.headerSelections.reportType == ctrl.type.ReportType.BY_PERSON" class="form-control"
+                        id="selectReportValuePerson"
                         ng-model="ctrl.view.headerSelections.person"
                         ng-options="person as (person.firstname | emptyForNull) + ' ' + (person.lastname | emptyForNull) for person in ctrl.view.personnel"
                         required="required">
                     <option value="" disabled selected>لطفا شخص را انتخاب کنید</option>
                 </select>
+                <label for="selectReportValueBuilding" style="display:none"></label>
                 <select ng-if="ctrl.view.headerSelections.reportType == ctrl.type.ReportType.BY_BUILDING" class="form-control"
+                        id="selectReportValueBuilding"
                         ng-model="ctrl.view.headerSelections.building"
                         ng-options="building as building.name for building in ctrl.view.buildings"
                         required="required">
                     <option value="" disabled selected>لطفا شخص را انتخاب کنید</option>
                 </select>
+                <label for="selectReportValuePosition" style="display:none"></label>
                 <select ng-if="ctrl.view.headerSelections.reportType == ctrl.type.ReportType.BY_POSITION" class="form-control"
-                        ng-model="ctrl.view.headerSelections.person"
+                        id="selectReportValuePosition"
+                        ng-model="ctrl.view.headerSelections.position"
                         ng-options="position as position.title for position in ctrl.view.positions"
                         required="required">
                     <option value="" disabled selected>لطفا شخص را انتخاب کنید</option>
                 </select>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <button type="submit" class="btn btn-primary" ng-disabled="!ctrl.view.isHeaderLoaded">
                     نمایش
                 </button>
@@ -66,10 +83,14 @@
                     <thead>
                         <tr>
                             <th>
+                                <span>
                                 ساختمان
+                                </span>
                             </th>
                             <th>
+                                <span>
                                 کارکرد
+                                </span>
                             </th>
                         </tr>
                     </thead>
@@ -80,6 +101,16 @@
                             </td>
                             <td>
                                 <span ng-bind="item.sum"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="color: seagreen;">
+                                <span>
+                                مجموع
+                                </span>
+                            </td>
+                            <td style="color: seagreen;">
+                                <span ng-bind="ctrl.view.totalSum"></span>
                             </td>
                         </tr>
                     </tbody>
@@ -109,10 +140,14 @@
                     <thead>
                     <tr>
                         <th>
+                            <span>
                             کارگر
+                            </span>
                         </th>
                         <th>
+                            <span>
                             کارکرد
+                            </span>
                         </th>
                     </tr>
                     </thead>
@@ -125,11 +160,89 @@
                             <span ng-bind="item.sum"></span>
                         </td>
                     </tr>
+                    <tr>
+                        <td style="color: seagreen;">
+                            <span>
+                                مجموع
+                            </span>
+                        </td>
+                        <td style="color: seagreen;">
+                            <span ng-bind="ctrl.view.totalSum"></span>
+                        </td>
+                    </tr>
                     </tbody>
                 </table>
 
             </div>
         </div>
+
+        <div class="row" ng-if="ctrl.view.headerSelections.reportType == ctrl.type.ReportType.BY_POSITION">
+            <div class="col-xs-12">
+                <div class="row">
+                    <div class="col-md-4">
+                        <span>از تاریخ:</span>
+                        <span ng-bind="ctrl.view.headerSelections.startDate"></span>
+                    </div>
+                    <div class="col-md-4">
+                        <span>تا:</span>
+                        <span ng-bind="ctrl.view.headerSelections.endDate"></span>
+                    </div>
+                    <div class="col-md-4">
+                        <span>عنوان سمت:</span>
+                        <span ng-bind="ctrl.view.headerSelections.position.title"></span>
+                    </div>
+                </div>
+
+                <table class="table table-bordered table-condensed table-responsive table-hover">
+                    <thead>
+                    <tr>
+                        <th>
+                            <span>
+                            کارگر
+                            </span>
+                        </th>
+                        <th ng-repeat="building in ctrl.view.buildingsForWorksByPosition">
+                            <span ng-bind="building.name"></span>
+                        </th>
+                        <th style="color: seagreen;">
+                            <span>
+                             مجموع
+                            </span>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="item in ctrl.view.workPersonBuildingsByPosition">
+                        <td>
+                            <span ng-bind="((item.person.firstname + ' ')|emptyForNull) + (item.person.lastname|emptyForNull)"></span>
+                        </td>
+                        <td ng-repeat="building in ctrl.view.buildingsForWorksByPosition">
+                            <span ng-bind="ctrl.method.getGroupingByPersonAndBuilding(item.person,building).sum"></span>
+                        </td>
+                        <td style="color: seagreen;">
+                            <span ng-bind="item.sum"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="color: seagreen;">
+                            <span>
+                                مجموع
+                            </span>
+                        </td>
+                        <td style="color: seagreen;"
+                            ng-repeat="building in ctrl.view.buildingsForWorksByPosition">
+                            <span ng-bind="ctrl.method.getSumBuilding(building)"></span>
+                        </td>
+                        <td style="color: #d9534f;">
+                            <span ng-bind="ctrl.view.totalSum"></span>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-md-12">
                 <button class="btn btn-primary" ng-click="ctrl.event.toSelect()">

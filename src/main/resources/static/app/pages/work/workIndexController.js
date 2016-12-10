@@ -29,7 +29,7 @@
                 "دی",
                 "بهمن",
                 "اسفند"
-            ],
+            ]
             ///** @type {Array<WorkPerDayDto>} */
             //workPerDays: []
         };
@@ -73,12 +73,35 @@
             /** @type {DatePickerConfig} */
             endDateConfig:null
             ,
+            /** UnProcessed Works
+             * @type {Array<WorkVm>}*/
             works: null,
+            /** Feed Total Sums
+             * @type {number|null}*/
+            totalSum: null,
+
+            //Processed for By_PERSON
             /** @type {Array<{key:number, building:BuildingVm, works: Array<WorkVm>, sum: number}> | null} */
             workBuildingsByPerson: null,
+
+            //Processed for BY_BUILDING
             /** @type {Array<{key:number, building:PersonVm, works: Array<WorkVm>, sum: number}> | null} */
             workPersonsByBuilding: null,
-            //workPersonBuildingsByPosition:null
+
+            //Processed for BY_POSITION
+            /**
+             * Feed Page Titles (Buildings Information)
+             * @type {Array<BuildingVm>}*/
+            buildingsForWorksByPosition: null,
+            /**
+             * Feed Main Data of the Table
+             * @type {Array<{keyPerson:number, person:PersonVm, buildingSubGroupWorks: Array<{keyBuilding:number, building:BuildingVm, works: Array<WorkVm>, sum: number}>, sum: number}> | null} */
+            workPersonBuildingsByPosition:null,
+            /**
+             * Feed Footers (Building Sums)
+             * Does not contain sub grouping for Persons, we already have enough data in 'workPersonBuildingsByPosition'
+             * @type {Array<{key:number, building:BuildingVm, sum:number}>} */
+            buildingSimpleGrouping: null
         };
 
         self.method = {
@@ -89,6 +112,13 @@
                 self.view.mode = PageMode.SELECT;
             },
             viewByPerson:function (){
+
+                //Feed Total Sums
+                self.view.totalSum = Enumerable.from(self.view.works)
+                    .sum(/**@param s {WorkVm}*/function (s) {
+                        return s.workPerDay
+                    });
+
                 self.view.workBuildingsByPerson = Enumerable.from(self.view.works)
                     .groupBy(
                         /** @param work {WorkVm} */
@@ -118,6 +148,13 @@
                     .select("x=>x").toArray();
             },
             viewByBuilding:function () {
+
+                //Feed Total Sums
+                self.view.totalSum = Enumerable.from(self.view.works)
+                    .sum(/**@param s {WorkVm}*/function (s) {
+                        return s.workPerDay
+                    });
+
                 self.view.workPersonsByBuilding = Enumerable.from(self.view.works)
                     .groupBy(
                         /** @param work {WorkVm} */
@@ -155,6 +192,159 @@
             },
             viewByPosition:function () {
 
+                //Feed Page Titles (Buildings Information)
+                self.view.buildingsForWorksByPosition = Enumerable.from(self.view.buildings)
+                    .where(/** @param w {BuildingVm} */function (w) {
+                        return Enumerable.from(self.view.works)
+                            .any(/** @param aw {WorkVm}*/function(aw){
+                            return aw.building.id == w.id;
+                        });
+                    })
+                    .distinct(/**@param d {BuildingVm}*/function (d) {return d.id})
+                    .toArray();
+
+                //Feed Footers (Building Sums)
+                self.view.buildingSimpleGrouping = Enumerable.from(self.view.works)
+                    .groupBy(
+                        /** @param work {WorkVm} */
+                        function(work){
+                            return work.building.id
+                        },
+                        null,
+                        /**
+                         * @param key {BuildingVm}
+                         * @param group {Grouping|Enumerable} */
+                        function (key, group) {
+                            var groupWorks = group.toArray();
+
+                            var buildingSample =
+                                new BuildingVm(
+                                    groupWorks[0].building.id,
+                                    groupWorks[0].building.name,
+                                    groupWorks //Work that the building refer too
+                                );
+
+                            return {
+                                key: key,
+                                building: buildingSample,
+                                works: groupWorks,
+                                sum: group.sum("s=>s.workPerDay")
+                            };
+                        }
+                    ).select("x=>x").toArray();
+
+                //Feed Total Sums
+                self.view.totalSum = Enumerable.from(self.view.works)
+                    .sum(/**@param s {WorkVm}*/function (s) {
+                        return s.workPerDay
+                    });
+
+                //Feed Main Data of the Table
+                self.view.workPersonBuildingsByPosition = Enumerable.from(self.view.works)
+                    .groupBy(
+                        /** @param work {WorkVm} */
+                        function(work){
+                            return work.person.id
+                        },
+                        null,
+                        /**
+                         * @param key {PersonVm}
+                         * @param group {Grouping|Enumerable} */
+                        function (key, group) {
+
+                            /** type {Array<WorkVm>} */
+                            var groupWorks = group.toArray();
+
+                            /** @type {Array<{key:number, building:BuildingVm, works: Array<WorkVm>, sum: number}> | null} */
+                            var buildingSubGroupWorks = group
+                                .groupBy(
+                                    /** @param work2 {WorkVm} */
+                                    function (work2) {
+                                        return work2.building.id;
+                                    },
+                                    null,// function(work){return work;},
+                                    /**
+                                     * @param key2 {BuildingVm}
+                                     * @param group2 {Grouping|Enumerable} */  //Enumerable
+                                    function (key2, group2) {
+                                        /** @type {Array<WorkVm>} */
+                                        var groupWorks2 = group2.toArray();
+                                        var buildingSample =
+                                            new BuildingVm(
+                                                groupWorks2[0].building.id,
+                                                groupWorks2[0].building.name,
+                                                groupWorks2 //Work that the building refer too
+                                            );
+                                        return {
+                                            keyBuilding: key2,
+                                            building: buildingSample,
+                                            works: groupWorks2,
+                                            sum: group2.sum("s=>s.workPerDay")
+                                        };
+                                    })
+                                .select("x=>x").toArray();
+
+                            var personSample =
+                                new PersonVm(
+                                    groupWorks[0].person.id,
+                                    groupWorks[0].person.firstname,
+                                    groupWorks[0].person.lastname,
+                                    new PositionVm(
+                                        groupWorks[0].person.position.id,
+                                        groupWorks[0].person.position.title,
+                                        null,
+                                        Enumerable.from(groupWorks).select("s=>s.person").toArray()
+                                    ),
+                                    groupWorks //Work that the person refer too
+                                );
+                            return {
+                                keyPerson: key,
+                                person: personSample,
+                                buildingSubGroupWorks: buildingSubGroupWorks,
+                                sum: group.sum("s=>s.workPerDay")
+                            }
+                        }
+                    ).select("x=>x").toArray();
+            },
+            /**
+             * This Method Used Inside Table for BY_POSITION
+             * @param person {PersonVm}
+             * @param building {BuildingVm}
+             * @return {{keyBuilding:number, building:PersonVm, works: Array<WorkVm>, sum: number}|null}
+             */
+            getGroupingByPersonAndBuilding: function (person, building) {
+                /** @type {{keyPerson:number, person:BuildingVm, buildingSubGroupWorks: Array<{keyBuilding:number, building:PersonVm, works: Array<WorkVm>, sum: number}>, sum: number} | null}*/
+                var groupItem = Enumerable.from(self.view.workPersonBuildingsByPosition)
+                    .firstOrDefault(
+                        /** @param w {{keyPerson:number, person:BuildingVm, buildingSubGroupWorks: Array<{keyBuilding:number, building:PersonVm, works: Array<WorkVm>, sum: number}>, sum: number}}*/
+                        function (w) {
+                            return w.person.id == person.id;
+                    },null);
+
+                if(groupItem != null){
+                    return Enumerable.from(groupItem.buildingSubGroupWorks)
+                        .firstOrDefault(
+                            /** @param w {{keyBuilding:number, building:PersonVm, works: Array<WorkVm>, sum: number}} */
+                            function (w) {
+                                return w.building.id == building.id;
+                            }, null);
+                }
+                return null;
+            },
+            /**
+             * This Method Used Inside Table for BY_POSITION
+             * @param building {BuildingVm}
+             * @return {number | null}
+             */
+            getSumBuilding: function (building) {
+                /** @type {{key:number, building:BuildingVm, sum:number}|null} */
+                var data = Enumerable.from(self.view.buildingSimpleGrouping)
+                    .firstOrDefault(
+                        /** @param w {{key:number, building:BuildingVm, sum:number}} */
+                        function (w) {
+                            return w.building.id == building.id;
+                        }, null);
+                return (data!=null)?data.sum:null;
             }
         };
 
@@ -216,8 +406,11 @@
         };
 
         $scope.$watch(
-            "ctrl.view.headerSelections.startDate"
-            , function(newVal, oldVal){
+            "ctrl.view.headerSelections.startDate",
+            /**
+             * @param newVal {string|null|undefined}
+             * @param oldVal {string|null|undefined}*/
+            function(newVal, oldVal){
                 if(Util.Utility.isNullOrUndefined(newVal)){
                     self.view.endDateConfig.minDate = undefined;
                 }else{
@@ -230,8 +423,11 @@
         );
 
         $scope.$watch(
-            "ctrl.view.headerSelections.endDate"
-            , function(newVal, oldVal) {
+            "ctrl.view.headerSelections.endDate",
+            /**
+             * @param newVal {string|null|undefined}
+             * @param oldVal {string|null|undefined}*/
+            function(newVal, oldVal) {
                 if (Util.Utility.isNullOrUndefined(newVal)) {
                     self.view.startDateConfig.maxDate = undefined;
                 } else {
@@ -301,7 +497,7 @@
             var reportDictionary = new Dictionary();
             reportDictionary.add(ReportType.BY_PERSON, "بر اساس شخص");
             reportDictionary.add(ReportType.BY_BUILDING, "بر اساس ساختمان");
-            //reportDictionary.add(ReportType.BY_POSITION, "بر اساس سمت");
+            reportDictionary.add(ReportType.BY_POSITION, "بر اساس سمت");
             self.view.reportTypes = reportDictionary;
 
             //Personnel
