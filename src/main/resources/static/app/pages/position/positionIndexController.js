@@ -3,7 +3,7 @@
  */
 (function () {
 
-    var controller = function ($location, positionsService, wagesService) {
+    var controller = function ($location, ngDialog, positionsService, wagesService) {
         var self = this;
 
         self.view={
@@ -11,10 +11,51 @@
         };
 
         self.event={
-            insert: function () {
-                $location.path("/position/insert")
+            showInsertDialog: function () {
+                var promise = ngDialog.openConfirm({
+                    template: '/app/pages/position/positionInsertDialog.html',
+                    controller: 'positionInsertDialogController',
+                    controllerAs: 'insCtrl',
+                    //plain: true, -- Mean use of plain String as HTML
+                    showClose: true,
+                    closeByDocument: true,
+                    closeByEscape: true
+                });
+                promise.then(/** @param data {PositionVm} */function (data) {
+                    self.view.positions.push(data);
+                }, function (err) {
+                    //ignore
+                });
             },
-            remove:function (id) {
+            /*insert: function () {
+                $location.path("/position/insert")
+            },*/
+            showRemoveDialog: function(id) {
+                var promise = ngDialog.openConfirm({
+                    template: '/app/pages/position/positionDeleteDialog.html',
+                    controller: 'positionDeleteDialogController',
+                    controllerAs: 'dltCtrl',
+                    resolve: {
+                        selectedItem: function () {
+                            return Enumerable.from(self.view.positions).first(function (f) {
+                                return f.id == id;
+                            });
+                        }
+                    },
+                    //plain: true, -- Mean use of plain String as HTML
+                    showClose: true,
+                    closeByDocument: true,
+                    closeByEscape: true
+                });
+                promise.then(/** @param data {PositionVm} */function (data) {
+                    self.view.positions.remove(null, function (item, empty) {
+                        return item.id == data.id;
+                    }, 'all');
+                }, function (err) {
+                    //ignore
+                });
+            },
+            /*remove:function (id) {
                 //var removeItem = Enumerable.From(buildings).FirstOrDefault(null,w=>w.id ==id);
                 //buildings.splice()
                 positionsService.remove({id:id}).$promise
@@ -31,6 +72,31 @@
                             alert("یک خطای ناشناس در هنگام حذف آتم رخ داده است");
                         }
                     });
+            }*/
+            showUpdateDialog: function (id) {
+                var promise = ngDialog.openConfirm({
+                    template: '/app/pages/position/positionUpdateDialog.html',
+                    controller: 'positionUpdateDialogController',
+                    controllerAs: 'updCtrl',
+                    resolve: {
+                        selectedItem: function () {
+                            return Enumerable.from(self.view.positions).first(function (f) {
+                                return f.id == id;
+                            });
+                        }
+                    },
+                    //plain: true, -- Mean use of plain String as HTML
+                    showClose: true,
+                    closeByDocument: true,
+                    closeByEscape: true
+                });
+                promise.then(/** @param data {PositionVm} */function (data) {
+                    self.view.positions.replace(null, data, function (item, empty) {
+                        return item.id == data.id;
+                    },undefined,'all');
+                }, function (err) {
+                    //ignore
+                });
             }
         };
 
@@ -72,7 +138,7 @@
         initialize();
     };
 
-    controller.$inject = ["$location", "positionsService", "wagesService"];
+    controller.$inject = ["$location", "ngDialog", "positionsService", "wagesService"];
 
     angular.module("personnelManagement")
         .controller("positionIndexController", controller);

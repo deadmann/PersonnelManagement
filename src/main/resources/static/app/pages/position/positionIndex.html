@@ -16,7 +16,10 @@
                     دستمزد بعدی
                 </th>
                 <th>
-                    <button class="btn btn-primary btn-sm" ng-click="ctrl.event.insert()">create</button>
+                    <button class="btn btn-primary btn-sm" ng-click="ctrl.event.showInsertDialog()">
+                        افزودن
+                    </button>
+                    <!--<button class="btn btn-primary btn-sm" ng-click="ctrl.event.insert()">create</button>-->
                 </th>
             </tr>
             </thead>
@@ -44,7 +47,13 @@
                     </div>
                 </td>
                 <td>
-                    <button class="btn btn-danger btn-sm" ng-click="ctrl.event.remove(row.id)">delete</button>
+                    <!--<button class="btn btn-danger btn-sm" ng-click="ctrl.event.remove(row.id)">delete</button>-->
+                    <button class="btn btn-danger btn-sm" ng-click="ctrl.event.showRemoveDialog(row.id)">
+                        حذف
+                    </button>
+                    <button class="btn btn-warning btn-sm" ng-click="ctrl.event.showUpdateDialog(row.id)">
+                        ویرایش
+                    </button>
                 </td>
             </tr>
             </tbody>

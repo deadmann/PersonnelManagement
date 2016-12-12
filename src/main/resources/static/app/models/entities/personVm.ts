@@ -20,6 +20,18 @@ class PersonVm {
         if (works != undefined)this.works = works;
     }
 
+    /** this function won't bind in angular */
+    public getFullName() {
+        return this.firstname
+        + (Util.Utility.isNullOrUndefinedOrEmpty(this.lastname)
+            ? ""
+            : " " + this.lastname);
+    }
+
+    public get fullName():string{
+        return this.getFullName();
+    }
+
     private setup() {
         this.id = 0;
         this.firstname = null;

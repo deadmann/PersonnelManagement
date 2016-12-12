@@ -53,3 +53,85 @@
 body{
     font-family: 'IRANSans' !Important;
 }
+
+
+/*override and new classes for ndDialog*/
+.ngdialog-content{
+    font-family: 'IRANSans' !Important;
+}
+
+.ngdialog .btn {
+    border: 0;
+    border-radius: 3px;
+    font-family: inherit;
+    font-size: .8em;
+    letter-spacing: .1em;
+    line-height: 1em;
+    margin: 0 0 0 .5em;
+    padding: .75em 2em;
+    text-transform: uppercase;
+}
+
+.ng-dialog-header {
+    margin: -1em -1em 0 -1em;
+    border-radius: 5px 5px 0 0;
+    min-height: 16.42857143px;
+    padding: 15px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.ng-dialog-header .close {
+    margin-top: -2px;
+}
+
+.ng-dialog-header.ng-dialog-default{
+    background-color:#ffffff;
+    color: #000;
+}
+
+.ng-dialog-header.ng-dialog-primary{
+    background-color: #337ab7;
+    color: #fff;
+}
+
+.ng-dialog-header.ng-dialog-danger{
+    background-color: #c71e1e;
+    color: #fff;
+}
+
+.ng-dialog-header.ng-dialog-warning{
+    background-color: #ec971f;
+    color: #fff;
+}
+
+.ng-dialog-title {
+    margin: 0 22px 0 0;
+    line-height: 1.42857143;
+    font-weight: bold;
+}
+
+.ng-dialog-body {
+    position: relative;
+    padding: 15px;
+}
+
+.ng-dialog-footer {
+    margin: 0 -1em -1em -1em;
+    border-radius: 0 0 5px 5px;
+    padding: 10px;
+    text-align: right;
+    border-top: 1px solid #e5e5e5;
+}
+
+.ng-dialog-footer .btn + .btn {
+    margin-bottom: 0;
+    margin-right: 5px;
+}
+
+.ng-dialog-footer .btn-group .btn + .btn {
+    margin-right: -1px;
+}
+
+.ng-dialog-footer .btn-block + .btn-block {
+    margin-left: 0;
+}

@@ -2,5 +2,5 @@ security:
   basic:
     enabled: true
   user:
-    password: "admin"
     name: "admin"
+    password: "3114379"

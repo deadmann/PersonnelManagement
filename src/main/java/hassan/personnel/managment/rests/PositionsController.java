@@ -9,14 +9,17 @@ import hassan.personnel.managment.models.vm.PositionVm;
 import hassan.personnel.managment.services.PositionService;
 import hassan.personnel.managment.services.WageService;
 import hassan.personnel.managment.utility.CalendarHelper;
+import org.hibernate.jpa.internal.EntityManagerFactoryImpl;
+import org.hibernate.jpa.internal.EntityManagerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import java.util.List;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
@@ -46,12 +49,18 @@ public class PositionsController {
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST)
-    private Position save(@RequestBody PositionInsertDto positionInsert){
+    //@Transactional(rollbackFor = {Exception.class})
+    private PositionVm save(@RequestBody PositionInsertDto positionInsert){
         Position position = new Position(positionInsert.getTitle());
+        //? -->Add Wage To Position WageList
         position = positionService.save(position);
 
         Wage wage = new Wage(CalendarHelper.getMinimum(), positionInsert.getStartPayment(), position);
-        return wageService.save(wage).getPosition();
+        Wage savedWage = wageService.save(wage);
+
+        //? -->Add Wage To Position WageList
+
+        return positionService.getPosition(savedWage.getPosition().getId()).getViewModelWithWages();
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)

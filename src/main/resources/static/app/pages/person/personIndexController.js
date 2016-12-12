@@ -3,7 +3,7 @@
  */
 (function () {
 
-    var controller = function ($location, personnelService) {
+    var controller = function ($location, ngDialog, personnelService) {
         var self = this;
 
         self.view={
@@ -11,10 +11,51 @@
         };
 
         self.event={
-            insert: function () {
-                $location.path("/person/insert")
+            showInsertDialog: function () {
+                var promise = ngDialog.openConfirm({
+                    template: '/app/pages/person/personInsertDialog.html',
+                    controller: 'personInsertDialogController',
+                    controllerAs: 'insCtrl',
+                    //plain: true, -- Mean use of plain String as HTML
+                    showClose: true,
+                    closeByDocument: true,
+                    closeByEscape: true
+                });
+                promise.then(/** @param data {PersonVm} */function (data) {
+                    self.view.personnel.push(data);
+                }, function (err) {
+                    //ignore
+                });
             },
-            remove:function (id) {
+            /*insert: function () {
+                $location.path("/person/insert")
+            },*/
+            showRemoveDialog: function(id) {
+                var promise = ngDialog.openConfirm({
+                    template: '/app/pages/person/personDeleteDialog.html',
+                    controller: 'personDeleteDialogController',
+                    controllerAs: 'dltCtrl',
+                    resolve: {
+                        selectedItem: function () {
+                            return Enumerable.from(self.view.personnel).first(function (f) {
+                                return f.id == id;
+                            });
+                        }
+                    },
+                    //plain: true, -- Mean use of plain String as HTML
+                    showClose: true,
+                    closeByDocument: true,
+                    closeByEscape: true
+                });
+                promise.then(/** @param data {PersonVm} */function (data) {
+                    self.view.personnel.remove(null, function (item, empty) {
+                        return item.id == data.id;
+                    }, 'all');
+                }, function (err) {
+                    //ignore
+                });
+            },
+            /*remove:function (id) {
                 //var removeItem = Enumerable.From(buildings).FirstOrDefault(null,w=>w.id ==id);
                 //buildings.splice()
                 personnelService.remove({id:id}).$promise
@@ -31,6 +72,31 @@
                             alert("یک خطای ناشناس در هنگام حذف آتم رخ داده است");
                         }
                     });
+            },*/
+            showUpdateDialog: function (id) {
+                var promise = ngDialog.openConfirm({
+                    template: '/app/pages/person/personUpdateDialog.html',
+                    controller: 'personUpdateDialogController',
+                    controllerAs: 'updCtrl',
+                    resolve: {
+                        selectedItem: function () {
+                            return Enumerable.from(self.view.personnel).first(function (f) {
+                                return f.id == id;
+                            });
+                        }
+                    },
+                    //plain: true, -- Mean use of plain String as HTML
+                    showClose: true,
+                    closeByDocument: true,
+                    closeByEscape: true
+                });
+                promise.then(/** @param data {BuildingVm} */function (data) {
+                    self.view.personnel.replace(null, data, function (item, empty) {
+                        return item.id == data.id;
+                    },undefined,'all');
+                }, function (err) {
+                    //ignore
+                });
             }
         };
 
@@ -46,7 +112,7 @@
         initialize();
     };
 
-    controller.$inject = ["$location", "personnelService"];
+    controller.$inject = ["$location", "ngDialog", "personnelService"];
 
     angular.module("personnelManagement")
         .controller("personIndexController", controller);

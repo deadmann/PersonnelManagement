@@ -1,6 +1,7 @@
 package hassan.personnel.managment.services;
 
 
+import hassan.personnel.managment.models.entities.Building;
 import hassan.personnel.managment.models.entities.Person;
 import hassan.personnel.managment.repositories.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,5 +39,9 @@ public class PersonService {
         Person person = personRepository.findOne(id);
         personRepository.delete(id);
         return person;
+    }
+
+    public Person update(Person person){
+        return personRepository.save(person);
     }
 }

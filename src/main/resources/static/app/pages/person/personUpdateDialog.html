@@ -1,0 +1,62 @@
+<form ng-submit="updCtrl.event.save()">
+
+    <div class="ng-dialog-header ng-dialog-warning">
+        <div class="ng-dialog-title">
+            ویرایش شخص
+        </div>
+    </div>
+
+    <div class="ng-dialog-body">
+        <div class="row">
+            <div class="col-md-4">
+                <label for="firstname">
+                    نام
+                </label>
+            </div>
+            <div class="col-md-8">
+                <input id="firstname" class="form-control" type="text"
+                       ng-model="updCtrl.view.person.firstname"
+                       required="required"/>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-4">
+                <label for="lastname">
+                    نام خانوادگی
+                </label>
+            </div>
+            <div class="col-md-8">
+                <input id="lastname" class="form-control" type="text"
+                       ng-model="updCtrl.view.person.lastname"/>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-4">
+                <label for="position">
+                    سمت
+                </label>
+            </div>
+            <div class="col-md-8">
+                <select id="position" class="form-control"
+                        ng-options="position as position.title for position in updCtrl.view.positions track by position.id"
+                        ng-model="updCtrl.view.person.position"
+                        required="required">
+                    <option disabled selected>یک مورد را انتخاب کنید</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="ng-dialog-footer">
+        <button type="submit" class="btn btn-warning btn-sm">
+            ذخیره اطلاعات
+        </button>
+        <button type="button" class="btn btn-default btn-sm" ng-click="updCtrl.event.close()">
+            انصراف
+        </button>
+    </div>
+
+</form>

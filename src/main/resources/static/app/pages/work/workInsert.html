@@ -33,7 +33,7 @@
         </div>
         <div class="col-md-4">
             <span>نام پرسنل:</span>
-            <span ng-bind="((ctrl.view.headerSelections.person.firstname + ' ') | emptyForNull) + (ctrl.view.headerSelections.person.lastname | emptyForNull)"></span>
+            <span ng-bind="(ctrl.view.headerSelections.person.firstname | emptyForNull) + ' ' + (ctrl.view.headerSelections.person.lastname | emptyForNull)"></span>
         </div>
         <form ng-submit="ctrl.event.save()">
             <table class="table table-bordered table-condensed table-striped table-hower">

@@ -17,6 +17,20 @@ var PersonVm = (function () {
         if (works != undefined)
             this.works = works;
     }
+    /** this function won't bind in angular */
+    PersonVm.prototype.getFullName = function () {
+        return this.firstname
+            + (Util.Utility.isNullOrUndefinedOrEmpty(this.lastname)
+                ? ""
+                : " " + this.lastname);
+    };
+    Object.defineProperty(PersonVm.prototype, "fullName", {
+        get: function () {
+            return this.getFullName();
+        },
+        enumerable: true,
+        configurable: true
+    });
     PersonVm.prototype.setup = function () {
         this.id = 0;
         this.firstname = null;

@@ -26,6 +26,7 @@
             // 'save': {method: 'POST'},
             // 'remove': {method: 'DELETE'},
             // 'delete': {method: 'DELETE'}
+            'update': {method: 'PUT'}
         })
     };
 

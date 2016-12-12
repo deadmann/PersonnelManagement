@@ -75,7 +75,7 @@
                     </div>
                     <div class="col-md-4">
                         <span>نام پرسنل:</span>
-                        <span ng-bind="((ctrl.view.headerSelections.person.firstname + ' ') | emptyForNull) + (ctrl.view.headerSelections.person.lastname | emptyForNull)"></span>
+                        <span ng-bind="(ctrl.view.headerSelections.person.firstname | emptyForNull) + ' ' + (ctrl.view.headerSelections.person.lastname | emptyForNull)"></span>
                     </div>
                 </div>
 
@@ -154,7 +154,7 @@
                     <tbody>
                     <tr ng-repeat="item in ctrl.view.workPersonsByBuilding">
                         <td>
-                            <span ng-bind="((item.person.firstname + ' ')|emptyForNull) + (item.person.lastname|emptyForNull)"></span>
+                            <span ng-bind="(item.person.firstname|emptyForNull) + ' ' + (item.person.lastname | emptyForNull)"></span>
                         </td>
                         <td>
                             <span ng-bind="item.sum"></span>
@@ -213,8 +213,8 @@
                     </thead>
                     <tbody>
                     <tr ng-repeat="item in ctrl.view.workPersonBuildingsByPosition">
-                        <td>
-                            <span ng-bind="((item.person.firstname + ' ')|emptyForNull) + (item.person.lastname|emptyForNull)"></span>
+                        <td style="font-weight: bold">
+                            <span ng-bind="(item.person.firstname|emptyForNull) + ' ' +  (item.person.lastname|emptyForNull)"></span>
                         </td>
                         <td ng-repeat="building in ctrl.view.buildingsForWorksByPosition">
                             <span ng-bind="ctrl.method.getGroupingByPersonAndBuilding(item.person,building).sum"></span>
@@ -224,7 +224,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td style="color: seagreen;">
+                        <td style="color: seagreen;font-weight: bold;">
                             <span>
                                 مجموع
                             </span>

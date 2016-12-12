@@ -1,0 +1,45 @@
+<form ng-submit="insCtrl.event.save()">
+
+    <div class="ng-dialog-header ng-dialog-primary">
+        <div class="ng-dialog-title">
+            افزودن سمت
+        </div>
+    </div>
+
+    <div class="ng-dialog-body">
+        <div class="row">
+            <div class="col-md-4">
+                <label for="title">
+                    عنوان سمت
+                </label>
+            </div>
+            <div class="col-md-8">
+                <input id="title" class="form-control ngdialog-input" type="text"
+                       ng-model="insCtrl.view.positionInsert.title"
+                       required="required"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <label for="startWage">
+                دستمزد
+                </label>
+            </div>
+            <div class="col-md-8">
+                <input id="startWage" class="form-control" type="number" min="0"
+                       ng-model="insCtrl.view.positionInsert.startPayment"
+                       required="required"/>
+            </div>
+        </div>
+    </div>
+
+    <div class="ng-dialog-footer">
+        <button type="submit" class="btn btn-primary">
+            ذخیره اطلاعات
+        </button>
+        <button type="button" class="btn btn-default" ng-click="insCtrl.event.close()">
+            انصراف
+        </button>
+    </div>
+
+</form>

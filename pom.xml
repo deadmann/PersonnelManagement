@@ -5,7 +5,7 @@
 
 	<groupId>hassan.personnel.managment</groupId>
 	<artifactId>personnel-management</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.1.0-BETA</version>
 	<packaging>jar</packaging>
 
 	<name>demo</name>
