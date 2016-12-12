@@ -32,7 +32,6 @@
                                 title: "اخطار",
                                 body: "ساختمان " + self.view.building.name + " پیدا نشد"
                             });
-                            alert("آیتم مورد نظر ‍یدا نشد");
                         } else if (err.status === 409) {
                             toaster.pop({
                                 type: "warning",

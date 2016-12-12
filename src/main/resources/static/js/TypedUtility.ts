@@ -67,16 +67,51 @@ module Util {
                 index = this.indexOf(itemList, searchItem, fnMatch);
                 return itemList.splice(index, 1);
             } else if (removeOption == 'last') {
-                index = this.indexOf(itemList, searchItem, fnMatch);
+                index = this.lastIndexOf(itemList, searchItem, fnMatch);
                 return itemList.splice(index, 1);
             } else if (removeOption == 'all') {
                 var deletedItems = [];
-                while ((index = this.indexOf(itemList, searchItem, fnMatch)) != -1) {
+                var index=0;//We pass index as reference so we don't repeat the whole search (0=> we don't plus by 1 as deleted item wont be inside list any more, and we need to recheck the index)
+                while ((index = this.indexOf(itemList, searchItem, fnMatch, index)) != -1) {
                     deletedItems.push(itemList.splice(index, 1)[0]);
                 }
                 return deletedItems;
             } else {
                 throw "remove option is not supported"
+            }
+        }
+
+        /**
+         * Remove Item From Array, And Returns List Of Deleted Items
+         * @param itemList{Array<any>} list of items that we want to search in
+         * @param searchItem {*} item we use to match data
+         * @param replaceWith {*} the item that should be replaced with searching item
+         * @param fnMatch {function} if defined this function will be used to match two models, other wise object reference will be used. firstItem come from array and second is searchItem
+         * @param replaceOption {string} 'first' (default), 'last', 'all'
+         * @returns {*[]} returns Deleted Items
+         */
+        public static replace(itemList:Array<any>, searchItem:any, replaceWith:any, fnMatch?:Function, replaceOption:string = 'first'):Array<any> {
+            var index:number;
+            if (replaceOption == 'first') {
+                index = this.indexOf(itemList, searchItem, fnMatch);
+                var oldItem = itemList[index];
+                itemList[index]=replaceWith;
+                return oldItem;
+            } else if (replaceOption == 'last') {
+                index = this.lastIndexOf(itemList, searchItem, fnMatch);
+                var oldItem = itemList[index];
+                itemList[index]=replaceWith;
+                return oldItem;
+            } else if (replaceOption == 'all') {
+                var oldItems = [];
+                var index = -1;//We pass index as reference so we don't repeat the whole search (-1=> 1. item doesn't delete, 2. we do plus by to bypass current item)
+                while ((index = this.indexOf(itemList, searchItem, fnMatch, index+1)) != -1) {
+                    oldItems.push(itemList[index]);
+                    itemList[index]=replaceWith;
+                }
+                return oldItems;
+            } else {
+                throw "replace option is not supported"
             }
         }
 
@@ -152,14 +187,15 @@ module Util {
          * @param items {Array<any>} list of items that we want to search in
          * @param searchItem {*|null} item we use to match data / null if want to match with global or other accessible data
          * @param fnMatch {function} if defined this function will be used to match two models, other wise object reference will be used. firstItem come from array and second is searchItem
+         * @param startIndex {number} the starting index where the search start from within the array
          * @returns {number}
          */
-        public static indexOf(items:any[], searchItem:any, fnMatch?:Function) {
+        public static indexOf(items:any[], searchItem:any, fnMatch?:Function, startIndex:number=0) {
             //If we don't have specific match function, we can use array indexOf if exists
             if (!fnMatch && Array.prototype.indexOf) {
                 return items.indexOf(searchItem);
             }
-            for (var i:number = 0; i < items.length; i++) {
+            for (var i:number = startIndex; i < items.length; i++) {
                 if (fnMatch) {
                     if (fnMatch(items[i], searchItem)) {
                         return i;
@@ -178,18 +214,18 @@ module Util {
          * @param items {Array<any>} list of items that we want to search in
          * @param searchItem {*|null} item we use to match data / null if want to match with global or other accessible data
          * @param fnMatch {function} if defined this function will be used to match two models, other wise object reference will be used. firstItem come from array and second is searchItem
+         * @param startIndex {number} the starting index where the search start from within the array
          * @returns {number}
          */
-        public static lastIndexOf(items:any[], searchItem:any, fnMatch?:Function) {
+        public static lastIndexOf(items:any[], searchItem:any, fnMatch?:Function, startIndex:number=(items.length-1)) {
             //If we don't have specific match function, we can use array lastIndexOf if exists
             if (!fnMatch && Array.prototype.lastIndexOf) {
                 return items.lastIndexOf(searchItem);
             }
-            var index:number = -1;
-            for (var i:number = 0; i < items.length; i++) {
+            for (var i:number = startIndex; i > 0; i--) {
                 if (fnMatch) {
                     if (fnMatch(items[i], searchItem)) {
-                        index = i;
+                        return i;
                     }
                 } else {
                     if (items[i] === searchItem) {
@@ -197,7 +233,7 @@ module Util {
                     }
                 }
             }
-            return index;
+            return -1;
         }
 
         /**

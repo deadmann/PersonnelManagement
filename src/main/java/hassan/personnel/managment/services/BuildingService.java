@@ -37,4 +37,8 @@ public class BuildingService {
         buildingRepository.delete(id);
         return building;
     }
+
+    public Building update(Building building){
+        return buildingRepository.save(building);
+    }
 }

@@ -75,6 +75,31 @@
                         }
                     });
             }*/
+            showUpdateDialog: function (id) {
+                var promise = ngDialog.openConfirm({
+                    template: '/app/pages/building/buildingUpdateDialog.html',
+                    controller: 'buildingUpdateDialogController',
+                    controllerAs: 'updCtrl',
+                    resolve: {
+                        selectedItem: function () {
+                            return Enumerable.from(self.view.buildings).first(function (f) {
+                                return f.id == id;
+                            });
+                        }
+                    },
+                    //plain: true, -- Mean use of plain String as HTML
+                    showClose: true,
+                    closeByDocument: true,
+                    closeByEscape: true
+                });
+                promise.then(/** @param data {BuildingVm} */function (data) {
+                    self.view.buildings.replace(null, data, function (item, empty) {
+                        return item.id == data.id;
+                    },undefined,'all');
+                }, function (err) {
+                    //ignore
+                });
+            }
         };
 
         function initialize() {

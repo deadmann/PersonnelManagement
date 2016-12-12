@@ -88,6 +88,13 @@ public class WorksController {
         return ResponseEntity.ok(workPerDays);
     }
 
+    /**
+     *
+     * @param personId
+     * @param startDate is inclusive
+     * @param endDate is inclusive
+     * @return
+     */
     @RequestMapping(value = "/by-person-and-date-between/{personId}/{startDate}/{endDate}")
     private ResponseEntity<List<WorkVm>> getWorksByPersonAndDateBetween(@PathVariable("personId") Integer personId, @PathVariable("startDate") String startDate, @PathVariable("endDate") String endDate) {
         String[] startDateParts = startDate.split("[-]");
@@ -103,6 +110,9 @@ public class WorksController {
                 Integer.valueOf(endDateParts[1]),
                 Integer.valueOf(endDateParts[2]));
 
+        //Make pcEnd Inclusive
+        pcEnd.add(Calendar.DAY_OF_MONTH, 1);
+
         List<Work> workList =
                 workService.getWorksByPersonIdAndDateBetween(personId,
                         CalendarHelper.toGregorian(pcStart),
@@ -112,6 +122,13 @@ public class WorksController {
         return ResponseEntity.ok(workVms);
     }
 
+    /**
+     *
+     * @param buildingId
+     * @param startDate is inclusive
+     * @param endDate is inclusive
+     * @return
+     */
     @RequestMapping(value = "/by-building-and-date-between/{buildingId}/{startDate}/{endDate}")
     private ResponseEntity<List<WorkVm>> getWorksByBuildingAndDateBetween(@PathVariable("buildingId") Integer buildingId, @PathVariable("startDate") String startDate, @PathVariable("endDate") String endDate) {
         String[] startDateParts = startDate.split("[-]");
@@ -127,6 +144,9 @@ public class WorksController {
                 Integer.valueOf(endDateParts[1]),
                 Integer.valueOf(endDateParts[2]));
 
+        //Make pcEnd Inclusive
+        pcEnd.add(Calendar.DAY_OF_MONTH, 1);
+
         List<Work> workList =
                 workService.getWorksByBuildingIdAndDateBetween(buildingId,
                         CalendarHelper.toGregorian(pcStart),
@@ -136,6 +156,13 @@ public class WorksController {
         return ResponseEntity.ok(workVms);
     }
 
+    /**
+     *
+     * @param positionId
+     * @param startDate is inclusive
+     * @param endDate is inclusive
+     * @return
+     */
     @RequestMapping(value = "/by-position-and-date-between/{positionId}/{startDate}/{endDate}")
     private ResponseEntity<List<WorkVm>> getWorksByPositionAndDateBetween(@PathVariable("positionId") Integer positionId, @PathVariable("startDate") String startDate, @PathVariable("endDate") String endDate) {
         String[] startDateParts = startDate.split("[-]");
@@ -150,6 +177,9 @@ public class WorksController {
                 Integer.valueOf(endDateParts[0]),
                 Integer.valueOf(endDateParts[1]),
                 Integer.valueOf(endDateParts[2]));
+
+        //Make pcEnd Inclusive
+        pcEnd.add(Calendar.DAY_OF_MONTH, 1);
 
         List<Work> workList =
                 workService.getWorksByPersonPositionIdAndDateBetween(positionId,
@@ -193,6 +223,11 @@ public class WorksController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
+    /**
+     * Convert WorkPerDays to Works
+     * @param workPerDays
+     * @return
+     */
     private List<Work> workPerDayToWork(List<WorkPerDayDto> workPerDays) {
         List<Work> works = new ArrayList<>();
         for (WorkPerDayDto workPerDay: workPerDays) {

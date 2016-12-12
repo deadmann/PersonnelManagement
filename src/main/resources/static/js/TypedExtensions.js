@@ -131,17 +131,6 @@ Number.prototype.putThousandComma = function () {
     return this.toString().putThousandComma();
 };
 /**
- * Remove Item From Array, And Returns List Of Deleted Items
- * @param searchItem {*} item we use to match data
- * @param fnMatch {function} if defined this function will be used to match two models, other wise object reference will be used. firstItem come from array and second is searchItem
- * @param removeOption {string} 'first' (default), 'last', 'all'
- * @returns {*[]} returns Deleted Items
- */
-Array.prototype.remove = function (searchItem, fnMatch, removeOption) {
-    if (removeOption === void 0) { removeOption = 'first'; }
-    return Util.Utility.remove(this, searchItem, fnMatch, removeOption);
-};
-/**
  * Find item using Match function.
  * @param searchItem {*} item we use to match data
  * @param fnMatch {function} if defined this function will be used to match two models, other wise object reference will be used. firstItem come from array and second is searchItem
@@ -163,19 +152,44 @@ Array.prototype.contains = function (searchItem, fnMatch) {
  * returns index of searched item at first found position, otherwise returns -1
  * @param searchItem {*|null} item we use to match data / null if want to match with global or other accessible data
  * @param fnMatch {function} if defined this function will be used to match two models, other wise object reference will be used. firstItem come from array and second is searchItem
+ * @param startIndex {number} the starting index where the search start from within the array
  * @returns {number}
  */
-Array.prototype.indexOfMatch = function (searchItem, fnMatch) {
-    return Util.Utility.indexOf(this, searchItem, fnMatch);
+Array.prototype.indexOfMatch = function (searchItem, fnMatch, startIndex) {
+    return Util.Utility.indexOf(this, searchItem, fnMatch, startIndex);
 };
 /**
  * returns index of searched item at last found position, otherwise returns -1
  * @param searchItem {*|null} item we use to match data / null if want to match with global or other accessible data
  * @param fnMatch {function} if defined this function will be used to match two models, other wise object reference will be used. firstItem come from array and second is searchItem
+ * @param startIndex {number} the starting index where the search start from within the array
  * @returns {number}
  */
-Array.prototype.lastIndexOfMatch = function (searchItem, fnMatch) {
+Array.prototype.lastIndexOfMatch = function (searchItem, fnMatch, startIndex) {
     return Util.Utility.lastIndexOf(this, searchItem, fnMatch);
+};
+/**
+ * Remove Item From Array, And Returns List Of Deleted Items
+ * @param searchItem {*} item we use to match data
+ * @param fnMatch {function} if defined this function will be used to match two models, other wise object reference will be used. firstItem come from array and second is searchItem
+ * @param removeOption {string} 'first' (default), 'last', 'all'
+ * @returns {*[]} returns Deleted Items
+ */
+Array.prototype.remove = function (searchItem, fnMatch, removeOption) {
+    if (removeOption === void 0) { removeOption = 'first'; }
+    return Util.Utility.remove(this, searchItem, fnMatch, removeOption);
+};
+/**
+ * Replace Item Inside Array, And Returns List Of Deleted Items
+ * @param searchItem {*} item we use to match data
+ * @param replaceWith {*} the item that should be replaced with searching item
+ * @param fnMatch {function} if defined this function will be used to match two models, other wise object reference will be used. firstItem come from array and second is searchItem
+ * @param replaceOption {string} 'first' (default), 'last', 'all'
+ * @returns {*[]} returns Deleted Items
+ */
+Array.prototype.replace = function (searchItem, replaceWith, fnMatch, replaceOption) {
+    if (replaceOption === void 0) { replaceOption = 'first'; }
+    return Util.Utility.replace(this, searchItem, replaceWith, fnMatch, replaceOption);
 };
 //// Add To Extensions
 //// ReSharper disable once NativeTypePrototypeExtending

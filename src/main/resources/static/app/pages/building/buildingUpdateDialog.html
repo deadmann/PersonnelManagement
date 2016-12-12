@@ -1,8 +1,8 @@
-<form ng-submit="insCtrl.event.save()">
+<form ng-submit="updCtrl.event.save()">
 
-    <div class="ng-dialog-header ng-dialog-default">
+    <div class="ng-dialog-header ng-dialog-warning">
         <div class="ng-dialog-title">
-            افزودن ساختمان
+    ویرایش ساختمان
         </div>
     </div>
 
@@ -14,16 +14,17 @@
                 </label>
             </div>
             <div class="col-md-8">
-                <input id="buildingName" class="form-control ngdialog-input" type="text" ng-model="insCtrl.view.building.name"/>
+                <input id="buildingName" class="form-control ngdialog-input" type="text" ng-model="updCtrl.view.building.name"/>
             </div>
         </div>
     </div>
 
+
     <div class="ng-dialog-footer">
-        <button type="submit" class="btn btn-primary">
+        <button type="submit" class="btn btn-warning btn-sm">
             ذخیره اطلاعات
         </button>
-        <button type="button" class="btn btn-default" ng-click="insCtrl.event.close()">
+        <button type="button" class="btn btn-default btn-sm" ng-click="updCtrl.event.close()">
             انصراف
         </button>
     </div>

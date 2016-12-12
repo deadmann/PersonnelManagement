@@ -1,6 +1,7 @@
 package hassan.personnel.managment.rests;
 
 import hassan.personnel.managment.exceptionalResponses.ConflictException;
+import hassan.personnel.managment.exceptionalResponses.InvalidDataException;
 import hassan.personnel.managment.exceptionalResponses.NotFoundException;
 import hassan.personnel.managment.models.entities.Building;
 import hassan.personnel.managment.models.vm.BuildingVm;
@@ -52,4 +53,23 @@ public class BuildingsController {
             throw new NotFoundException("Requested Item Does Not Found");
         }
     }
+
+    @RequestMapping(value="/{id}", method=RequestMethod.PUT)
+    private BuildingVm update(@PathVariable int id, @RequestBody Building building) throws ConflictException, NotFoundException, InvalidDataException {
+        try {
+            if(id != building.getId())
+                throw new InvalidDataException("Model id does not match with requested id");
+
+            Building buildingUpdate = buildingService.getBuilding(building.getId());
+            buildingUpdate.setName(building.getName());
+
+            buildingService.update(buildingUpdate);
+            return building.getViewModel();
+        }catch (DataIntegrityViolationException ex){
+            throw new ConflictException(ex.getMessage());
+        }catch (EmptyResultDataAccessException ex){
+            throw new NotFoundException("Requested Item Does Not Found");
+        }
+    }
+
 }

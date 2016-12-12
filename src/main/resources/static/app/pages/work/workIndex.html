@@ -213,7 +213,7 @@
                     </thead>
                     <tbody>
                     <tr ng-repeat="item in ctrl.view.workPersonBuildingsByPosition">
-                        <td>
+                        <td style="font-weight: bold">
                             <span ng-bind="((item.person.firstname + ' ')|emptyForNull) + (item.person.lastname|emptyForNull)"></span>
                         </td>
                         <td ng-repeat="building in ctrl.view.buildingsForWorksByPosition">
@@ -224,7 +224,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td style="color: seagreen;">
+                        <td style="color: seagreen;font-weight: bold;">
                             <span>
                                 مجموع
                             </span>
