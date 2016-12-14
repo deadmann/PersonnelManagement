@@ -1,6 +1,7 @@
 package hassan.personnel.managment.services;
 
 
+import hassan.personnel.managment.exceptionalResponses.ConflictException;
 import hassan.personnel.managment.models.entities.Building;
 import hassan.personnel.managment.models.entities.Person;
 import hassan.personnel.managment.repositories.PersonRepository;
@@ -26,7 +27,9 @@ public class PersonService {
         return (List<Person>) personRepository.findAll();
     }
 
-    public Person save(Person person) {
+    public Person save(Person person) throws ConflictException {
+        if(getPerson(person.getId())!=null)
+            throw new ConflictException("This Item Already Exists");
         return personRepository.save(person);
     }
 

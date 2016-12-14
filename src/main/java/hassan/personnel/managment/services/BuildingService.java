@@ -1,5 +1,6 @@
 package hassan.personnel.managment.services;
 
+import hassan.personnel.managment.exceptionalResponses.ConflictException;
 import hassan.personnel.managment.models.entities.Building;
 import hassan.personnel.managment.repositories.BuildingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,9 @@ public class BuildingService {
         return (List<Building>) buildingRepository.findAll();
     }
 
-    public Building save(Building building) {
+    public Building save(Building building) throws ConflictException {
+        if(getBuilding(building.getId())!=null)
+            throw new ConflictException("This Item Already Exists");
         return buildingRepository.save(building);
     }
 

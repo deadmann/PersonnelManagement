@@ -1,11 +1,14 @@
 package hassan.personnel.managment.services;
 
 
+import hassan.personnel.managment.exceptionalResponses.ConflictException;
 import hassan.personnel.managment.models.entities.Position;
+import hassan.personnel.managment.models.entities.Wage;
 import hassan.personnel.managment.repositories.PositionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,7 +28,10 @@ public class PositionService {
         return (List<Position>) positionRepository.findAll();
     }
 
-    public Position save(Position position) {
+    public Position save(Position position) throws ConflictException {
+        if(getPosition(position.getId())!=null)
+            throw new ConflictException("This Item Already Exists");
+
         return positionRepository.save(position);
     }
 

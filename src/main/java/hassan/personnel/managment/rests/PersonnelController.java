@@ -39,7 +39,7 @@ public class PersonnelController {
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST)
-    private Person save(@RequestBody Person person){
+    private Person save(@RequestBody Person person) throws ConflictException {
         return personService.save(person);
     }
 

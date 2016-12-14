@@ -1,5 +1,6 @@
 package hassan.personnel.managment.services;
 
+import hassan.personnel.managment.exceptionalResponses.ConflictException;
 import hassan.personnel.managment.models.entities.Wage;
 import hassan.personnel.managment.repositories.WageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,9 @@ public class WageService {
         return wageRepository.findAll();
     }
 
-    public Wage save(Wage wage) {
+    public Wage save(Wage wage) throws ConflictException {
+        if(getWage(wage.getId())!=null)
+            throw new ConflictException("This Item Already Exists");
         return wageRepository.save(wage);
     }
 

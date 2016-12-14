@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -50,17 +51,26 @@ public class PositionsController {
 
     @RequestMapping(value = "", method = RequestMethod.POST)
     //@Transactional(rollbackFor = {Exception.class})
-    private PositionVm save(@RequestBody PositionInsertDto positionInsert){
+    private PositionVm save(@RequestBody PositionInsertDto positionInsert) throws ConflictException {
         Position position = new Position(positionInsert.getTitle());
+
+        List<Wage> wageList;
+        if((wageList = position.getWages())==null) {
+            wageList = new ArrayList<Wage>();
+            position.setWages(wageList);
+        }
+
+        Wage wage = new Wage(CalendarHelper.getMinimum(), positionInsert.getStartPayment(), position);
+
+        wageList.add(wage);
         //? -->Add Wage To Position WageList
         position = positionService.save(position);
 
-        Wage wage = new Wage(CalendarHelper.getMinimum(), positionInsert.getStartPayment(), position);
         Wage savedWage = wageService.save(wage);
 
         //? -->Add Wage To Position WageList
 
-        return positionService.getPosition(savedWage.getPosition().getId()).getViewModelWithWages();
+        return position.getViewModelWithWages();
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)

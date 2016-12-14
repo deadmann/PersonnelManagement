@@ -36,7 +36,7 @@ public class WagesController {
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST)
-    private Wage save(@RequestBody Wage wage){
+    private Wage save(@RequestBody Wage wage) throws ConflictException {
         return wageService.save(wage);
     }
 

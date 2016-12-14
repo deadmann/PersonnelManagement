@@ -10,28 +10,38 @@
  */
 class ModelHelper {
     public static toBuilding(obj:any):BuildingVm {
+        if (Util.Utility.isNullOrUndefined(obj))
+            return null;
         var works = ModelHelper.toArray(obj.works, ModelType.Work);
         return new BuildingVm(obj.id, obj.name, works);
     }
 
     public static toPerson(obj:any):PersonVm {
+        if (Util.Utility.isNullOrUndefined(obj))
+            return null;
         var works = ModelHelper.toArray(obj.works, ModelType.Work);
         var position = ModelHelper.toPosition(obj.position);
         return new PersonVm(obj.id, obj.firstname, obj.lastname, position, works);
     }
 
     public static toPosition(obj:any):PositionVm {
+        if (Util.Utility.isNullOrUndefined(obj))
+            return null;
         var personnel = ModelHelper.toArray(obj.personnel, ModelType.Person);
         var wages = ModelHelper.toArray(obj.wages, ModelType.Wage);
         return new PositionVm(obj.id, obj.title, wages, personnel);
     }
 
     public static toWage(obj:any):WageVm {
+        if (Util.Utility.isNullOrUndefined(obj))
+            return null;
         var position=ModelHelper.toPosition(obj.position);
         return new WageVm(obj.id, obj.startDate, obj.price, position);
     }
 
     public static toWork(obj:any):WorkVm {
+        if (Util.Utility.isNullOrUndefined(obj))
+            return null;
         var person = ModelHelper.toPerson(obj.person);
         var building = ModelHelper.toBuilding(obj.building);
         return new WorkVm(obj.id, obj.workPerDay, obj.date, person, building);

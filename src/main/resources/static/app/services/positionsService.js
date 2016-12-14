@@ -12,7 +12,7 @@
                 method :"GET",
                 /** @param data {PositionVm} */
                 transformResult: function (data) {
-                    return ModelHelper.toBuilding(data);
+                    return ModelHelper.toPosition(data);
                 }
             },
             "query": {
@@ -31,7 +31,13 @@
                     return ModelHelper.toArray(data, ModelType.Position);
                 }
             },
-            // 'save': {method: 'POST'},
+            'save': {
+                method: 'POST',
+                /** @param data {PositionVm} */
+                transformResult: function (data) {
+                    return ModelHelper.toPosition(data);
+                }
+            },
             // 'remove': {method: 'DELETE'},
             // 'delete': {method: 'DELETE'}
             'update': {method: 'PUT'}

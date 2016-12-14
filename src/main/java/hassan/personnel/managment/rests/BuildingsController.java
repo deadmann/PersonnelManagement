@@ -37,7 +37,7 @@ public class BuildingsController {
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST)
-    private Building save(@RequestBody Building building){
+    private Building save(@RequestBody Building building) throws ConflictException {
         return buildingService.save(building);
     }
 

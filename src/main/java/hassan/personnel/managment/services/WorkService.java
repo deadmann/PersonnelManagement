@@ -1,5 +1,6 @@
 package hassan.personnel.managment.services;
 
+import hassan.personnel.managment.exceptionalResponses.ConflictException;
 import hassan.personnel.managment.exceptionalResponses.InvalidDataException;
 import hassan.personnel.managment.models.entities.Work;
 import hassan.personnel.managment.repositories.WorkRepository;
@@ -63,7 +64,9 @@ public class WorkService {
         return workRepository.findByPersonPositionIdAndDateGreaterThanEqualAndDateLessThan(positionId, inclusiveStartDate, exclusiveEndDate);
     }
 
-    public Work save(Work work) {
+    public Work save(Work work) throws ConflictException {
+        if(getWork(work.getId())!=null)
+            throw new ConflictException("This Item Already Exists");
         return workRepository.save(work);
     }
 

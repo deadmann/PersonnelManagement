@@ -191,7 +191,7 @@ public class WorksController {
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST)
-    private Work save(@RequestBody Work work){
+    private Work save(@RequestBody Work work) throws ConflictException {
         return workService.save(work);
     }
 
