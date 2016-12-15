@@ -88,7 +88,8 @@
                     //plain: true, -- Mean use of plain String as HTML
                     showClose: true,
                     closeByDocument: true,
-                    closeByEscape: true
+                    closeByEscape: true,
+                    width: "700px"
                 });
                 promise.then(/** @param data {PositionVm} */function (data) {
                     self.view.positions.replace(null, data, function (item, empty) {

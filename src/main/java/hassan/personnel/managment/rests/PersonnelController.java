@@ -3,9 +3,7 @@ package hassan.personnel.managment.rests;
 import hassan.personnel.managment.exceptionalResponses.ConflictException;
 import hassan.personnel.managment.exceptionalResponses.InvalidDataException;
 import hassan.personnel.managment.exceptionalResponses.NotFoundException;
-import hassan.personnel.managment.models.entities.Building;
 import hassan.personnel.managment.models.entities.Person;
-import hassan.personnel.managment.models.vm.BuildingVm;
 import hassan.personnel.managment.models.vm.PersonVm;
 import hassan.personnel.managment.services.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +21,12 @@ import java.util.stream.Collectors;
 @RequestMapping("/rest/personnel")
 public class PersonnelController {
 
+    private final PersonService personService;
+
     @Autowired
-    private PersonService personService;
+    public PersonnelController(PersonService personService) {
+        this.personService = personService;
+    }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     private PersonVm get(@PathVariable int id){
@@ -34,18 +36,18 @@ public class PersonnelController {
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     private List<PersonVm> getAll(){
-        List<Person> personList = personService.getAll();
-        return personList.stream().map(m->m.getViewModel()).collect(Collectors.toList());
+        List<Person> personList = personService.getPersonnel();
+        return personList.stream().map(Person::getViewModel).collect(Collectors.toList());
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST)
-    private Person save(@RequestBody Person person) throws ConflictException {
-        return personService.save(person);
+    private PersonVm save(@RequestBody Person person) throws ConflictException, InvalidDataException {
+        return personService.save(person).getViewModel();
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     private PersonVm remove(@PathVariable int id) throws NotFoundException, ConflictException {
-        Person person = null;
+        Person person;
         try {
             person = personService.remove(id);
             return person.getViewModel();
@@ -58,21 +60,17 @@ public class PersonnelController {
 
     @RequestMapping(value="/{id}", method=RequestMethod.PUT)
     private PersonVm update(@PathVariable int id, @RequestBody Person person) throws ConflictException, NotFoundException, InvalidDataException {
-        try {
-            if(id != person.getId())
-                throw new InvalidDataException("Model id does not match with requested id");
+        if (id != person.getId())
+            throw new InvalidDataException("Model id does not match with requested id");
 
-            Person personUpdate = personService.getPerson(person.getId());
-            personUpdate.setFirstname(person.getFirstname());
-            personUpdate.setLastname(person.getLastname());
-            personUpdate.setPosition(person.getPosition());
+        if (person.getPosition() == null)
+            throw new InvalidDataException();
 
-            personService.update(personUpdate);
-            return person.getViewModel();
-        }catch (DataIntegrityViolationException ex){
-            throw new ConflictException(ex.getMessage());
-        }catch (EmptyResultDataAccessException ex){
-            throw new NotFoundException("Requested Item Does Not Found");
-        }
+        Person personUpdate = personService.getPerson(person.getId());
+        personUpdate.setFirstname(person.getFirstname());
+        personUpdate.setLastname(person.getLastname());
+        personUpdate.setPosition(person.getPosition());
+
+        return personService.update(personUpdate).getViewModel();
     }
 }

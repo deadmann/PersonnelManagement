@@ -36,5 +36,20 @@ var WorkVm = (function () {
         this.person = null;
         this.building = null;
     };
+    WorkVm.prototype.getPersianDate = function () {
+        try {
+            return moment(this.date).format('jYYYY/jM/jD');
+        }
+        catch (err) {
+            return "";
+        }
+    };
+    Object.defineProperty(WorkVm.prototype, "persianDate", {
+        get: function () {
+            return this.getPersianDate();
+        },
+        enumerable: true,
+        configurable: true
+    });
     return WorkVm;
 }());

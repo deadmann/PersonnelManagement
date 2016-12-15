@@ -5,7 +5,7 @@
     "use strict";
 
     var service = function ($resource) {
-        return $resource("/rest/positions/:id", {
+        return $resource("/rest/positions/:id:param1", {
 
         },{
             "get": {
@@ -26,6 +26,9 @@
             "queryFetchWages": {
                 method: "GET",
                 isArray: true,
+                params:{
+                    param1: 'fetch-wage'
+                },
                 /** @param data {Array<PositionVm>} */
                 transformResult: function (data) {
                     return ModelHelper.toArray(data, ModelType.Position);
@@ -40,7 +43,13 @@
             },
             // 'remove': {method: 'DELETE'},
             // 'delete': {method: 'DELETE'}
-            'update': {method: 'PUT'}
+            'update': {
+                method: 'PUT',
+                /** @param data {PositionVm} */
+                transformResult: function (data) {
+                    return ModelHelper.toPosition(data);
+                }
+            }
         })
     };
 

@@ -1,6 +1,7 @@
 package hassan.personnel.managment.rests;
 
 import hassan.personnel.managment.exceptionalResponses.ConflictException;
+import hassan.personnel.managment.exceptionalResponses.InvalidDataException;
 import hassan.personnel.managment.exceptionalResponses.NotFoundException;
 import hassan.personnel.managment.models.entities.Position;
 import hassan.personnel.managment.models.entities.Wage;
@@ -9,16 +10,12 @@ import hassan.personnel.managment.models.vm.PositionVm;
 import hassan.personnel.managment.services.PositionService;
 import hassan.personnel.managment.services.WageService;
 import hassan.personnel.managment.utility.CalendarHelper;
-import org.hibernate.jpa.internal.EntityManagerFactoryImpl;
-import org.hibernate.jpa.internal.EntityManagerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -45,30 +42,32 @@ public class PositionsController {
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     private List<PositionVm> getAll(){
-        List<Position> positionList = positionService.getAll();
+        List<Position> positionList = positionService.getPositions();
         return positionList.stream().map(Position::getViewModel).collect(Collectors.toList());
     }
 
+    @RequestMapping(value = "/fetch-wage", method = RequestMethod.GET)
+    private List<PositionVm> fetchWage(){
+        List<Position> positionList = positionService.getPositions();
+        return positionList.stream().map(Position::getViewModelWithWages).collect(Collectors.toList());
+    }
+
     @RequestMapping(value = "", method = RequestMethod.POST)
-    //@Transactional(rollbackFor = {Exception.class})
+    @Transactional(rollbackFor = {Exception.class})
     private PositionVm save(@RequestBody PositionInsertDto positionInsert) throws ConflictException {
         Position position = new Position(positionInsert.getTitle());
 
-        List<Wage> wageList;
-        if((wageList = position.getWages())==null) {
-            wageList = new ArrayList<Wage>();
-            position.setWages(wageList);
+        if(position.getWages()==null) {
+            position.setWages(new ArrayList<>());
         }
 
+        //Add Position to Wage
         Wage wage = new Wage(CalendarHelper.getMinimum(), positionInsert.getStartPayment(), position);
+        //Add Wage to Position
+        position.getWages().add(wage);
 
-        wageList.add(wage);
-        //? -->Add Wage To Position WageList
         position = positionService.save(position);
-
-        Wage savedWage = wageService.save(wage);
-
-        //? -->Add Wage To Position WageList
+        wage = wageService.save(wage);
 
         return position.getViewModelWithWages();
     }
@@ -97,15 +96,27 @@ public class PositionsController {
         }
     }
 
-    @RequestMapping(value = "/fetch-wage", method = RequestMethod.GET)
-    private List<PositionVm> fetchWage(){
-        List<Position> positionList = positionService.getAll();
-        return positionList.stream().map(Position::getViewModelWithWages).collect(Collectors.toList());
+    @RequestMapping(value="/{id}", method=RequestMethod.PUT)
+    private PositionVm update(@PathVariable int id, @RequestBody Position position) throws ConflictException, NotFoundException, InvalidDataException {
+        try {
+            if(id != position.getId())
+                throw new InvalidDataException("Model id does not match with requested id");
+
+            Position positionUpdate = positionService.getPosition(position.getId());
+            positionUpdate.setTitle(position.getTitle());
+
+            positionService.update(positionUpdate);
+            return positionUpdate.getViewModelWithWages();
+        }catch (DataIntegrityViolationException ex){
+            throw new ConflictException(ex.getMessage());
+        }catch (EmptyResultDataAccessException ex){
+            throw new NotFoundException("Requested Item Does Not Found");
+        }
     }
 
     // Sample of Custom Query
     private List<Position> querySampleFetchWage(){
-        List<Position> values = this.positionService.getAllPositionFetchWage();
+        List<Position> values = this.positionService.getPositionsFetchWage();
         return values;
     }
 }

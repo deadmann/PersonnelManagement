@@ -1,0 +1,82 @@
+<form ng-submit="updCtrl.event.save()">
+
+    <div class="ng-dialog-header ng-dialog-warning">
+        <div class="ng-dialog-title">
+            ویرایش سمت
+        </div>
+    </div>
+
+    <div class="ng-dialog-body">
+        <div class="row">
+            <div class="col-md-4">
+                <label for="title">
+                    عنوان سمت
+                </label>
+            </div>
+            <div class="col-md-8">
+                <input id="title" class="form-control ngdialog-input" type="text"
+                       ng-model="updCtrl.view.position.title"
+                       required="required"/>
+            </div>
+        </div>
+        <div class="row">
+            <table class="table table-bordered table-responsive table-striped table-concede">
+                <thead>
+                    <tr>
+                        <th>
+
+                        </th>
+                        <th>
+                            کد
+                        </th>
+                        <th>
+                            تاریخ شروع
+                        </th>
+                        <th>
+                            بها
+                        </th>
+                        <th>
+                            <button type="button" class="btn btn-primary btn-sm" ng-click="updCtrl.event.showWageInsertDialog()">
+                                ایجاد
+                            </button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="row in updCtrl.view.wages">
+                        <td>
+                            {{$index + 1}}
+                        </td>
+                        <td>
+                            {{row.id}}
+                        </td>
+                        <td>
+                            {{row.persianStartDate}}
+                        </td>
+                        <td>
+                            {{row.price}}
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-danger btn-sm" ng-click="updCtrl.event.showWageRemoveDialog(row.id)">
+                                حذف
+                            </button>
+                            <button type="button" class="btn btn-warning btn-sm" ng-click="updCtrl.event.showWageUpdateDialog(row.id)">
+                                ویرایش
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="ng-dialog-footer">
+        <button type="submit" class="btn btn-warning btn-sm">
+            ذخیره اطلاعات
+        </button>
+        <button type="button" class="btn btn-default btn-sm" ng-click="updCtrl.event.close()">
+            انصراف
+        </button>
+    </div>
+
+</form>

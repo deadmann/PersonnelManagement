@@ -22,14 +22,14 @@
                         toaster.pop({
                             type: "success",
                             title: "توضیحات",
-                            body: "ساختمان " + self.view.building.name + " با موفقیت افزوده شد"
+                            body: "پروژه " + self.view.building.name + " با موفقیت افزوده شد"
                         });
                         $scope.confirm(data);
                     }, function (err) {
                         toaster.pop({
                             type: "error",
                             title: "خطا",
-                            body: "یک خطای ناشناس در هنگام افزودن ساختمان " + self.view.building.name + " رخ داده است"
+                            body: "یک خطای ناشناس در هنگام افزودن پروژه " + self.view.building.name + " رخ داده است"
                         });
                     });
             }

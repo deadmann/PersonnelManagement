@@ -36,6 +36,8 @@
             <span ng-bind="(ctrl.view.headerSelections.person.firstname | emptyForNull) + ' ' + (ctrl.view.headerSelections.person.lastname | emptyForNull)"></span>
         </div>
         <form ng-submit="ctrl.event.save()">
+            <!-- inside clear fix with100 with overflow is require to display content -->
+            <!--<div  style="overflow-x: auto; width:100%">-->
             <table class="table table-bordered table-condensed table-striped table-hower">
                 <thead>
                     <tr>
@@ -50,7 +52,7 @@
                             <select id="buildingSelectionDropDown" class="form-control" ng-model="ctrl.view.tableSelections.building"
                                     ng-change="ctrl.event.selectBuilding()"
                                     ng-options="building as building.name for building in ctrl.view.buildings" >
-                                <option value="" disabled selected>افزودن ساختمان</option>
+                                <option value="" disabled selected>افزودن پروژه</option>
                             </select>
                         </th>
                     </tr>
@@ -62,11 +64,11 @@
                         </td>
                         <td ng-repeat="building in ctrl.view.tableSelections.selectedBuildings">
                             <label style="display:none" for="{{building.id}}-{{day}}"></label>
-                            <input id="{{building.id}}-{{day}}" type="number" min="0" max="20" step="any"
+                            <input style="width: 150px"
+                                    id="{{building.id}}-{{day}}" type="number" min="0" max="20" step="any"
                                    class="form-control input-sm" ng-model="ctrl.view.buildingDayWorks[building.id][day]"
                             placeholder="
-{{ctrl.view.headerSelections.year}}/{{ctrl.view.headerSelections.month.key}}{{day}} {{building.name}} -
-{{ctrl.view.headerSelections.person.firstname}} {{ctrl.view.headerSelections.person.lastname | emptyForNull}}" />
+{{ctrl.view.headerSelections.year}}/{{ctrl.view.headerSelections.month.key}}/{{day}} {{building.name}}" />
                         </td>
                         <td>
                             <span class="text-success" ng-bind="ctrl.method.getSumDays(day)"></span>
@@ -85,6 +87,7 @@
                     </tr>
                 </tbody>
             </table>
+            <!--</div>-->
 
             <button type="submit" class="btn btn-primary">
                 ذخیره اطلاعات

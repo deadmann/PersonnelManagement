@@ -1,6 +1,7 @@
 package hassan.personnel.managment.models.entities;
 
 import com.ibm.icu.util.ULocale;
+import hassan.personnel.managment.models.interfaces.Model;
 import hassan.personnel.managment.models.interfaces.ViewModel;
 import hassan.personnel.managment.models.vm.WorkVm;
 
@@ -13,7 +14,7 @@ import java.util.GregorianCalendar;
  */
 @Entity
 @Table(name = "Work")
-public class Work implements ViewModel {
+public class Work implements Model, ViewModel {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
@@ -21,12 +22,6 @@ public class Work implements ViewModel {
 
     @Temporal(TemporalType.DATE)
     private java.util.Calendar date;
-
-//    @Column(name = "person_id")
-//    private int personId;
-//
-//    @Column(name = "building_id")
-//    private int buildingId;
 
     @ManyToOne
     @JoinColumn(nullable = false, foreignKey = @ForeignKey(name = "FK_WORK_PERSON"))//Name of the FK Constraint
@@ -48,6 +43,15 @@ public class Work implements ViewModel {
         return workVm;
     }
 
+    public Work getCopy(boolean withNextLevelArray){
+        Work copy = new Work();
+        copy.setId(this.getId());
+        copy.setDate(this.getDate());
+        copy.setWorkPerDay(this.getWorkPerDay());
+        copy.setBuilding(this.getBuilding().getCopy(false));
+        copy.setPerson(this.getPerson().getCopy(false));
+        return copy;
+    }
 
     public long getId() {
         return id;
@@ -89,28 +93,20 @@ public class Work implements ViewModel {
                 + persianCalendar.get(Calendar.DAY_OF_MONTH);
     }
 
-    //    public int getPersonId() {
-//        return personId;
-//    }
-//
-//    public void setPersonId(int personId) {
-//        this.personId = personId;
-//    }
-//
-//    public int getBuildingId() {
-//        return buildingId;
-//    }
-//
-//    public void setBuildingId(int buildingId) {
-//        this.buildingId = buildingId;
-//    }
-
     public Person getPerson() {
         return person;
     }
 
     public void setPerson(Person person) {
+        //Remove Work from Old Person
+        if(this.person!=null)
+            this.person.getWorks().remove(this);
+
         this.person = person;
+
+        //Add Work to New Person, if new Person has Works (is not null it self)
+        if(this.person!=null)
+            this.person.getWorks().add(this);
     }
 
     public Building getBuilding() {
@@ -118,6 +114,14 @@ public class Work implements ViewModel {
     }
 
     public void setBuilding(Building building) {
+        //Remove Work from Old Building
+        if(this.building!=null)
+            this.building.getWorks().remove(this);
+
         this.building = building;
+
+        //Add Work to New Building, if new Building has works (is not null it self)
+        if(this.building!=null)
+            this.building.getWorks().add(this);
     }
 }

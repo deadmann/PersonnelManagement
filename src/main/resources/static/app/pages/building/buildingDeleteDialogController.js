@@ -22,7 +22,7 @@
                         toaster.pop({
                             type: "success",
                             title: "توضیحات",
-                            body: "ساختمان " + self.view.building.name + " با موفقیت حذف گشت"
+                            body: "پروژه " + self.view.building.name + " با موفقیت حذف گشت"
                         });
                         $scope.confirm(self.view.building);
                     }, function (err) {
@@ -30,19 +30,19 @@
                             toaster.pop({
                                 type: "warning",
                                 title: "اخطار",
-                                body: "ساختمان " + self.view.building.name + " پیدا نشد"
+                                body: "پروژه " + self.view.building.name + " پیدا نشد"
                             });
                         } else if (err.status === 409) {
                             toaster.pop({
                                 type: "warning",
                                 title: "اخطار",
-                                body: "ساختمان " + self.view.building.name + " توسط اجزای دیگر برنامه در حال استفاده می باشد"
+                                body: "پروژه " + self.view.building.name + " توسط اجزای دیگر برنامه در حال استفاده می باشد"
                             });
                         } else {
                             toaster.pop({
                                 type: "error",
                                 title: "خطا",
-                                body: "یک خطای ناشناس در هنگام حذف ساختمان " + self.view.building.name + " رخ داده است"
+                                body: "یک خطای ناشناس در هنگام حذف پروژه " + self.view.building.name + " رخ داده است"
                             });
                         }
                     });

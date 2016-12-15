@@ -37,4 +37,16 @@ class WorkVm {
         this.person = null;
         this.building = null;
     }
+
+    public getPersianDate():string{
+        try{
+            return moment(this.date).format('jYYYY/jM/jD');
+        }catch (err){
+            return "";
+        }
+    }
+
+    get persianDate(): string {
+        return this.getPersianDate();
+    }
 }

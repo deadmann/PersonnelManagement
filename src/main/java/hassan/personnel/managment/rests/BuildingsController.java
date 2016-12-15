@@ -32,7 +32,7 @@ public class BuildingsController {
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     private List<BuildingVm> getAll(){
-        List<Building> buildingList = buildingService.getAll();
+        List<Building> buildingList = buildingService.getBuildings();
         return buildingList.stream().map(Building::getViewModel).collect(Collectors.toList());
     }
 

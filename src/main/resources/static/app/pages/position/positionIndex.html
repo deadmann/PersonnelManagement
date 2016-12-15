@@ -17,7 +17,7 @@
                 </th>
                 <th>
                     <button class="btn btn-primary btn-sm" ng-click="ctrl.event.showInsertDialog()">
-                        افزودن
+                        ایجاد
                     </button>
                     <!--<button class="btn btn-primary btn-sm" ng-click="ctrl.event.insert()">create</button>-->
                 </th>
@@ -35,14 +35,16 @@
                 <td>
                     {{row.getCurrentWage().id}}- {{row.getCurrentWage().price}}<br/>
                     <span ng-if="! row.isCurrentTheFirstWage()" style="font-size: 60%">
-                        تاریخ انتشار: {{row.getNextWage().startDate}}
+                        تاریخ انتشار:
+                        {{row.getNextWage().persianStartDate}}
                     </span>
                 </td>
                 <td>
                     <div ng-if="row.getNextWage() != null">
                         {{row.getNextWage().id}}- {{row.getNextWage().price}}<br/>
                         <span style="font-size: 60%">
-                            تاریخ انتشار: {{row.getNextWage().startDate}}
+                            تاریخ انتشار:
+                            {{row.getNextWage().persianStartDate}}
                         </span>
                     </div>
                 </td>

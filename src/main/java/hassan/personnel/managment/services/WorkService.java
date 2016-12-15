@@ -97,6 +97,8 @@ public class WorkService {
 
         com.ibm.icu.util.Calendar pCalStart = CalendarHelper.createPersian(year, month, 1);
         com.ibm.icu.util.Calendar pCalEnd = CalendarHelper.createPersian(year, month, CalendarHelper.daysInPersianMonth(year, month));
+        //we need before 1th of next month and it is Exclusive
+        pCalEnd.add(com.ibm.icu.util.Calendar.DAY_OF_MONTH, 1);
 
         Calendar gCalStart = CalendarHelper.toGregorian(pCalStart);
         Calendar gCalEnd = CalendarHelper.toGregorian(pCalEnd);
@@ -109,7 +111,16 @@ public class WorkService {
 
     public Work remove(Long id) {
         Work work = workRepository.findOne(id);
+        Work copy=work.getCopy(true);
+
         workRepository.delete(id);
-        return work;
+
+        //Breaking Exists Links
+        work.getPerson().getWorks().remove(work);
+        work.setPerson(null);
+        work.getBuilding().getWorks().remove(work);
+        work.setBuilding(null);
+
+        return copy;
     }
 }

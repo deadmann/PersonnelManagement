@@ -1,0 +1,24 @@
+<div class="ng-dialog-header ng-dialog-danger">
+    <div class="ng-dialog-title">
+        حذف دستمزد
+    </div>
+</div>
+
+<div class="ng-dialog-body">
+    <div ng-if="!wageDltCtrl.view.isFirstItemInPosition">
+    آیا از حذف دستمزد
+    {{wageDltCtrl.view.wage.persianStartDate}}
+    در سمت
+    {{wageDltCtrl.view.position.title}}
+    مطمئن هستید؟
+    </div>
+    <div ng-if="wageDltCtrl.view.isFirstItemInPosition">
+        آیتم مورد نظر مبدا محاسبات می باشد و قابل حذف نمی باشد
+    </div>
+</div>
+
+<div class="ng-dialog-footer">
+    <button ng-if="!wageDltCtrl.view.isFirstItemInPosition" class="btn btn-danger" ng-click="wageDltCtrl.event.confirmDelete()">تایید حذف</button>
+    <button class="btn btn-default" ng-click="wageDltCtrl.event.close()">انصراف</button>
+    <!--<button ng-click="confirm()">Confirm</button>-->
+</div>

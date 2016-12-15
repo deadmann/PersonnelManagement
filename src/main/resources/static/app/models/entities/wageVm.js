@@ -1,4 +1,5 @@
 ///<reference path="positionVm.ts"/>
+///<reference path="../../../typings/index.d.ts"/>
 /**
  * Created by Hassan on 11/18/2016.
  */
@@ -32,5 +33,38 @@ var WageVm = (function () {
         this.price = 0;
         this.position = null;
     };
+    WageVm.prototype.getGregorianStartDate = function () {
+        return this.startDate.getFullYear().toString()
+            + '-' + this.startDate.getMonth()
+            + '-' + this.startDate.getDay();
+    };
+    //??? is used at all? :-/
+    WageVm.prototype.isValidPersianDate = function () {
+        try {
+            if (!moment(this.startDate).isValid())
+                return false;
+            //test on persian
+            moment(this.startDate).format('jYYYY/jM/jD');
+            return true;
+        }
+        catch (err) {
+            return false;
+        }
+    };
+    WageVm.prototype.getPersianStartDate = function () {
+        try {
+            return moment(this.startDate).format('jYYYY/jM/jD');
+        }
+        catch (err) {
+            return "";
+        }
+    };
+    Object.defineProperty(WageVm.prototype, "persianStartDate", {
+        get: function () {
+            return this.getPersianStartDate();
+        },
+        enumerable: true,
+        configurable: true
+    });
     return WageVm;
 }());

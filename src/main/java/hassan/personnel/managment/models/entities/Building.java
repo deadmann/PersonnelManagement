@@ -1,5 +1,6 @@
 package hassan.personnel.managment.models.entities;
 
+import hassan.personnel.managment.models.interfaces.Model;
 import hassan.personnel.managment.models.interfaces.ViewModel;
 import hassan.personnel.managment.models.vm.BuildingVm;
 
@@ -12,7 +13,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "Building")
-public class Building implements ViewModel {
+public class Building implements Model, ViewModel {
     public Building(String name) {
         this.name = name;
     }
@@ -38,6 +39,22 @@ public class Building implements ViewModel {
         buildingVm.setWorks(null);
 
         return buildingVm;
+    }
+
+    public Building getCopy(boolean withNextLevelArray){
+        Building copy = new Building();
+        copy.setId(this.getId());
+        copy.setName(this.getName());
+
+        if (withNextLevelArray) {
+            List<Work> workList = new ArrayList<>();
+            for (Work work : this.getWorks()) {
+                workList.add((Work) work.getCopy(false));
+            }
+            copy.setWorks(workList);
+        }
+
+        return copy;
     }
 
     public int getId() {

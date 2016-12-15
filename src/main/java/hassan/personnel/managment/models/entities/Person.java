@@ -1,5 +1,6 @@
 package hassan.personnel.managment.models.entities;
 
+import hassan.personnel.managment.models.interfaces.Model;
 import hassan.personnel.managment.models.interfaces.ViewModel;
 import hassan.personnel.managment.models.vm.PersonVm;
 
@@ -12,7 +13,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "Person")
-public class Person implements ViewModel {
+public class Person implements Model, ViewModel {
 
     public Person(){
         this.works = new ArrayList<>();
@@ -34,9 +35,6 @@ public class Person implements ViewModel {
     @Column(nullable = true, length = 50)
     private String lastname;
 
-//    @Column(name = "position_id")
-//    private int positionId;
-
     @ManyToOne
     @JoinColumn(nullable = false, foreignKey = @ForeignKey(name = "FK_PERSON_POSITION"))//Name of the FK Constraint
     private Position position;
@@ -54,6 +52,24 @@ public class Person implements ViewModel {
         personVm.setWorks(null);
 
         return personVm;
+    }
+
+    public Person getCopy(boolean withNextLevelArray) {
+        Person copy = new Person();
+        copy.setId(this.getId());
+        copy.setFirstname(this.getFirstname());
+        copy.setLastname(this.getLastname());
+        copy.setPosition(this.getPosition().getCopy(false));
+
+        if (withNextLevelArray) {
+            List<Work> workList = new ArrayList<>();
+            for (Work work : this.getWorks()) {
+                workList.add((Work) work.getCopy(false));
+            }
+            copy.setWorks(workList);
+        }
+
+        return copy;
     }
 
     public int getId() {
@@ -80,20 +96,20 @@ public class Person implements ViewModel {
         this.lastname = lastname;
     }
 
-//    public int getPositionId() {
-//        return positionId;
-//    }
-//
-//    public void setPositionId(int positionId) {
-//        this.positionId = positionId;
-//    }
-
     public Position getPosition() {
         return position;
     }
 
     public void setPosition(Position position) {
+        //Remove Person from Old Position
+        if(this.position!=null)
+            this.position.getPersonnel().remove(this);
+
         this.position = position;
+
+        //Add Person to New Position, if new Position has personnel
+        if(this.position!=null)
+            this.position.getPersonnel().add(this);
     }
 
     public List<Work> getWorks() {

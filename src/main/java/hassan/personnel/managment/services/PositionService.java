@@ -2,6 +2,7 @@ package hassan.personnel.managment.services;
 
 
 import hassan.personnel.managment.exceptionalResponses.ConflictException;
+import hassan.personnel.managment.models.entities.Person;
 import hassan.personnel.managment.models.entities.Position;
 import hassan.personnel.managment.models.entities.Wage;
 import hassan.personnel.managment.repositories.PositionRepository;
@@ -24,7 +25,7 @@ public class PositionService {
         return positionRepository.findOne(id);
     }
 
-    public List<Position> getAll(){
+    public List<Position> getPositions(){
         return (List<Position>) positionRepository.findAll();
     }
 
@@ -42,13 +43,29 @@ public class PositionService {
 
 
 
-    public List<Position> getAllPositionFetchWage(){
+    public List<Position> getPositionsFetchWage(){
         return positionRepository.findAllPositionFetchWage();
     }
 
     public Position remove(int id) {
         Position position = positionRepository.findOne(id);
+        Position copy = position.getCopy(true);
+
         positionRepository.delete(id);
-        return position;
+
+        //Breaking Exists Links
+        position.getPersonnel().forEach(e->{
+            e.setPosition(null);
+        });
+
+        position.getWages().forEach(e->{
+            e.setPosition(null);
+        });
+
+        return copy;
+    }
+
+    public Position update(Position position){
+        return positionRepository.save(position);
     }
 }

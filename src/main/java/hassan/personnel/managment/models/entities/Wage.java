@@ -1,5 +1,6 @@
 package hassan.personnel.managment.models.entities;
 
+import hassan.personnel.managment.models.interfaces.Model;
 import hassan.personnel.managment.models.interfaces.ViewModel;
 import hassan.personnel.managment.models.vm.WageVm;
 
@@ -12,7 +13,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "Wage")
-public class Wage implements ViewModel {
+public class Wage implements Model, ViewModel {
 
     public Wage(){
     }
@@ -34,9 +35,6 @@ public class Wage implements ViewModel {
     @Column(nullable = true)
     private double price;
 
-//    @Column(name = "position_id")
-//    private int postionId;
-
     @ManyToOne
     @JoinColumn(nullable = false, foreignKey = @ForeignKey(name = "FK_WAGE_POSITION"))//Name of the FK Constraint
     private Position position;
@@ -49,6 +47,15 @@ public class Wage implements ViewModel {
         wageVm.setPosition(this.getPosition() != null ? this.getPosition().getViewModel() : null);
 
         return wageVm;
+    }
+
+    public Wage getCopy(boolean withNextLevelArray){
+        Wage copy = new Wage();
+        copy.setId(this.getId());
+        copy.setPrice(this.getPrice());
+        copy.setStartDate(this.getStartDate());
+        copy.setPosition(this.getPosition().getCopy(false));
+        return copy;
     }
 
     public int getId() {
@@ -80,14 +87,14 @@ public class Wage implements ViewModel {
     }
 
     public void setPosition(Position position) {
-        this.position = position;
-    }
+        //Remove Wage from Old Position
+        if(this.position!=null)
+            this.position.getWages().remove(this);
 
-//    public int getPostionId() {
-//        return postionId;
-//    }
-//
-//    public void setPostionId(int postionId) {
-//        this.postionId = postionId;
-//    }
+        this.position = position;
+
+        //Add Wage to New Position, if new Position has wages (is not null it self)
+        if(this.position!=null)
+            this.position.getWages().add(this);
+    }
 }

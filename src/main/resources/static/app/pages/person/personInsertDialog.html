@@ -14,7 +14,7 @@
                 </label>
             </div>
             <div class="col-md-8">
-                <input id="firstname" class="form-control" type="text"
+                <input id="firstname" class="form-control ngdialog-input" type="text"
                        ng-model="insCtrl.view.person.firstname"
                        required="required"/>
             </div>
@@ -27,7 +27,7 @@
                 </label>
             </div>
             <div class="col-md-8">
-                <input id="lastname" class="form-control" type="text"
+                <input id="lastname" class="form-control ngdialog-input" type="text"
                        ng-model="insCtrl.view.person.lastname"/>
             </div>
         </div>
@@ -39,7 +39,7 @@
                 </label>
             </div>
             <div class="col-md-8">
-                <select id="position" class="form-control"
+                <select id="position" class="form-control ngdialog-input"
                         ng-options="position as position.title for position in insCtrl.view.positions"
                         ng-model="insCtrl.view.person.position"
                         required="required">

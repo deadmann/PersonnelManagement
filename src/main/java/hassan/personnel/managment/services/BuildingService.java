@@ -21,8 +21,8 @@ public class BuildingService {
         return buildingRepository.findOne(id);
     }
 
-    public List<Building> getAll(){
-        return (List<Building>) buildingRepository.findAll();
+    public List<Building> getBuildings(){
+        return buildingRepository.findAll();
     }
 
     public Building save(Building building) throws ConflictException {
@@ -37,8 +37,16 @@ public class BuildingService {
 
     public Building remove(int id) {
         Building building = buildingRepository.findOne(id);
+        Building copy = building.getCopy(true);
+
         buildingRepository.delete(id);
-        return building;
+
+        //Breaking Links
+        building.getWorks().forEach((e)->{
+            e.setBuilding(null);
+        });
+
+        return copy;
     }
 
     public Building update(Building building){

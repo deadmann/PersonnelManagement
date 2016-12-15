@@ -5,7 +5,7 @@
     "use strict";
 
     var service = function ($resource) {
-        return $resource("/rest/wages/:id", {
+        return $resource("/rest/wages/:id:param1/:param2", {
 
         },{
             "get": {
@@ -23,9 +23,34 @@
                     return ModelHelper.toArray(data, ModelType.Wage);
                 }
             },
-            // 'save': {method: 'POST'},
+            "queryByPositionId": {
+                method: "GET",
+                isArray: true,
+                params:{
+                    param1: "by-position-id",
+                    param2: "@param2",//@positionId
+                },
+                /** @param data {Array<WageVm>} */
+                transformResult: function (data) {
+                    return ModelHelper.toArray(data, ModelType.Wage);
+                }
+            },
+            'save': {
+                method: 'POST',
+                /** @param data {WageVm} */
+                transformResult: function (data) {
+                    return ModelHelper.toWage(data);
+                }
+            },
             // 'remove': {method: 'DELETE'},
             // 'delete': {method: 'DELETE'}
+            'update': {
+                method: "PUT",
+                /** @param data {WageVm} */
+                transformResult: function (data) {
+                    return ModelHelper.toWage(data);
+                }
+            }
         })
     };
 

@@ -84,12 +84,17 @@
                         <tr>
                             <th>
                                 <span>
-                                ساختمان
+                                پروژه
                                 </span>
                             </th>
                             <th>
                                 <span>
                                 کارکرد
+                                </span>
+                            </th>
+                            <th>
+                                <span>
+                                بها
                                 </span>
                             </th>
                         </tr>
@@ -102,6 +107,9 @@
                             <td>
                                 <span ng-bind="item.sum"></span>
                             </td>
+                            <td>
+                                <span ng-bind="item.sumMoney.putThousandComma()"></span>
+                            </td>
                         </tr>
                         <tr>
                             <td style="color: seagreen;">
@@ -111,6 +119,9 @@
                             </td>
                             <td style="color: seagreen;">
                                 <span ng-bind="ctrl.view.totalSum"></span>
+                            </td>
+                            <td style="color: seagreen;">
+                                <span ng-bind="ctrl.view.totalSumMoney.putThousandComma()"></span>
                             </td>
                         </tr>
                     </tbody>
@@ -131,7 +142,7 @@
                         <span ng-bind="ctrl.view.headerSelections.endDate"></span>
                     </div>
                     <div class="col-md-4">
-                        <span>نام ساختمان:</span>
+                        <span>نام پروژه:</span>
                         <span ng-bind="ctrl.view.headerSelections.building.name"></span>
                     </div>
                 </div>
@@ -149,6 +160,11 @@
                             کارکرد
                             </span>
                         </th>
+                        <th>
+                            <span>
+                            بها
+                            </span>
+                        </th>
                     </tr>
                     </thead>
                     <tbody>
@@ -159,6 +175,9 @@
                         <td>
                             <span ng-bind="item.sum"></span>
                         </td>
+                        <td>
+                            <span ng-bind="item.sumMoney.putThousandComma()"></span>
+                        </td>
                     </tr>
                     <tr>
                         <td style="color: seagreen;">
@@ -168,6 +187,9 @@
                         </td>
                         <td style="color: seagreen;">
                             <span ng-bind="ctrl.view.totalSum"></span>
+                        </td>
+                        <td style="color: seagreen;">
+                            <span ng-bind="ctrl.view.totalSumMoney.putThousandComma()"></span>
                         </td>
                     </tr>
                     </tbody>
@@ -218,9 +240,13 @@
                         </td>
                         <td ng-repeat="building in ctrl.view.buildingsForWorksByPosition">
                             <span ng-bind="ctrl.method.getGroupingByPersonAndBuilding(item.person,building).sum"></span>
+                            <br/>
+                            <span ng-bind="ctrl.method.getGroupingByPersonAndBuilding(item.person,building).sumMoney.putThousandComma()"></span>
                         </td>
                         <td style="color: seagreen;">
                             <span ng-bind="item.sum"></span>
+                            <br/>
+                            <span ng-bind="item.sumMoney.putThousandComma()"></span>
                         </td>
                     </tr>
                     <tr>
@@ -231,10 +257,14 @@
                         </td>
                         <td style="color: seagreen;"
                             ng-repeat="building in ctrl.view.buildingsForWorksByPosition">
-                            <span ng-bind="ctrl.method.getSumBuilding(building)"></span>
+                            <span ng-bind="ctrl.method.getGroupingByBuilding(building).sum"></span>
+                            <br/>
+                            <span ng-bind="ctrl.method.getGroupingByBuilding(building).sumMoney.putThousandComma()"></span>
                         </td>
                         <td style="color: #d9534f;">
                             <span ng-bind="ctrl.view.totalSum"></span>
+                            <br/>
+                            <span ng-bind="ctrl.view.totalSumMoney.putThousandComma()"></span>
                         </td>
                     </tr>
                     </tbody>

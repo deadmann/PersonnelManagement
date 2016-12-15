@@ -1,0 +1,46 @@
+<form ng-submit="wageInsCtrl.event.save()">
+
+    <div class="ng-dialog-header ng-dialog-primary">
+        <div class="ng-dialog-title">
+            افزودن دستمزد
+        </div>
+    </div>
+
+    <div class="ng-dialog-body">
+        <div class="row">
+            <div class="col-md-4">
+                <label for="wageAmount">
+                مبلغ دستمزد
+                </label>
+            </div>
+            <div class="col-md-8">
+                <input id="wageAmount" class="form-control ngdialog-input" type="number" min="0"
+                       ng-model="wageInsCtrl.view.wage.price"
+                       required="required"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <label for="startDate">
+                    تاریخ شروع
+                </label>
+            </div>
+            <div class="col-md-8">
+                <input id="startDate" class="form-control ngdialog-input" type="text"
+                       ng-model="wageInsCtrl.view.persianDate"
+                       jq-date-picker="" date-picker-config="wageInsCtrl.view.startDateConfig"
+                       required="required"/>
+            </div>
+        </div>
+    </div>
+
+    <div class="ng-dialog-footer">
+        <button type="submit" class="btn btn-primary">
+            ذخیره اطلاعات
+        </button>
+        <button type="button" class="btn btn-default" ng-click="wageInsCtrl.event.close()">
+            انصراف
+        </button>
+    </div>
+
+</form>

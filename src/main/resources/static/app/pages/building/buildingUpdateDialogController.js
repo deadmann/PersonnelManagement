@@ -22,7 +22,7 @@
                         toaster.pop({
                             type: "success",
                             title: "توضیحات",
-                            body: "ساختمان " + self.view.building.name + " با موفقیت ویرایش شد"
+                            body: "پروژه " + self.view.building.name + " با موفقیت ویرایش شد"
                         });
                         $scope.confirm(data);
                     }, function (err) {
@@ -30,13 +30,13 @@
                             toaster.pop({
                                 type: "warning",
                                 title: "اخطار",
-                                body: "ساختمان " + selectedItem.name + " پیدا نشد"
+                                body: "پروژه " + selectedItem.name + " پیدا نشد"
                             });
                         } else {
                             toaster.pop({
                                 type: "error",
                                 title: "خطا",
-                                body: "یک خطای ناشناس در هنگام ذخیره اطلاعات ساختمان " + self.view.building.name + " رخ داده است"
+                                body: "یک خطای ناشناس در هنگام ذخیره اطلاعات پروژه " + self.view.building.name + " رخ داده است"
                             });
                         }
                     });

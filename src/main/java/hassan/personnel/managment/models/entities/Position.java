@@ -1,5 +1,6 @@
 package hassan.personnel.managment.models.entities;
 
+import hassan.personnel.managment.models.interfaces.Model;
 import hassan.personnel.managment.models.interfaces.ViewModel;
 import hassan.personnel.managment.models.vm.PositionVm;
 import hassan.personnel.managment.models.vm.WageVm;
@@ -13,7 +14,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "Position")
-public class Position implements ViewModel {
+public class Position implements Model, ViewModel {
 
     public Position(){
         personnel = new ArrayList<Person>();
@@ -45,6 +46,27 @@ public class Position implements ViewModel {
         positionVm.setWages(null);
 
         return positionVm;
+    }
+
+    public Position getCopy(boolean withNextLevelArray){
+        Position copy = new Position();
+        copy.setId(this.getId());
+        copy.setTitle(this.getTitle());
+
+        if (withNextLevelArray) {
+            List<Wage> wageList = new ArrayList<>();
+            for (Wage wage : this.getWages()) {
+                wageList.add(wage.getCopy(false));
+            }
+            copy.setWages(wageList);
+
+            List<Person> personList = new ArrayList<>();
+            for (Person person : this.getPersonnel()) {
+                personList.add(person.getCopy(false));
+            }
+            copy.setPersonnel(personList);
+        }
+        return copy;
     }
 
     /**
@@ -87,14 +109,6 @@ public class Position implements ViewModel {
     public void setTitle(String title) {
         this.title = title;
     }
-
-//    public int getWageId() {
-//        return wageId;
-//    }
-//
-//    public void setWageId(int wageId) {
-//        this.wageId = wageId;
-//    }
 
     public List<Wage> getWages() {
         return wages;

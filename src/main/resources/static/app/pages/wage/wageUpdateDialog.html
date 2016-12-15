@@ -1,0 +1,50 @@
+<form ng-submit="wageUpdCtrl.event.save()">
+
+    <div class="ng-dialog-header ng-dialog-warning">
+        <div class="ng-dialog-title">
+            ویرایش دستمزد
+        </div>
+    </div>
+
+    <div class="ng-dialog-body">
+        <div class="row">
+            <div class="col-md-4">
+                <label for="wageAmount">
+                    مبلغ دستمزد
+                </label>
+            </div>
+            <div class="col-md-8">
+                <input id="wageAmount" class="form-control ngdialog-input" type="number" min="0"
+                       ng-model="wageUpdCtrl.view.wage.price"
+                       required="required"/>
+            </div>
+        </div>
+        <!-- We don't like to change date of first item,
+            and we disallow this action both here and on server -->
+        <div class="row" ng-if="!wageUpdCtrl.view.isFirstItemInPosition">
+            <div class="col-md-4">
+                <label for="startDate">
+                    تاریخ شروع
+                </label>
+            </div>
+            <div class="col-md-8">
+                <input id="startDate" class="form-control ngdialog-input" type="text"
+                       ng-model="wageUpdCtrl.view.wage.persianStartDate"
+                       jq-date-picker="" date-picker-config="wageUpdCtrl.view.startDateConfig"
+                       required="required"/>
+            </div>
+        </div>
+    </div>
+
+    <div class="ng-dialog-footer">
+        <!--<button type="submit" class="btn btn-warning">-->
+            <!--ذخیره اطلاعات-->
+        <!--</button>-->
+        <button type="button" class="btn btn-default" ng-click="wageUpdCtrl.event.close()">
+            انصراف
+        </button>
+
+        این بخش کامل نشده است
+    </div>
+
+</form>
