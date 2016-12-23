@@ -6,6 +6,7 @@
 
     var controller = function ($scope, selectedItem, buildingsService, toaster) {
         var self = this;
+        var logger = ErrorHandler.getInstance();
 
         self.view={
             /** @type {BuildingVm}*/
@@ -19,25 +20,25 @@
             save: function () {
                 buildingsService.update({id:self.view.building.id}, self.view.building).$promise
                     .then(function (data) {
-                        toaster.pop({
-                            type: "success",
-                            title: "توضیحات",
-                            body: "پروژه " + self.view.building.name + " با موفقیت ویرایش شد"
-                        });
+                        logger.pop( toaster, new ToasterData(
+                            "success",
+                            "توضیحات",
+                            "پروژه " + self.view.building.name + " با موفقیت ویرایش شد"
+                        ));
                         $scope.confirm(data);
                     }, function (err) {
                         if (err.status === 404) {
-                            toaster.pop({
-                                type: "warning",
-                                title: "اخطار",
-                                body: "پروژه " + selectedItem.name + " پیدا نشد"
-                            });
+                            logger.pop( toaster, new ToasterData(
+                                "warning",
+                                "اخطار",
+                                "پروژه " + selectedItem.name + " پیدا نشد"
+                            ));
                         } else {
-                            toaster.pop({
-                                type: "error",
-                                title: "خطا",
-                                body: "یک خطای ناشناس در هنگام ذخیره اطلاعات پروژه " + self.view.building.name + " رخ داده است"
-                            });
+                            logger.pop( toaster, new ToasterData(
+                                "error",
+                                "خطا",
+                                "یک خطای ناشناس در هنگام ذخیره اطلاعات پروژه " + self.view.building.name + " رخ داده است"
+                            ));
                         }
                     });
             }
@@ -52,17 +53,17 @@
                     self.view.building = data;
                 }, function (err) {
                     if (err.status === 404) {
-                        toaster.pop({
-                            type: "warning",
-                            title: "اخطار",
-                            body: "ساختمان " + selectedItem.name + " پیدا نشد"
-                        });
+                        logger.pop( toaster, new ToasterData(
+                            "warning",
+                            "اخطار",
+                            "ساختمان " + selectedItem.name + " پیدا نشد"
+                        ));
                     } else {
-                        toaster.pop({
-                            type: "error",
-                            title: "خطا",
-                            body: "یک خطای ناشناس در هنگام دریافت آخرین اطلاعات ساختمان " + selectedItem.name + " رخ داده است"
-                        });
+                        logger.pop( toaster, new ToasterData(
+                            "error",
+                            "خطا",
+                            "یک خطای ناشناس در هنگام دریافت آخرین اطلاعات ساختمان " + selectedItem.name + " رخ داده است"
+                        ));
                     }
                 });
         }

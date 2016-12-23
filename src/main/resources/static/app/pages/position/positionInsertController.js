@@ -3,8 +3,9 @@
  */
 (function(){
 
-    var controller = function ($location, positionsService) {
+    var controller = function ($location, positionsService, toaster) {
         var self = this;
+        var logger = ErrorHandler.getInstance();
 
         self.view={
             /** @type {PositionInsertDto}*/
@@ -18,7 +19,11 @@
                         //self.view.buildings = data;
                         $location.path("/position");
                     }, function (err) {
-                        alert("An Error Has Occur");
+                        logger.pop(toaster, new ToasterData(
+                            "error",
+                            "خطا",
+                            "در هنگام ذخیره اطلاعات سمت یک خطا رخ داده است"
+                        ));
                     });
             },
             cancel: function(){
@@ -33,7 +38,7 @@
         initialize();
     };
 
-    controller.$inject = ["$location", "positionsService"];
+    controller.$inject = ["$location", "positionsService", "toaster"];
 
     angular.module("personnelManagement")
         .controller("positionInsertController", controller);

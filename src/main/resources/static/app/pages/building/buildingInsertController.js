@@ -4,8 +4,9 @@
 (function(){
     "use strict";
 
-    var controller = function ($location, buildingsService) {
+    var controller = function ($location, buildingsService, toaster) {
         var self = this;
+        var logger = ErrorHandler.getInstance();
 
         self.view={
             /** @type {BuildingVm}*/
@@ -19,7 +20,11 @@
                         //self.view.buildings = data;
                         $location.path("/building");
                     }, function (err) {
-                        alert("An Error Has Occur");
+                        logger.pop(toaster, new ToasterData(
+                            "error",
+                            "خطا",
+                            "در هنگام ذخیره اطلاعات ساختمان یک خطا رخ داده است"
+                        ));
                     });
             },
             cancel: function(){
@@ -34,7 +39,7 @@
         initialize();
     };
 
-    controller.$inject = ["$location", "buildingsService"];
+    controller.$inject = ["$location", "buildingsService", "toaster"];
 
     angular.module("personnelManagement")
         .controller("buildingInsertController", controller);

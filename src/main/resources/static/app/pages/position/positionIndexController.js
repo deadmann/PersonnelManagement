@@ -3,8 +3,9 @@
  */
 (function () {
 
-    var controller = function ($location, ngDialog, positionsService, wagesService) {
+    var controller = function ($location, ngDialog, positionsService, wagesService, toaster) {
         var self = this;
+        var logger = ErrorHandler.getInstance();
 
         self.view={
             positions: []
@@ -129,17 +130,25 @@
 
                             self.view.positions = joinedPositions;
                         }, function (err) {
-                            alert("An Error Has Occur While Fetching Wages");
+                            logger.pop(toaster, new ToasterData(
+                                "error",
+                                "خطا",
+                                "در هنگام دریافت اطلاعات دستمزد ها یک خطا رخ داده است"
+                            ));
                         });
                 }, function (err) {
-                    alert("An Error Has Occur While Fetching Positions");
+                    logger.pop(toaster, new ToasterData(
+                        "error",
+                        "خطا",
+                        "در هنگام دریافت اطلاعات سمت ها یک خطا رخ داده است"
+                    ));
                 });
         }
 
         initialize();
     };
 
-    controller.$inject = ["$location", "ngDialog", "positionsService", "wagesService"];
+    controller.$inject = ["$location", "ngDialog", "positionsService", "wagesService", "toaster"];
 
     angular.module("personnelManagement")
         .controller("positionIndexController", controller);

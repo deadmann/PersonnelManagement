@@ -4,13 +4,13 @@
 var AngularUtility;
 (function (AngularUtility) {
     "use strict";
-    function filter() {
+    function emptyForNullFilter() {
         return function (text) {
             return Util.Utility.isNullOrUndefined(text) ? "" : text;
         };
     }
-    AngularUtility.filter = filter;
-    filter.$inject = [];
+    AngularUtility.emptyForNullFilter = emptyForNullFilter;
+    emptyForNullFilter.$inject = [];
     angular.module("angularUtility")
-        .filter("emptyForNull", filter);
+        .filter("emptyForNull", emptyForNullFilter);
 })(AngularUtility || (AngularUtility = {}));

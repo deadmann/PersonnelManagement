@@ -54,7 +54,7 @@
                             {{row.persianStartDate}}
                         </td>
                         <td>
-                            {{row.price}}
+                            {{row.price|rials}}
                         </td>
                         <td>
                             <button type="button" class="btn btn-danger btn-sm" ng-click="updCtrl.event.showWageRemoveDialog(row.id)">

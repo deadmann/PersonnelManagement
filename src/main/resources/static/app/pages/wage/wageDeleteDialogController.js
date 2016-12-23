@@ -7,6 +7,7 @@
     var controller = function ($scope, selectedItem, isFirstItem, positionItem, wagesService, toaster) {
         var DatePickerConfig = AngularUtility.DatePickerConfig;
         var self = this;
+        var logger = ErrorHandler.getInstance();
 
         self.view={
             /** @type {WageVm}*/
@@ -24,31 +25,31 @@
             confirmDelete: function() {
                 wagesService.remove({id: self.view.wage.id}).$promise
                     .then(function (data) {
-                        toaster.pop({
-                            type: "success",
-                            title: "توضیحات",
-                            body: "دستمزد " + self.view.wage.persianStartDate + " با موفقیت حذف گشت"
-                        });
+                        logger.pop( toaster, new ToasterData(
+                            "success",
+                            "توضیحات",
+                            "دستمزد " + self.view.wage.persianStartDate + " با موفقیت حذف گشت"
+                        ));
                         $scope.confirm(self.view.wage);
                     }, function (err) {
                         if (err.status === 404) {
-                            toaster.pop({
-                                type: "warning",
-                                title: "اخطار",
-                                body: "دستمزد " + self.view.wage.persianStartDate + " پیدا نشد"
-                            });
+                            logger.pop( toaster, new ToasterData(
+                                "warning",
+                                "اخطار",
+                                "دستمزد " + self.view.wage.persianStartDate + " پیدا نشد"
+                            ));
                         } else if (err.status === 409) {
-                            toaster.pop({
-                                type: "warning",
-                                title: "اخطار",
-                                body: "دستمزد " + self.view.wage.persianStartDate + " توسط اجزای دیگر برنامه در حال استفاده می باشد"
-                            });
+                            logger.pop( toaster, new ToasterData(
+                                "warning",
+                                "اخطار",
+                                "دستمزد " + self.view.wage.persianStartDate + " توسط اجزای دیگر برنامه در حال استفاده می باشد"
+                            ));
                         } else {
-                            toaster.pop({
-                                type: "error",
-                                title: "خطا",
-                                body: "یک خطای ناشناس در هنگام حذف دستمزد " + self.view.wage.persianStartDate + " رخ داده است"
-                            });
+                            logger.pop( toaster, new ToasterData(
+                                "error",
+                                "خطا",
+                                "یک خطای ناشناس در هنگام حذف دستمزد " + self.view.wage.persianStartDate + " رخ داده است"
+                            ));
                         }
 
                     });

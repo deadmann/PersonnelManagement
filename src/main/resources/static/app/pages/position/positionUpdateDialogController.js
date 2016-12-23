@@ -9,6 +9,7 @@
 
     var controller = function ($scope, ngDialog, selectedItem, positionsService, wagesService, toaster) {
         var self = this;
+        var logger = ErrorHandler.getInstance();
 
         self.view={
             /** @type {PositionVm}*/
@@ -24,25 +25,25 @@
             save: function() {
                 positionsService.update({id:self.view.position.id}, self.view.position).$promise
                     .then(function (data) {
-                        toaster.pop({
-                            type: "success",
-                            title: "توضیحات",
-                            body: "سمت " + self.view.position.title + " با موفقیت ویرایش شد"
-                        });
+                        logger.pop( toaster, new ToasterData(
+                            "success",
+                            "توضیحات",
+                            "سمت " + self.view.position.title + " با موفقیت ویرایش شد"
+                        ));
                         $scope.confirm(data);
                     }, function (err) {
                         if (err.status === 404) {
-                            toaster.pop({
-                                type: "warning",
-                                title: "اخطار",
-                                body: "سمت " + selectedItem.title + " پیدا نشد"
-                            });
+                            logger.pop( toaster, new ToasterData(
+                                "warning",
+                                "اخطار",
+                                "سمت " + selectedItem.title + " پیدا نشد"
+                            ));
                         } else {
-                            toaster.pop({
-                                type: "error",
-                                title: "خطا",
-                                body: "یک خطای ناشناس در هنگام ذخیره اطلاعات سمت " + self.view.position.title + " رخ داده است"
-                            });
+                            logger.pop( toaster, new ToasterData(
+                                "error",
+                                "خطا",
+                                "یک خطای ناشناس در هنگام ذخیره اطلاعات سمت " + self.view.position.title + " رخ داده است"
+                            ));
                         }
                     });
             },
@@ -119,7 +120,7 @@
                     //plain: true, -- Mean use of plain String as HTML
                     showClose: true,
                     closeByDocument: true,
-                    closeByEscape: true,
+                    closeByEscape: true
                 });
                 promise.then(/** @param data {WageVm} */function (data) {
                     self.view.wages.replace(null, data, function (item, empty) {
@@ -147,17 +148,17 @@
                     afterInitialize();
                 }, function (err) {
                     if (err.status === 404) {
-                        toaster.pop({
-                            type: "warning",
-                            title: "اخطار",
-                            body: "سمت " + selectedItem.getFullName() + " پیدا نشد"
-                        });
+                        logger.pop( toaster, new ToasterData(
+                            "warning",
+                            "اخطار",
+                            "سمت " + selectedItem.getFullName() + " پیدا نشد"
+                        ));
                     } else {
-                        toaster.pop({
-                            type: "error",
-                            title: "خطا",
-                            body: "یک خطای ناشناس در هنگام دریافت آخرین اطلاعات سمت " + selectedItem.getFullName() + " رخ داده است"
-                        });
+                        logger.pop( toaster, new ToasterData(
+                            "error",
+                            "خطا",
+                            "یک خطای ناشناس در هنگام دریافت آخرین اطلاعات سمت " + selectedItem.getFullName() + " رخ داده است"
+                        ));
                     }
                 });
 
@@ -167,17 +168,17 @@
                     afterInitialize();
                 }, function (err) {
                     if(err.status==404) {
-                        toaster.pop({
-                            type: "warning",
-                            title: "اخطار",
-                            body: "دستمزدهای مربوط به سمت " + selectedItem.getFullName() + " پیدا نشد"
-                        });
+                        logger.pop( toaster, new ToasterData(
+                            "warning",
+                            "اخطار",
+                            "دستمزدهای مربوط به سمت " + selectedItem.getFullName() + " پیدا نشد"
+                        ));
                     } else{
-                        toaster.pop({
-                            type: "error",
-                            title: "خطا",
-                            body: "یک خطای ناشناس در هنگام دریافت آخرین اطلاعات دستمزدهای مربوط به سمت " + selectedItem.getFullName() + " رخ داده است"
-                        });
+                        logger.pop( toaster, new ToasterData(
+                            "error",
+                            "خطا",
+                            "یک خطای ناشناس در هنگام دریافت آخرین اطلاعات دستمزدهای مربوط به سمت " + selectedItem.getFullName() + " رخ داده است"
+                        ));
                     }
                 })
         }
