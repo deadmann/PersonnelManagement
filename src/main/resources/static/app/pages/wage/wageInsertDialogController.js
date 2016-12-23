@@ -7,6 +7,7 @@
     var controller = function ($scope, positionItem, wagesService, toaster) {
         var DatePickerConfig = AngularUtility.DatePickerConfig;
         var self = this;
+        var logger = ErrorHandler.getInstance();
         
         self.view={
             /** @type {WageVm}*/
@@ -38,11 +39,11 @@
             save: function() {
 
                 if(!self.method.isValidPersianDate(self.view.persianDate)) {
-                    toaster.pop({
-                        type: "error",
-                        title: "خطا",
-                        body: "تاریخ ورودی یا مقدار آن نا معتبر می باشد"
-                    });
+                    logger.pop( toaster, new ToasterData(
+                        "error",
+                        "خطا",
+                        "تاریخ ورودی یا مقدار آن نا معتبر می باشد"
+                    ));
                     return;
                 }
                 self.view.wage.startDate = (new Date(moment(self.view.persianDate, 'jYYYY/jM/jD').format("YYYY-MM-DD")));
@@ -52,18 +53,18 @@
 
                 wagesService.save({}, self.view.wage).$promise
                     .then(function (data) {
-                        toaster.pop({
-                            type: "success",
-                            title: "توضیحات",
-                            body: "دستمزد " + self.view.wage.persianStartDate + " با موفقیت افزوده شد"
-                        });
+                        logger.pop( toaster, new ToasterData(
+                            "success",
+                            "توضیحات",
+                            "دستمزد " + self.view.wage.persianStartDate + " با موفقیت افزوده شد"
+                        ));
                         $scope.confirm(data);
                     }, function (err) {
-                        toaster.pop({
-                            type: "error",
-                            title: "خطا",
-                            body: "یک خطای ناشناس در هنگام افزودن دستمزد " + self.view.wage.persianStartDate + " رخ داده است"
-                        });
+                        logger.pop( toaster, new ToasterData(
+                            "error",
+                            "خطا",
+                            "یک خطای ناشناس در هنگام افزودن دستمزد " + self.view.wage.persianStartDate + " رخ داده است"
+                        ));
                     });
             }
         };

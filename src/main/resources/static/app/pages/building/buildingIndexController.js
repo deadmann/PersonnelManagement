@@ -5,8 +5,9 @@
 (function(){
     "use strict";
 
-    var controller = function ($location, ngDialog, buildingsService) {
+    var controller = function ($location, $timeout, ngDialog, buildingsService, toaster) {
         var self = this;
+        var logger = ErrorHandler.getInstance();
 
         self.view={
             buildings: []
@@ -107,14 +108,19 @@
                 .then(function (data) {
                     self.view.buildings = data;
                 }, function (err) {
-                    alert("An Error Has Occur");
+                    logger.pop(toaster, new ToasterData(
+                        "error",
+                        "خطا",
+                        "در هنگام دریافت اطلاعات ساختمان یک خطا رخ داده است"
+                    ));
                 });
+
         }
 
         initialize();
     };
 
-    controller.$inject = ["$location", "ngDialog", "buildingsService"];
+    controller.$inject = ["$location", "$timeout", "ngDialog", "buildingsService", "toaster"];
 
     angular.module("personnelManagement")
         .controller("buildingIndexController", controller);

@@ -3,8 +3,9 @@
  */
 (function(){
 
-    var controller = function ($location, wagesService) {
+    var controller = function ($location, wagesService, toaster) {
         var self = this;
+        var logger = ErrorHandler.getInstance();
 
         self.view={
             /** @type {WageVm}*/
@@ -18,7 +19,11 @@
                         //self.view.buildings = data;
                         $location.path("/wage");
                     }, function (err) {
-                        alert("An Error Has Occur");
+                        logger.pop(toaster, new ToasterData(
+                            "error",
+                            "خطا",
+                            "در هنگام ذخیره اطلاعات دستمزد یک خطا رخ داده است"
+                        ));
                     });
             },
             cancel: function(){
@@ -33,7 +38,7 @@
         initialize();
     };
 
-    controller.$inject = ["$location", "wagesService"];
+    controller.$inject = ["$location", "wagesService", "toaster"];
 
     angular.module("personnelManagement")
         .controller("wageInsertController", controller);

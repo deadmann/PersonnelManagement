@@ -6,6 +6,7 @@
 
     var controller = function ($scope, positionsService, toaster) {
         var self = this;
+        var logger = ErrorHandler.getInstance();
 
         self.view={
             /** @type {PositionInsertDto}*/
@@ -19,18 +20,18 @@
             save: function() {
                 positionsService.save({}, self.view.positionInsert).$promise
                     .then(function (data) {
-                        toaster.pop({
-                            type: "success",
-                            title: "توضیحات",
-                            body: "سمت " + self.view.positionInsert.title + " با موفقیت افزوده شد"
-                        });
+                        logger.pop( toaster, new ToasterData(
+                            "success",
+                            "توضیحات",
+                            "سمت " + self.view.positionInsert.title + " با موفقیت افزوده شد"
+                        ));
                         $scope.confirm(data);
                     }, function (err) {
-                        toaster.pop({
-                            type: "error",
-                            title: "خطا",
-                            body: "یک خطای ناشناس در هنگام افزودن سمت " + self.view.positionInsert.title + " رخ داده است"
-                        });
+                        logger.pop( toaster, new ToasterData(
+                            "error",
+                            "خطا",
+                            "یک خطای ناشناس در هنگام افزودن سمت " + self.view.positionInsert.title + " رخ داده است"
+                        ));
                     });
             }
         };

@@ -6,6 +6,7 @@
 
     var controller = function ($scope, selectedItem, personnelService, toaster) {
         var self = this;
+        var logger = ErrorHandler.getInstance();
 
         self.view={
             /** @type {PersonVm} */
@@ -19,31 +20,31 @@
             confirmDelete: function() {
                 personnelService.remove({id: self.view.person.id}).$promise
                     .then(function (data) {
-                        toaster.pop({
-                            type: "success",
-                            title: "توضیحات",
-                            body: "شخص " + self.view.person.getFullName() + " با موفقیت حذف گشت"
-                        });
+                        logger.pop( toaster, new ToasterData(
+                            "success",
+                            "توضیحات",
+                            "شخص " + self.view.person.getFullName() + " با موفقیت حذف گشت"
+                        ));
                         $scope.confirm(self.view.person);
                     }, function (err) {
                         if (err.status === 404) {
-                            toaster.pop({
-                                type: "warning",
-                                title: "اخطار",
-                                body: "شخص " + self.view.person.getFullName() + " پیدا نشد"
-                            });
+                            logger.pop( toaster, new ToasterData(
+                                "warning",
+                                "اخطار",
+                                "شخص " + self.view.person.getFullName() + " پیدا نشد"
+                            ));
                         } else if (err.status === 409) {
-                            toaster.pop({
-                                type: "warning",
-                                title: "اخطار",
-                                body: "شخص " + self.view.person.getFullName() + " توسط اجزای دیگر برنامه در حال استفاده می باشد"
-                            });
+                            logger.pop( toaster, new ToasterData(
+                                "warning",
+                                "اخطار",
+                                "شخص " + self.view.person.getFullName() + " توسط اجزای دیگر برنامه در حال استفاده می باشد"
+                            ));
                         } else {
-                            toaster.pop({
-                                type: "error",
-                                title: "خطا",
-                                body: "یک خطای ناشناس در هنگام حذف ساختمان " + self.view.person.getFullName() + " رخ داده است"
-                            });
+                            logger.pop( toaster, new ToasterData(
+                                "error",
+                                "خطا",
+                                "یک خطای ناشناس در هنگام حذف ساختمان " + self.view.person.getFullName() + " رخ داده است"
+                            ));
                         }
                     });
             }

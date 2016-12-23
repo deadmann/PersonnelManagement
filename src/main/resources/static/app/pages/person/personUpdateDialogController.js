@@ -6,6 +6,7 @@
 
     var controller = function ($scope, selectedItem, personnelService, positionsService, toaster) {
         var self = this;
+        var logger = ErrorHandler.getInstance();
 
         self.view={
             /** @type {PersonVm}*/
@@ -21,25 +22,25 @@
             save: function () {
                 personnelService.update({id:self.view.person.id}, self.view.person).$promise
                     .then(function (data) {
-                        toaster.pop({
-                            type: "success",
-                            title: "توضیحات",
-                            body: "شخص " + self.view.person.getFullName() + " با موفقیت ویرایش شد"
-                        });
+                        logger.pop( toaster, new ToasterData(
+                            "success",
+                            "توضیحات",
+                            "شخص " + self.view.person.getFullName() + " با موفقیت ویرایش شد"
+                        ));
                         $scope.confirm(data);
                     }, function (err) {
                         if (err.status === 404) {
-                            toaster.pop({
-                                type: "warning",
-                                title: "اخطار",
-                                body: "شخص " + selectedItem.getFullName() + " پیدا نشد"
-                            });
+                            logger.pop( toaster, new ToasterData(
+                                "warning",
+                                "اخطار",
+                                "شخص " + selectedItem.getFullName() + " پیدا نشد"
+                            ));
                         } else {
-                            toaster.pop({
-                                type: "error",
-                                title: "خطا",
-                                body: "یک خطای ناشناس در هنگام ذخیره اطلاعات شخص " + self.view.person.getFullName() + " رخ داده است"
-                            });
+                            logger.pop( toaster, new ToasterData(
+                                "error",
+                                "خطا",
+                                "یک خطای ناشناس در هنگام ذخیره اطلاعات شخص " + self.view.person.getFullName() + " رخ داده است"
+                            ));
                         }
                     });
             }
@@ -59,11 +60,11 @@
                     self.view.positions = data;
                     afterInitialize();
                 }, function (err) {
-                    toaster.pop({
-                        type: "error",
-                        title: "خطا",
-                        body: "خطایی در هنگام دریافت اطلاعات سمت ها رخ داده است."
-                    });
+                    logger.pop( toaster, new ToasterData(
+                        "error",
+                        "خطا",
+                        "خطایی در هنگام دریافت اطلاعات سمت ها رخ داده است."
+                    ));
                 });
 
             //1. We do not want to edit original item
@@ -74,17 +75,17 @@
                     afterInitialize();
                 }, function (err) {
                     if (err.status === 404) {
-                        toaster.pop({
-                            type: "warning",
-                            title: "اخطار",
-                            body: "شخص " + selectedItem.getFullName() + " پیدا نشد"
-                        });
+                        logger.pop( toaster, new ToasterData(
+                            "warning",
+                            "اخطار",
+                            "شخص " + selectedItem.getFullName() + " پیدا نشد"
+                        ));
                     } else {
-                        toaster.pop({
-                            type: "error",
-                            title: "خطا",
-                            body: "یک خطای ناشناس در هنگام دریافت آخرین اطلاعات شخص " + selectedItem.getFullName() + " رخ داده است"
-                        });
+                        logger.pop( toaster, new ToasterData(
+                            "error",
+                            "خطا",
+                            "یک خطای ناشناس در هنگام دریافت آخرین اطلاعات شخص " + selectedItem.getFullName() + " رخ داده است"
+                        ));
                     }
                 });
         }

@@ -5,6 +5,7 @@
     var controller = function ($scope, baseDataService, buildingsService, personnelService, positionsService, worksService, toaster) {
         //Basic Definition
         var self = this;
+        var logger = ErrorHandler.getInstance();
         var DatePickerConfig = AngularUtility.DatePickerConfig;
 
 
@@ -383,7 +384,7 @@
                 var LesserWageEnumerable = Enumerable.from(position.wages).where(/**@param w {WageVm}*/function(w){return work.date >= w.startDate;});
                 /** @type {WageVm} */
                 var equivalentWage = LesserWageEnumerable.orderByDescending("o=>o.startDate").first();
-                return work.workPerDay * equivalentWage.price;
+                return (work.workPerDay/8) * equivalentWage.price;
             }
         };
 
@@ -412,7 +413,11 @@
                                         self.method.viewByPerson();
                                         self.method.toView();
                                     }, function (err) {
-                                        alert("An Error Occur While Fetching Work Data");
+                                        logger.pop(toaster, new ToasterData(
+                                            "error",
+                                            "خطا",
+                                            "در هنگام دریافت اطلاعات کارکرد یک خطا رخ داده است"
+                                        ));
                                     });
                                 break;
                             case ReportType.BY_BUILDING:
@@ -427,7 +432,11 @@
                                         self.method.viewByBuilding();
                                         self.method.toView();
                                     }, function (err) {
-                                        alert("An Error Occur While Fetching Work Data");
+                                        logger.pop(toaster, new ToasterData(
+                                            "error",
+                                            "خطا",
+                                            "در هنگام دریافت اطلاعات کارکرد یک خطا رخ داده است"
+                                        ));
                                     });
                                 break;
                             case ReportType.BY_POSITION:
@@ -442,16 +451,20 @@
                                         self.method.viewByPosition();
                                         self.method.toView();
                                     }, function (err) {
-                                        alert("An Error Occur While Fetching Work Data");
+                                        logger.pop(toaster, new ToasterData(
+                                            "error",
+                                            "خطا",
+                                            "در هنگام دریافت اطلاعات کارکرد یک خطا رخ داده است"
+                                        ));
                                     });
                                 break;
                         }
                     }, function (err) {
-                        toaster.pop({
-                            type: 'error',
-                            title: 'خطا',
-                            body: 'در هنگام دریافت اطلاعات خطایی رخ داده است.' + err
-                        })
+                        logger.pop( toaster, new ToasterData(
+                            'error',
+                            'خطا',
+                            'در هنگام دریافت اطلاعات خطایی رخ داده است.' + err
+                        ));
                     });
             }
         };
@@ -525,7 +538,11 @@
                     privateData.startYear = data;
                     afterInitializeCallBack();
                 }, function (err) {
-                    alert("An Error Occur While Loading System Base Data From Server");
+                    logger.pop(toaster, new ToasterData(
+                        "error",
+                        "خطا",
+                        "در هنگام دریافت اطلاعات پایه سیستم یک خطا رخ داده است"
+                    ));
                 });
 
             //Current Year
@@ -534,7 +551,11 @@
                     privateData.currentYear = data;
                     afterInitializeCallBack();
                 }, function (err) {
-                    alert("An Error Occur While Loading System Base Data From Server");
+                    logger.pop(toaster, new ToasterData(
+                        "error",
+                        "خطا",
+                        "در هنگام دریافت اطلاعات پایه سیستم یک خطا رخ داده است"
+                    ));
                 });
 
             //Month Lists
@@ -556,7 +577,11 @@
                 self.view.personnel = data;
                 afterInitializeCallBack();
             }, function (err) {
-                alert("An Error Has Occur While Fetching Personnel Data." + err);
+                logger.pop(toaster, new ToasterData(
+                    "error",
+                    "خطا",
+                    "در هنگام دریافت اطلاعات پرسنل یک خطا رخ داده است" + err
+                ));
             });
 
             //Buildings
@@ -564,7 +589,11 @@
                 self.view.buildings = data;
                 afterInitializeCallBack();
             },function (err) {
-                alert("An Error Has Occur While Fetching Buildings Data." + err);
+                logger.pop(toaster, new ToasterData(
+                    "error",
+                    "خطا",
+                    "در هنگام دریافت اطلاعات ساختمان ها یک خطا رخ داده است" + err
+                ));
             });
 
             //Positions
@@ -572,7 +601,11 @@
                 self.view.positions = data;
                 afterInitializeCallBack();
             },function (err) {
-                alert("An Error Has Occur While Fetching Positions Data." + err);
+                logger.pop(toaster, new ToasterData(
+                    "error",
+                    "خطا",
+                    "در هنگام دریافت اطلاعات سمت ها یک خطا رخ داده است" + err
+                ));
             });
         }
 

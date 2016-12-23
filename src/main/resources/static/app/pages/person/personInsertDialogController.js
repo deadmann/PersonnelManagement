@@ -7,6 +7,7 @@
 
     var controller = function ($scope, personnelService, positionsService, toaster) {
         var self = this;
+        var logger = ErrorHandler.getInstance();
 
         self.view={
             /** @type {PersonVm}*/
@@ -22,18 +23,18 @@
             save: function() {
                 personnelService.save({}, self.view.person).$promise
                     .then(function (data) {
-                        toaster.pop({
-                            type: "success",
-                            title: "توضیحات",
-                            body: "شخص " + self.view.person.getFullName() + " با موفقیت افزوده شد"
-                        });
+                        logger.pop( toaster, new ToasterData(
+                            "success",
+                            "توضیحات",
+                            "شخص " + self.view.person.getFullName() + " با موفقیت افزوده شد"
+                        ));
                         $scope.confirm(data);
                     }, function (err) {
-                        toaster.pop({
-                            type: "error",
-                            title: "خطا",
-                            body: "یک خطای ناشناس در هنگام افزودن شخص " + self.view.person.getFullName() + " رخ داده است"
-                        });
+                        logger.pop( toaster, new ToasterData(
+                            "error",
+                            "خطا",
+                            "یک خطای ناشناس در هنگام افزودن شخص " + self.view.person.getFullName() + " رخ داده است"
+                        ));
                     });
             }
         };
@@ -43,11 +44,11 @@
                 .then(function (data) {
                     self.view.positions = data;
                 }, function (err) {
-                    toaster.pop({
-                        type: "error",
-                        title: "خطا",
-                        body: "خطایی در هنگام دریافت اطلاعات سمت ها رخ داده است."
-                    });
+                    logger.pop( toaster, new ToasterData(
+                        "error",
+                        "خطا",
+                        "خطایی در هنگام دریافت اطلاعات سمت ها رخ داده است."
+                    ));
                 });
             self.view.person = new PersonVm();
         }

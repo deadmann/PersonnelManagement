@@ -1,25 +1,33 @@
 <div class="clearfix">
     <div class="row" ng-if="ctrl.view.mode == ctrl.type.PageMode.SELECT">
-        <div class="col-md-3">
-            <select class="form-control" ng-model="ctrl.view.headerSelections.year" ng-options="x as x for x in ctrl.view.years">
-                <option value="" disabled selected>لطفا سال را انتخاب کنید</option>
-            </select>
-        </div>
-        <div class="col-md-3">
-            <select class="form-control" ng-model="ctrl.view.headerSelections.month" ng-options="item as (item.key + ' - ' + item.value) for item in ctrl.view.months.getAllKeyValues()">
-                <option value="" disabled selected>لطفا ماه را انتخاب کنید</option>
-            </select>
-        </div>
-        <div class="col-md-3">
-            <select class="form-control" ng-model="ctrl.view.headerSelections.person" ng-options="x as (x.firstname | emptyForNull) + ' ' + (x.lastname | emptyForNull) for x in ctrl.view.personnel">
-                <option value="" disabled selected>لطفا شخص را انتخاب کنید</option>
-            </select>
-        </div>
-        <div class="col-md-3">
-            <button class="btn btn-primary" ng-disabled="!ctrl.view.isHeaderLoaded" ng-click="ctrl.event.toEditWorks()">
-                ویرایش
-            </button>
-        </div>
+        <form ng-submit="ctrl.event.toEditWorks()">
+            <div class="col-md-3">
+                <select class="form-control" ng-model="ctrl.view.headerSelections.year"
+                        ng-options="x as x for x in ctrl.view.years"
+                        required="required">
+                    <option value="" disabled selected>لطفا سال را انتخاب کنید</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <select class="form-control" ng-model="ctrl.view.headerSelections.month"
+                        ng-options="item as (item.key + ' - ' + item.value) for item in ctrl.view.months.getAllKeyValues()"
+                        required="required">
+                    <option value="" disabled selected>لطفا ماه را انتخاب کنید</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <select class="form-control" ng-model="ctrl.view.headerSelections.person"
+                        ng-options="x as (x.firstname | emptyForNull) + ' ' + (x.lastname | emptyForNull) for x in ctrl.view.personnel"
+                        required="required">
+                    <option value="" disabled selected>لطفا شخص را انتخاب کنید</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <button type="submit" class="btn btn-primary" ng-disabled="!ctrl.view.isHeaderLoaded">
+                    ویرایش
+                </button>
+            </div>
+        </form>
     </div>
 
     <div class="row" ng-if="ctrl.view.mode == ctrl.type.PageMode.EDIT">
@@ -71,7 +79,7 @@
 {{ctrl.view.headerSelections.year}}/{{ctrl.view.headerSelections.month.key}}/{{day}} {{building.name}}" />
                         </td>
                         <td>
-                            <span class="text-success" ng-bind="ctrl.method.getSumDays(day)"></span>
+                            <span class="text-success" ng-bind="ctrl.method.getSumDays(day)|workTime"></span>
                         </td>
                     </tr>
                     <tr>
@@ -79,10 +87,10 @@
                             مجموع
                         </td>
                         <td ng-repeat="building in ctrl.view.tableSelections.selectedBuildings">
-                            <span class="text-success" ng-bind="ctrl.method.getSumBuildings(building)"></span>
+                            <span class="text-success" ng-bind="ctrl.method.getSumBuildings(building)|workTime"></span>
                         </td>
                         <td>
-                            <span class="text-danger" ng-bind="ctrl.method.getSumTotal()"></span>
+                            <span class="text-danger" ng-bind="ctrl.method.getSumTotal()|workTime"></span>
                         </td>
                     </tr>
                 </tbody>

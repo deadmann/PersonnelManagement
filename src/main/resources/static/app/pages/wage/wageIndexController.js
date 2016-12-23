@@ -3,8 +3,9 @@
  */
 (function () {
 
-    var controller = function ($location, wagesService) {
+    var controller = function ($location, wagesService, toaster) {
         var self = this;
+        var logger = ErrorHandler.getInstance();
 
         self.view={
             wages: []
@@ -25,14 +26,18 @@
                 .then(function (data) {
                     self.view.wages = data;
                 }, function (err) {
-                    alert("An Error Has Occur");
+                    logger.pop(toaster, new ToasterData(
+                        "error",
+                        "خطا",
+                        "در هنگام دریافت اطلاعات دستمزد ها یک خطا رخ داده است"
+                    ));
                 });
         }
 
         initialize();
     };
 
-    controller.$inject = ["$location", "wagesService"];
+    controller.$inject = ["$location", "wagesService", "toaster"];
 
     angular.module("personnelManagement")
         .controller("wageIndexController", controller);

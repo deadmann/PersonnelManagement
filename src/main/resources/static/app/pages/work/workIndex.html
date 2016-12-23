@@ -61,6 +61,9 @@
         </form>
     </div>
 
+
+
+
     <div ng-if="ctrl.view.mode == ctrl.type.PageMode.VIEW">
         <div class="row" ng-if="ctrl.view.headerSelections.reportType == ctrl.type.ReportType.BY_PERSON">
             <div class="col-xs-12">
@@ -105,10 +108,10 @@
                                 <span ng-bind="item.building.name"></span>
                             </td>
                             <td>
-                                <span ng-bind="item.sum"></span>
+                                <span ng-bind="item.sum|workTime"></span>
                             </td>
                             <td>
-                                <span ng-bind="item.sumMoney.putThousandComma()"></span>
+                                <span ng-bind="item.sumMoney|rials"></span>
                             </td>
                         </tr>
                         <tr>
@@ -118,10 +121,10 @@
                                 </span>
                             </td>
                             <td style="color: seagreen;">
-                                <span ng-bind="ctrl.view.totalSum"></span>
+                                <span ng-bind="ctrl.view.totalSum|workTime"></span>
                             </td>
                             <td style="color: seagreen;">
-                                <span ng-bind="ctrl.view.totalSumMoney.putThousandComma()"></span>
+                                <span ng-bind="ctrl.view.totalSumMoney|rials"></span>
                             </td>
                         </tr>
                     </tbody>
@@ -129,6 +132,10 @@
 
             </div>
         </div>
+
+
+
+
 
         <div class="row" ng-if="ctrl.view.headerSelections.reportType == ctrl.type.ReportType.BY_BUILDING">
             <div class="col-xs-12">
@@ -173,10 +180,10 @@
                             <span ng-bind="(item.person.firstname|emptyForNull) + ' ' + (item.person.lastname | emptyForNull)"></span>
                         </td>
                         <td>
-                            <span ng-bind="item.sum"></span>
+                            <span ng-bind="item.sum|workTime"></span>
                         </td>
                         <td>
-                            <span ng-bind="item.sumMoney.putThousandComma()"></span>
+                            <span ng-bind="item.sumMoney|rials"></span>
                         </td>
                     </tr>
                     <tr>
@@ -186,10 +193,10 @@
                             </span>
                         </td>
                         <td style="color: seagreen;">
-                            <span ng-bind="ctrl.view.totalSum"></span>
+                            <span ng-bind="ctrl.view.totalSum|workTime"></span>
                         </td>
                         <td style="color: seagreen;">
-                            <span ng-bind="ctrl.view.totalSumMoney.putThousandComma()"></span>
+                            <span ng-bind="ctrl.view.totalSumMoney|rials"></span>
                         </td>
                     </tr>
                     </tbody>
@@ -197,6 +204,11 @@
 
             </div>
         </div>
+
+
+
+
+
 
         <div class="row" ng-if="ctrl.view.headerSelections.reportType == ctrl.type.ReportType.BY_POSITION">
             <div class="col-xs-12">
@@ -239,14 +251,14 @@
                             <span ng-bind="(item.person.firstname|emptyForNull) + ' ' +  (item.person.lastname|emptyForNull)"></span>
                         </td>
                         <td ng-repeat="building in ctrl.view.buildingsForWorksByPosition">
-                            <span ng-bind="ctrl.method.getGroupingByPersonAndBuilding(item.person,building).sum"></span>
+                            <span ng-bind="ctrl.method.getGroupingByPersonAndBuilding(item.person,building).sum|workTime"></span>
                             <br/>
-                            <span ng-bind="ctrl.method.getGroupingByPersonAndBuilding(item.person,building).sumMoney.putThousandComma()"></span>
+                            <span ng-bind="ctrl.method.getGroupingByPersonAndBuilding(item.person,building).sumMoney|rials"></span>
                         </td>
                         <td style="color: seagreen;">
-                            <span ng-bind="item.sum"></span>
+                            <span ng-bind="item.sum|workTime"></span>
                             <br/>
-                            <span ng-bind="item.sumMoney.putThousandComma()"></span>
+                            <span ng-bind="item.sumMoney|rials"></span>
                         </td>
                     </tr>
                     <tr>
@@ -257,14 +269,14 @@
                         </td>
                         <td style="color: seagreen;"
                             ng-repeat="building in ctrl.view.buildingsForWorksByPosition">
-                            <span ng-bind="ctrl.method.getGroupingByBuilding(building).sum"></span>
+                            <span ng-bind="ctrl.method.getGroupingByBuilding(building).sum|workTime"></span>
                             <br/>
-                            <span ng-bind="ctrl.method.getGroupingByBuilding(building).sumMoney.putThousandComma()"></span>
+                            <span ng-bind="ctrl.method.getGroupingByBuilding(building).sumMoney|rials"></span>
                         </td>
                         <td style="color: #d9534f;">
-                            <span ng-bind="ctrl.view.totalSum"></span>
+                            <span ng-bind="ctrl.view.totalSum|workTime"></span>
                             <br/>
-                            <span ng-bind="ctrl.view.totalSumMoney.putThousandComma()"></span>
+                            <span ng-bind="ctrl.view.totalSumMoney|rials"></span>
                         </td>
                     </tr>
                     </tbody>
@@ -272,6 +284,9 @@
 
             </div>
         </div>
+
+
+
 
         <div class="row">
             <div class="col-md-12">

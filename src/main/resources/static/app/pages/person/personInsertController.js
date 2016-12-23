@@ -3,8 +3,9 @@
  */
 (function(){
 
-    var controller = function ($location, personnelService, positionsService) {
+    var controller = function ($location, personnelService, positionsService, toaster) {
         var self = this;
+        var logger = ErrorHandler.getInstance();
 
         self.view={
             /** @type {PersonVm}*/
@@ -20,7 +21,11 @@
                         //self.view.buildings = data;
                         $location.path("/person");
                     }, function (err) {
-                        alert("An Error Has Occur");
+                        logger.pop(toaster, new ToasterData(
+                            "error",
+                            "خطا",
+                            "در هنگام ذخیره اطلاعات شخص یک خطا رخ داده است"
+                        ));
                     });
             },
             cancel: function(){
@@ -33,7 +38,11 @@
                 .then(function (data) {
                     self.view.positions = data;
                 }, function (err) {
-                    alert("An Error Has Occur While Loading Positions Data.");
+                    logger.pop(toaster, new ToasterData(
+                        "error",
+                        "خطا",
+                        "در هنگام دریافت اطلاعات سمت ها یک خطا رخ داده است"
+                    ));
                 });
             self.view.personInsert = new PersonVm();
         }
@@ -41,7 +50,7 @@
         initialize();
     };
 
-    controller.$inject = ["$location", "personnelService", "positionsService"];
+    controller.$inject = ["$location", "personnelService", "positionsService", "toaster"];
 
     angular.module("personnelManagement")
         .controller("personInsertController", controller);

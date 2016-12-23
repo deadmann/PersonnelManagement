@@ -5,14 +5,14 @@ module AngularUtility {
     "use strict";
 
 
-    export function filter() {
+    export function emptyForNullFilter() {
         return (text: string) => {
             return Util.Utility.isNullOrUndefined(text) ? "" : text;
         };
     }
 
-    filter.$inject = [];
+    emptyForNullFilter.$inject = [];
 
     angular.module("angularUtility")
-        .filter("emptyForNull", filter);
+        .filter("emptyForNull", emptyForNullFilter);
 }

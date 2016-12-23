@@ -6,6 +6,7 @@
 
     var controller = function ($scope, selectedItem, positionsService, toaster) {
         var self = this;
+        var logger = ErrorHandler.getInstance();
 
         self.view={
             /** @type {PositionVm} */
@@ -19,31 +20,31 @@
             confirmDelete: function() {
                 positionsService.remove({id: self.view.position.id}).$promise
                     .then(function (data) {
-                        toaster.pop({
-                            type: "success",
-                            title: "توضیحات",
-                            body: "سمت " + self.view.position.title + " با موفقیت حذف گشت"
-                        });
+                        logger.pop( toaster, new ToasterData(
+                            "success",
+                            "توضیحات",
+                            "سمت " + self.view.position.title + " با موفقیت حذف گشت"
+                        ));
                         $scope.confirm(self.view.position);
                     }, function (err) {
                         if (err.status === 404) {
-                            toaster.pop({
-                                type: "warning",
-                                title: "اخطار",
-                                body: "سمت " + self.view.position.title + " پیدا نشد"
-                            });
+                            logger.pop( toaster, new ToasterData(
+                                "warning",
+                                "اخطار",
+                                "سمت " + self.view.position.title + " پیدا نشد"
+                            ));
                         } else if (err.status === 409) {
-                            toaster.pop({
-                                type: "warning",
-                                title: "اخطار",
-                                body: "سمت " + self.view.position.title + " توسط اجزای دیگر برنامه در حال استفاده می باشد"
-                            });
+                            logger.pop( toaster, new ToasterData(
+                                "warning",
+                                "اخطار",
+                                "سمت " + self.view.position.title + " توسط اجزای دیگر برنامه در حال استفاده می باشد"
+                            ));
                         } else {
-                            toaster.pop({
-                                type: "error",
-                                title: "خطا",
-                                body: "یک خطای ناشناس در هنگام حذف سمت " + self.view.position.title + " رخ داده است"
-                            });
+                            logger.pop( toaster, new ToasterData(
+                                "error",
+                                "خطا",
+                                "یک خطای ناشناس در هنگام حذف سمت " + self.view.position.title + " رخ داده است"
+                            ));
                         }
                     });
             }

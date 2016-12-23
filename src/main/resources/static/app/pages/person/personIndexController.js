@@ -3,8 +3,9 @@
  */
 (function () {
 
-    var controller = function ($location, ngDialog, personnelService) {
+    var controller = function ($location, ngDialog, personnelService, toaster) {
         var self = this;
+        var logger = ErrorHandler.getInstance();
 
         self.view={
             personnel: []
@@ -105,14 +106,18 @@
                 .then(function (data) {
                     self.view.personnel = data;
                 }, function (err) {
-                    alert("An Error Has Occur");
+                    logger.pop(toaster, new ToasterData(
+                        "error",
+                        "خطا",
+                        "در هنگام دریافت اطلاعات اشخاص یک خطا رخ داده است"
+                    ));
                 });
         }
 
         initialize();
     };
 
-    controller.$inject = ["$location", "ngDialog", "personnelService"];
+    controller.$inject = ["$location", "ngDialog", "personnelService", "toaster"];
 
     angular.module("personnelManagement")
         .controller("personIndexController", controller);

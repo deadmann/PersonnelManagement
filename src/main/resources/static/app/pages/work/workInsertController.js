@@ -2,8 +2,9 @@
  * Created by Hassan on 11/20/2016.
  */
 (function () {
-    var controller = function (baseDataService, buildingsService, personnelService, worksService) {
+    var controller = function (baseDataService, buildingsService, personnelService, worksService, toaster) {
         var self = this;
+        var logger = ErrorHandler.getInstance();
 
         var privateData = {
             /** @type {number|null} */
@@ -70,6 +71,57 @@
         };
 
         self.method = {
+            toEditWorks: function () {
+                //Keep Track Of Running Async Service, And Provide Ability To Run A Method After All Async Finished.
+                var afterToEditWorksAsyncRunnerCounter = 2;
+
+                function afterToEditWorkCallBack(){
+                    if (afterToEditWorksAsyncRunnerCounter == 0){
+                        self.view.mode = PageMode.EDIT;
+                        self.method.mapWpdToBdw();
+                    }
+                }
+
+                baseDataService.getDaysInMonth({
+                    param2: self.view.headerSelections.year,
+                    param3: self.view.headerSelections.month.key
+                }).$promise
+                    .then(function (data) {
+                        privateData.daysInMonth = data;
+                        self.view.days = Util.Utility.generateRange(1, data, true);
+                        afterToEditWorksAsyncRunnerCounter --;
+                        if(afterToEditWorksAsyncRunnerCounter === 0) afterToEditWorkCallBack();
+                    }, function (err) {
+                        logger.pop(toaster, new ToasterData(
+                            "error",
+                            "خطا",
+                            "در هنگام دریافت اطلاعات تاریخ یک خطا رخ داده است"
+                        ));
+                    });
+
+                worksService.getWorkPerDaysByPersonAndMonth({
+                    param2: self.view.headerSelections.person.id,
+                    param3: self.view.headerSelections.year,
+                    param4: self.view.headerSelections.month.key
+                }).$promise
+                    .then(function (data) {
+                        privateData.workPerDays = data;
+                        afterToEditWorksAsyncRunnerCounter --;
+                        if(afterToEditWorksAsyncRunnerCounter === 0) afterToEditWorkCallBack();
+                    }, function (err) {
+                        logger.pop(toaster, new ToasterData(
+                            "error",
+                            "خطا",
+                            "در هنگام دریافت اطلاعات کارکرد یک خطا رخ داده است"
+                        ));
+                    });
+            },
+            toSelect: function () {
+                self.view.mode = PageMode.SELECT;
+                self.method.resetDataForms();
+                privateData.daysInMonth = null;
+                self.view.days = null;
+            },
             //Data that should rest or list that should be empty when month/year/person changes
             resetDataForms: function () {
                 privateData.workPerDays = []; //--> TODO: Should check server again and re-map (for Enable Update/Edit)
@@ -170,47 +222,10 @@
 
         self.event = {
             toEditWorks: function () {
-                //Keep Track Of Running Async Service, And Provide Ability To Run A Method After All Async Finished.
-                var afterToEditWorksAsyncRunnerCounter = 2;
-
-                function afterToEditWorkCallBack(){
-                    if (afterToEditWorksAsyncRunnerCounter == 0){
-                        self.view.mode = PageMode.EDIT;
-                        self.method.mapWpdToBdw();
-                    }
-                }
-
-                baseDataService.getDaysInMonth({
-                    param2: self.view.headerSelections.year,
-                    param3: self.view.headerSelections.month.key
-                }).$promise
-                    .then(function (data) {
-                        privateData.daysInMonth = data;
-                        self.view.days = Util.Utility.generateRange(1, data, true);
-                        afterToEditWorksAsyncRunnerCounter --;
-                        if(afterToEditWorksAsyncRunnerCounter === 0) afterToEditWorkCallBack();
-                    }, function (err) {
-                        alert("An Error Occur While Loading Calendar Information");
-                    });
-
-                worksService.getWorkPerDaysByPersonAndMonth({
-                    param2: self.view.headerSelections.person.id,
-                    param3: self.view.headerSelections.year,
-                    param4: self.view.headerSelections.month.key
-                }).$promise
-                    .then(function (data) {
-                        privateData.workPerDays = data;
-                        afterToEditWorksAsyncRunnerCounter --;
-                        if(afterToEditWorksAsyncRunnerCounter === 0) afterToEditWorkCallBack();
-                    }, function (err) {
-                        alert("Cannot Fetch Works Data From Server" + err);
-                    });
+                self.method.toEditWorks();
             },
             toSelectMode: function () {
-                self.view.mode = PageMode.SELECT;
-                self.method.resetDataForms();
-                privateData.daysInMonth = null;
-                self.view.days = null;
+                self.method.toSelect();
             },
             selectBuilding:function () {
                 var eBuildings = Enumerable.from(self.view.tableSelections.selectedBuildings);
@@ -221,7 +236,11 @@
                 if(!isExists){
                     self.view.tableSelections.selectedBuildings.push(self.view.tableSelections.building);
                 } else {
-                    alert("This Building Already Exists.");
+                    logger.pop(toaster, new ToasterData(
+                        "warning",
+                        "اخطار",
+                        "این ساختمان هم اکنون موجود می باشد"
+                    ));
                 }
                 self.view.tableSelections.building = null; //Reset To Null
             },
@@ -236,9 +255,18 @@
                     param4:self.view.headerSelections.month.key
                 }, privateData.workPerDays).$promise
                     .then(function (data) {
-                        alert("success");
+                        logger.pop(toaster, new ToasterData(
+                            "success",
+                            "پیغام",
+                            "اطلاعات کارکرد با موفقیت ذخیره شد"
+                        ));
+                        self.method.toSelect();
                     }, function (err) {
-                        alert("An error occur while saving data");
+                        logger.pop(toaster, new ToasterData(
+                            "error",
+                            "خطا",
+                            "در هنگام ذخیره اطلاعات کارکرد ها یک خطا رخ داده است" + err
+                        ));
                     })
             }
         };
@@ -267,7 +295,11 @@
                     privateData.startYear = data;
                     afterInitializeCallBack();
                 }, function (err) {
-                    alert("An Error Occur While Loading System Base Data From Server");
+                    logger.pop(toaster, new ToasterData(
+                        "error",
+                        "خطا",
+                        "در هنگام دریافت اطلاعات پایه سیستم یک خطا رخ داده است"
+                    ));
                 });
 
             //Current Year
@@ -276,7 +308,11 @@
                     privateData.currentYear = data;
                     afterInitializeCallBack();
                 }, function (err) {
-                    alert("An Error Occur While Loading System Base Data From Server");
+                    logger.pop(toaster, new ToasterData(
+                        "error",
+                        "خطا",
+                        "در هنگام دریافت اطلاعات پایه سیستم یک خطا رخ داده است"
+                    ));
                 });
 
             //Month Lists
@@ -291,7 +327,11 @@
                 self.view.personnel = data;
                 afterInitializeCallBack();
             }, function (err) {
-                alert("An Error Has Occur While Fetching Personnel Data." + err);
+                logger.pop(toaster, new ToasterData(
+                    "error",
+                    "خطا",
+                    "در هنگام دریافت اطلاعات اشخاص یک خطا رخ داده است" + err
+                ));
             });
 
             //Buildings
@@ -299,14 +339,18 @@
                 self.view.buildings = data;
                 afterInitializeCallBack();
             },function (err) {
-                alert("An Error Has Occur While Fetching Buildings Data." + err);
+                logger.pop(toaster, new ToasterData(
+                    "error",
+                    "خطا",
+                    "در هنگام دریافت اطلاعات ساختمان ها یک خطا رخ داده است" + err
+                ));
             });
         }
 
         initialize();
     };
 
-    controller.$inject = ["baseDataService", "buildingsService", "personnelService", "worksService"];
+    controller.$inject = ["baseDataService", "buildingsService", "personnelService", "worksService", "toaster"];
 
     angular.module("personnelManagement")
         .controller("workInsertController", controller);
