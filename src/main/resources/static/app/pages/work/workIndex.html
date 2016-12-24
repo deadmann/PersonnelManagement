@@ -108,10 +108,10 @@
                                 <span ng-bind="item.building.name"></span>
                             </td>
                             <td>
-                                <span ng-bind="item.sum|workTime"></span>
+                                <span class="no-break" ng-bind="item.sum|workTime"></span>
                             </td>
                             <td>
-                                <span ng-bind="item.sumMoney|rials"></span>
+                                <span class="no-break" ng-bind="item.sumMoney|rials"></span>
                             </td>
                         </tr>
                         <tr>
@@ -121,10 +121,10 @@
                                 </span>
                             </td>
                             <td style="color: seagreen;">
-                                <span ng-bind="ctrl.view.totalSum|workTime"></span>
+                                <span class="no-break" ng-bind="ctrl.view.totalSum|workTime"></span>
                             </td>
                             <td style="color: seagreen;">
-                                <span ng-bind="ctrl.view.totalSumMoney|rials"></span>
+                                <span class="no-break" ng-bind="ctrl.view.totalSumMoney|rials"></span>
                             </td>
                         </tr>
                     </tbody>
@@ -180,10 +180,10 @@
                             <span ng-bind="(item.person.firstname|emptyForNull) + ' ' + (item.person.lastname | emptyForNull)"></span>
                         </td>
                         <td>
-                            <span ng-bind="item.sum|workTime"></span>
+                            <span class="no-break" ng-bind="item.sum|workTime"></span>
                         </td>
                         <td>
-                            <span ng-bind="item.sumMoney|rials"></span>
+                            <span class="no-break" ng-bind="item.sumMoney|rials"></span>
                         </td>
                     </tr>
                     <tr>
@@ -193,10 +193,10 @@
                             </span>
                         </td>
                         <td style="color: seagreen;">
-                            <span ng-bind="ctrl.view.totalSum|workTime"></span>
+                            <span class="no-break" ng-bind="ctrl.view.totalSum|workTime"></span>
                         </td>
                         <td style="color: seagreen;">
-                            <span ng-bind="ctrl.view.totalSumMoney|rials"></span>
+                            <span class="no-break" ng-bind="ctrl.view.totalSumMoney|rials"></span>
                         </td>
                     </tr>
                     </tbody>
@@ -251,14 +251,16 @@
                             <span ng-bind="(item.person.firstname|emptyForNull) + ' ' +  (item.person.lastname|emptyForNull)"></span>
                         </td>
                         <td ng-repeat="building in ctrl.view.buildingsForWorksByPosition">
-                            <span ng-bind="ctrl.method.getGroupingByPersonAndBuilding(item.person,building).sum|workTime"></span>
+                            <span class="no-break"
+                                  ng-bind="ctrl.method.getGroupingByPersonAndBuilding(item.person,building).sum|workTime"></span>
                             <br/>
-                            <span ng-bind="ctrl.method.getGroupingByPersonAndBuilding(item.person,building).sumMoney|rials"></span>
+                            <span class="no-break"
+                                  ng-bind="ctrl.method.getGroupingByPersonAndBuilding(item.person,building).sumMoney|rials"></span>
                         </td>
                         <td style="color: seagreen;">
-                            <span ng-bind="item.sum|workTime"></span>
+                            <span class="no-break" ng-bind="item.sum|workTime"></span>
                             <br/>
-                            <span ng-bind="item.sumMoney|rials"></span>
+                            <span class="no-break" ng-bind="item.sumMoney|rials"></span>
                         </td>
                     </tr>
                     <tr>
@@ -269,14 +271,16 @@
                         </td>
                         <td style="color: seagreen;"
                             ng-repeat="building in ctrl.view.buildingsForWorksByPosition">
-                            <span ng-bind="ctrl.method.getGroupingByBuilding(building).sum|workTime"></span>
+                            <span class="no-break"
+                                  ng-bind="ctrl.method.getGroupingByBuilding(building).sum|workTime"></span>
                             <br/>
-                            <span ng-bind="ctrl.method.getGroupingByBuilding(building).sumMoney|rials"></span>
+                            <span class="no-break"
+                                  ng-bind="ctrl.method.getGroupingByBuilding(building).sumMoney|rials"></span>
                         </td>
                         <td style="color: #d9534f;">
-                            <span ng-bind="ctrl.view.totalSum|workTime"></span>
+                            <span class="no-break" ng-bind="ctrl.view.totalSum|workTime"></span>
                             <br/>
-                            <span ng-bind="ctrl.view.totalSumMoney|rials"></span>
+                            <span class="no-break" ng-bind="ctrl.view.totalSumMoney|rials"></span>
                         </td>
                     </tr>
                     </tbody>

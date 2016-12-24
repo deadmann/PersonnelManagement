@@ -52,6 +52,8 @@
                         return;
                     }
                     self.view.wage.startDate = (new Date(moment(self.view.persianDate, 'jYYYY/jM/jD').format("YYYY-MM-DD")));
+                }else{
+                    //Set a value equal to what we receive/we have on server...
                 }
 
                 //!IMPORTANT
