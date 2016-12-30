@@ -12,6 +12,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -52,6 +53,12 @@ public class WagesController {
 
     @RequestMapping(value = "", method = RequestMethod.POST)
     private WageVm save(@RequestBody Wage wage) throws ConflictException, InvalidDataException {
+        Calendar cal = new GregorianCalendar(wage.getStartDate().get(
+                Calendar.YEAR),
+                wage.getStartDate().get(Calendar.MONTH),
+                wage.getStartDate().get(Calendar.DAY_OF_MONTH));
+        wage.setStartDate(cal);
+
         Position position = positionService.getPosition(wage.getPosition().getId());
         Optional<Wage> first = position.getWages().stream().sorted((a, b)->{
             if(a.getStartDate().getTime().getTime()>b.getStartDate().getTime().getTime())
@@ -92,14 +99,22 @@ public class WagesController {
 
     @RequestMapping(value="/{id}", method=RequestMethod.PUT)
     private WageVm update(@PathVariable int id, @RequestBody Wage wage) throws ConflictException, NotFoundException, InvalidDataException, ForbiddenChange {
+        //Fix Incoming Calendar
+        Calendar cal = new GregorianCalendar(wage.getStartDate().get(
+                Calendar.YEAR),
+                wage.getStartDate().get(Calendar.MONTH),
+                wage.getStartDate().get(Calendar.DAY_OF_MONTH));
+        wage.setStartDate(cal);
+
         try {
-            if(id != wage.getId())
+            if (id != wage.getId())
                 throw new InvalidDataException("Model id does not match with requested id");
 
             Wage wageUpdate = wageService.getWage(wage.getId());
+            Wage firstWage = wageUpdate.getPosition().getWages().get(0);
             //If FIRST ITEM and DATE CHANGED disallow
-            if(wageUpdate.getPosition().getWages().get(0).getId() == id
-                    && wageUpdate.getPosition().getWages().get(0).getStartDate() != wage.getStartDate())
+            if (firstWage.getId() == id
+                    && firstWage.getStartDate().getTimeInMillis() != wage.getStartDate().getTimeInMillis())
                 throw new ForbiddenChange("Date Should Not Get Modified On First Item.");
 
             //Wage wageUpdate = wageService.getWage(wage.getId());
@@ -108,9 +123,9 @@ public class WagesController {
 
             wageService.update(wageUpdate);
             return wageUpdate.getViewModel();
-        }catch (DataIntegrityViolationException ex){
+        } catch (DataIntegrityViolationException ex) {
             throw new ConflictException(ex.getMessage());
-        }catch (EmptyResultDataAccessException ex){
+        } catch (EmptyResultDataAccessException ex) {
             throw new NotFoundException("Requested Item Does Not Found");
         } catch (ForbiddenChange forbiddenChange) {
             throw forbiddenChange;

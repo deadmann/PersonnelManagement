@@ -51,9 +51,10 @@
                         ));
                         return;
                     }
-                    self.view.wage.startDate = (new Date(moment(self.view.persianDate, 'jYYYY/jM/jD').format("YYYY-MM-DD")));
+                    self.view.wage.startDate = moment(self.view.persianDate, 'jYYYY/jM/jD').format("YYYY-MM-DD");
                 }else{
                     //Set a value equal to what we receive/we have on server...
+                    // self.view.wage.startDate - Stay Unchanged
                 }
 
                 //!IMPORTANT
@@ -107,6 +108,8 @@
                 startConfig.dateFormat = "yy/mm/dd";
                 startConfig.numberOfMonths = 1;
                 startConfig.showButtonPanel = true;
+                startConfig.changeMonth = true;
+                startConfig.changeYear = true;
                 return startConfig;
             }
 

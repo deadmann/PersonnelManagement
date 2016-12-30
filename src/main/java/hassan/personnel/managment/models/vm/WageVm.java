@@ -1,5 +1,11 @@
 package hassan.personnel.managment.models.vm;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import hassan.personnel.managment.utility.CalendarStringDeserializer;
+import hassan.personnel.managment.utility.CalendarStringSerializer;
+
 import java.util.Calendar;
 
 /**
@@ -8,6 +14,11 @@ import java.util.Calendar;
 public class WageVm {
     private int id;
 
+//    @JsonSerialize(using = CustomCalendarSerializer.class)
+//    @JsonDeserialize(using = CustomCalendarDeserializer.class)
+//    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")// HH:mm")
+    @JsonSerialize(using = CalendarStringSerializer.class)
+    //@JsonDeserialize(using = CalendarStringDeserializer.class) //Deserializer Does Not Work :|
     private Calendar startDate;
 
     private double price;

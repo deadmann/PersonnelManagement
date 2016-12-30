@@ -31,10 +31,16 @@ class PositionVm {
         }
 
         var min = Enumerable.from(this.wages)
-            .minBy((m:WageVm)=>m.startDate.getTime());
+            .minBy((m:WageVm)=>m.startDate);
         var current = this.getCurrentWage();
 
         return min == current;
+    }
+
+    private static getCurrentDateString():string{
+        var today =new Date();
+        //get Day Returns day of week, Date returns day of month
+        return today.getFullYear() + '-'+(today.getMonth()+1) + '-'+today.getDate();
     }
 
     public getCurrentWage():WageVm{
@@ -43,8 +49,8 @@ class PositionVm {
         }
 
         return Enumerable.from(this.wages)
-            .where((w:WageVm)=>w.startDate.getTime() < new Date().getTime()) //Get All Previous Dates Wages
-            .maxBy((m:WageVm)=>m.startDate.getTime()); //Show The Biggest Date Wage
+            .where((w:WageVm)=>Util.Utility.compareString(w.startDate, PositionVm.getCurrentDateString())==-1) //Get All Previous Dates Wages
+            .maxBy((m:WageVm)=>m.startDate); //Show The Biggest Date Wage
     }
 
     public getNextWage():WageVm{
@@ -54,12 +60,12 @@ class PositionVm {
         var current = this.getCurrentWage();
 
         var afterCurrentEnum = Enumerable.from(this.wages)
-            .where((w:WageVm)=>w.startDate.getTime() > current.startDate.getTime());
+            .where((w:WageVm)=> Util.Utility.compareString(w.startDate, current.startDate)==1);
 
         if (!afterCurrentEnum.any()) {
             return null;
         }
 
-        return afterCurrentEnum.minBy((m: WageVm)=>m.startDate.getTime());
+        return afterCurrentEnum.minBy((m: WageVm)=>m.startDate);
     }
 }

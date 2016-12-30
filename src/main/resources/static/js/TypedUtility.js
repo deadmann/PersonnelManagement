@@ -50,6 +50,18 @@ var Util;
             return retValue;
         };
         /**
+         * Compare two string return 0 if both are equal, 1 if first one is greater, and -1 if second one is greater
+         * @param string1
+         * @param string2
+         */
+        Utility.compareString = function (string1, string2) {
+            if (this.isNullOrUndefined(string1))
+                throw new Error("string1 cannot be null");
+            if (this.isNullOrUndefined(string2))
+                throw new Error("string2 cannot be null");
+            return string1.localeCompare(string2, "enUs");
+        };
+        /**
          * Remove Item From Array, And Returns List Of Deleted Items
          * @param itemList{Array<any>} list of items that we want to search in
          * @param searchItem {*} item we use to match data
@@ -280,10 +292,18 @@ var Util;
         Utility.escapeRegExp = function (str) {
             return str.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
         };
+        /**
+         * Turn String To Numerical Data, and Compare It, 0 if equal, 1 if first is greater, -1 if second is greater
+         * @param date1
+         * @param date2
+         * @returns {number}
+         */
         Utility.compareDates = function (date1, date2) {
             var dateNum1 = parseInt(date1.replace(/\D/g, ''));
             var dateNum2 = parseInt(date2.replace(/\D/g, ''));
-            return dateNum1 - dateNum2;
+            return (dateNum1 == dateNum2) ? 0
+                : ((dateNum1 > dateNum2) ? 1
+                    : -1);
         };
         Utility.isBetweenDates = function (date, startDate, endDate) {
             return (this.compareDates(date, startDate) >= 0 && this.compareDates(date, endDate) <= 0);

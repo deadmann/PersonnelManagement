@@ -49,13 +49,18 @@
     url('../fonts/ttf/IRANSansWeb(FaNum).ttf') format('truetype');
 }
 
-
 body{
     font-family: 'IRANSans' !Important;
 }
 
 .no-break{
     white-space: nowrap;
+}
+
+/*override for jquery-datepicker*/
+select.ui-datepicker-year,
+select.ui-datepicker-month{
+    color: black;
 }
 
 /*override and new classes for ndDialog*/

@@ -8,20 +8,8 @@ var WageVm = (function () {
         this.setup();
         if (id != undefined)
             this.id = id;
-        if (startDate != undefined) {
-            if (typeof startDate == "number") {
-                this.startDate = new Date(startDate);
-            }
-            else if (typeof startDate == "string") {
-                this.startDate = new Date(startDate);
-            }
-            else if (typeof startDate == "Date") {
-                this.startDate = startDate;
-            }
-            else {
-                throw new Error("Cannot Cast '" + (typeof startDate).toString() + "' to 'Date'");
-            }
-        }
+        if (startDate != undefined)
+            this.startDate = startDate;
         if (price != undefined)
             this.price = price;
         if (position != undefined)
@@ -32,11 +20,6 @@ var WageVm = (function () {
         this.startDate = null;
         this.price = 0;
         this.position = null;
-    };
-    WageVm.prototype.getGregorianStartDate = function () {
-        return this.startDate.getFullYear().toString()
-            + '-' + this.startDate.getMonth()
-            + '-' + this.startDate.getDay();
     };
     //??? is used at all? :-/
     WageVm.prototype.isValidPersianDate = function () {

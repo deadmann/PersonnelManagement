@@ -1,5 +1,11 @@
 package hassan.personnel.managment.models.vm;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import hassan.personnel.managment.utility.CalendarStringDeserializer;
+import hassan.personnel.managment.utility.CalendarStringSerializer;
+
 import java.util.Calendar;
 
 /**
@@ -9,7 +15,9 @@ public class WorkVm {
     private long id;
 
     private float workPerDay;
-
+//    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")// HH:mm")
+    @JsonSerialize(using = CalendarStringSerializer.class)
+    //@JsonDeserialize(using = CalendarStringDeserializer.class)
     private Calendar date;
 
     private PersonVm person;
@@ -33,10 +41,12 @@ public class WorkVm {
         this.workPerDay = workPerDay;
     }
 
+    @JsonSerialize(using = CalendarStringSerializer.class)
     public Calendar getDate() {
         return date;
     }
 
+    @JsonDeserialize(using = CalendarStringDeserializer.class)
     public void setDate(Calendar date) {
         this.date = date;
     }

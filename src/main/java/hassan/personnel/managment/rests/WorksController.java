@@ -21,6 +21,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -192,6 +193,12 @@ public class WorksController {
 
     @RequestMapping(value = "", method = RequestMethod.POST)
     private Work save(@RequestBody Work work) throws ConflictException {
+        java.util.Calendar cal = new GregorianCalendar(work.getDate().get(
+                java.util.Calendar.YEAR),
+                work.getDate().get(java.util.Calendar.MONTH),
+                work.getDate().get(java.util.Calendar.DAY_OF_MONTH));
+        work.setDate(cal);
+
         return workService.save(work);
     }
 

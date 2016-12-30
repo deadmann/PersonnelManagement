@@ -10,20 +10,8 @@ var WorkVm = (function () {
             this.id = id;
         if (workPerDay != undefined)
             this.workPerDay = workPerDay;
-        if (date != undefined) {
-            if (typeof date == "number") {
-                this.date = new Date(date);
-            }
-            else if (typeof date == "string") {
-                this.date = new Date(date);
-            }
-            else if (typeof date == "Date") {
-                this.date = date;
-            }
-            else {
-                throw new Error("Cannot Cast '" + (typeof date).toString() + "' to 'Date'");
-            }
-        }
+        if (date != undefined)
+            this.date = date;
         if (person != undefined)
             this.person = person;
         if (building != undefined)

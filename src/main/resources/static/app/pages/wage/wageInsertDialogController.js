@@ -46,7 +46,7 @@
                     ));
                     return;
                 }
-                self.view.wage.startDate = (new Date(moment(self.view.persianDate, 'jYYYY/jM/jD').format("YYYY-MM-DD")));
+                self.view.wage.startDate = moment(self.view.persianDate, 'jYYYY/jM/jD').format("YYYY-MM-DD");
 
                 //!IMPORTANT
                 self.view.wage.position = positionItem;
@@ -76,6 +76,8 @@
                 startConfig.dateFormat = "yy/mm/dd";
                 startConfig.numberOfMonths = 1;
                 startConfig.showButtonPanel = true;
+                startConfig.changeMonth = true;
+                startConfig.changeYear = true;
                 return startConfig;
             }
 

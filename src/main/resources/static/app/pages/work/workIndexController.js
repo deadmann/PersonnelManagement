@@ -381,7 +381,9 @@
                 /** @type {PositionVm} */
                 var position = Enumerable.from(privateData.positionsWithWages).first(/**@param w {PositionVm}*/function(w){return work.person.position.id == w.id;});
                 /** @type {Enumerable} */
-                var LesserWageEnumerable = Enumerable.from(position.wages).where(/**@param w {WageVm}*/function(w){return work.date >= w.startDate;});
+                var LesserWageEnumerable = Enumerable.from(position.wages).where(/**@param w {WageVm}*/function(w){
+                    return Util.Utility.compareString(work.date, w.startDate)>=0;
+                });
                 /** @type {WageVm} */
                 var equivalentWage = LesserWageEnumerable.orderByDescending("o=>o.startDate").first();
                 return (work.workPerDay/8) * equivalentWage.price;
@@ -526,6 +528,8 @@
                 startConfig.dateFormat = "yy/mm/dd";
                 startConfig.numberOfMonths = 1;
                 startConfig.showButtonPanel = true;
+                startConfig.changeMonth = true;
+                startConfig.changeYear = true;
                 return startConfig;
             }
 

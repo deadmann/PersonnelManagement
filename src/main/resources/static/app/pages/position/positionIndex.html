@@ -33,16 +33,20 @@
                     {{row.title}}
                 </td>
                 <td>
-                    {{row.getCurrentWage().id}}- {{row.getCurrentWage().price|rials}}<br/>
-                    <span ng-if="! row.isCurrentTheFirstWage()" style="font-size: 60%">
+                    <span style="font-size: 75%">{{row.getCurrentWage().id}}-</span>
+                    <span>{{row.getCurrentWage().price|rials}}</span>
+                    <br/>
+                    <span ng-if="! row.isCurrentTheFirstWage()" style="font-size: 75%">
                         تاریخ انتشار:
-                        {{row.getNextWage().persianStartDate}}
+                        {{row.getCurrentWage().persianStartDate}}
                     </span>
                 </td>
                 <td>
                     <div ng-if="row.getNextWage() != null">
-                        {{row.getNextWage().id}}- {{row.getNextWage().price|rials}}<br/>
-                        <span style="font-size: 60%">
+                        <span style="font-size: 75%">{{row.getNextWage().id}}-</span>
+                        <span>{{row.getNextWage().price|rials}}</span>
+                        <br/>
+                        <span style="font-size: 75%">
                             تاریخ انتشار:
                             {{row.getNextWage().persianStartDate}}
                         </span>

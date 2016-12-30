@@ -5,11 +5,15 @@
 
 	<groupId>hassan.personnel.managment</groupId>
 	<artifactId>personnel-management</artifactId>
-	<version>1.1.1-BETA</version>
+	<version>1.2.0</version>
 	<packaging>jar</packaging>
 
-	<name>demo</name>
-	<description>Personnel Management Application</description>
+	<name>Personnel Management Application</name>
+	<description>
+		This application is an entry point to import worker amount of work, on different projects,
+		and it will provide report based on their working time, and their wages on different
+		particular dates
+	</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
