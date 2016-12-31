@@ -59,12 +59,13 @@ public class WagesController {
                 wage.getStartDate().get(Calendar.DAY_OF_MONTH));
         wage.setStartDate(cal);
 
+        //Find First Wage
         Position position = positionService.getPosition(wage.getPosition().getId());
         Optional<Wage> first = position.getWages().stream().sorted((a, b)->{
             if(a.getStartDate().getTime().getTime()>b.getStartDate().getTime().getTime())
-                return -1;
-            if(a.getStartDate().getTime().getTime()<b.getStartDate().getTime().getTime())
                 return 1;
+            if(a.getStartDate().getTime().getTime()<b.getStartDate().getTime().getTime())
+                return -1;
             return 0;
         }).findFirst();
 
@@ -81,10 +82,24 @@ public class WagesController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    private WageVm remove(@PathVariable int id) throws NotFoundException, ConflictException, ForbiddenRemove {
+    private WageVm remove(@PathVariable int id) throws NotFoundException, ConflictException, ForbiddenRemove, InvalidDataException {
         Wage wage = wageService.getWage(id);
+
+        Position position = positionService.getPosition(wage.getPosition().getId());
+        Optional<Wage> first = position.getWages().stream().sorted((a, b)->{
+            if(a.getStartDate().getTime().getTime()>b.getStartDate().getTime().getTime())
+                return 1;
+            if(a.getStartDate().getTime().getTime()<b.getStartDate().getTime().getTime())
+                return -1;
+            return 0;
+        }).findFirst();
+
+        if(!first.isPresent() || first.get() == null){
+            throw new InvalidDataException("Position Does Not Contain Begining Wage");
+        }
+
         //If FIRST ITEM disallow
-        if(wage.getPosition().getWages().get(0).getId() == id)
+        if(first.get().getId() == id)
             throw new ForbiddenRemove("This Item Should Not Get Deleted.");
 
         try {
@@ -111,10 +126,24 @@ public class WagesController {
                 throw new InvalidDataException("Model id does not match with requested id");
 
             Wage wageUpdate = wageService.getWage(wage.getId());
-            Wage firstWage = wageUpdate.getPosition().getWages().get(0);
+
+            //Find First Wage
+            Position position = positionService.getPosition(wage.getPosition().getId());
+            Optional<Wage> first = position.getWages().stream().sorted((a, b)->{
+                if(a.getStartDate().getTime().getTime()>b.getStartDate().getTime().getTime())
+                    return 1;
+                if(a.getStartDate().getTime().getTime()<b.getStartDate().getTime().getTime())
+                    return -1;
+                return 0;
+            }).findFirst();
+
+            if(!first.isPresent() || first.get() == null){
+                throw new InvalidDataException("Position Does Not Contain Begining Wage");
+            }
+
             //If FIRST ITEM and DATE CHANGED disallow
-            if (firstWage.getId() == id
-                    && firstWage.getStartDate().getTimeInMillis() != wage.getStartDate().getTimeInMillis())
+            if (first.get().getId() == id
+                    && first.get().getStartDate().getTimeInMillis() != wage.getStartDate().getTimeInMillis())
                 throw new ForbiddenChange("Date Should Not Get Modified On First Item.");
 
             //Wage wageUpdate = wageService.getWage(wage.getId());
