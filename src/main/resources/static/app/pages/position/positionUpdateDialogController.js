@@ -18,6 +18,20 @@
             wages: null
         };
 
+        self.method = {
+            /**
+             * @returns {WageVm}
+             */
+            getFirstWage:function(){
+                return Enumerable.from(self.view.wages)
+                    .orderBy("x=>x.startDate")
+                    .first();
+            },
+            reOrderItemsByStartDate:function(){
+                self.view.wages = Enumerable.from(self.view.wages).orderBy("x=>x.startDate").toArray();
+            }
+        };
+        
         self.event={
             close: function () {
                 $scope.closeThisDialog();
@@ -64,6 +78,7 @@
                 });
                 promise.then(/** @param data {WageVm} */function (data) {
                     self.view.wages.push(data);
+                    self.method.reOrderItemsByStartDate();
                 }, function (err) {
                     //ignore
                 });
@@ -83,7 +98,7 @@
                             });
                         },
                         isFirstItem: function () {
-                            return self.view.wages[0].id === id;
+                            return self.method.getFirstWage().id === id;
                         }
                     },
                     //plain: true, -- Mean use of plain String as HTML
@@ -114,7 +129,7 @@
                             });
                         },
                         isFirstItem: function () {
-                            return self.view.wages[0].id === id;
+                            return self.method.getFirstWage().id === id;
                         }
                     },
                     //plain: true, -- Mean use of plain String as HTML
@@ -126,6 +141,7 @@
                     self.view.wages.replace(null, data, function (item, empty) {
                         return item.id == data.id;
                     },undefined,'all');
+                    self.method.reOrderItemsByStartDate();
                 }, function (err) {
                     //ignore
                 });
@@ -165,6 +181,7 @@
             wagesService.queryByPositionId({param2:selectedItem.id}).$promise
                 .then(/** @param data {Array<WageVm>}*/function (data) {
                     self.view.wages = data;
+                    self.method.reOrderItemsByStartDate();
                     afterInitialize();
                 }, function (err) {
                     if(err.status==404) {
