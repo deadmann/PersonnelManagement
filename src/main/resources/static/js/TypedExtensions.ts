@@ -49,14 +49,12 @@ interface String {
 }
 
 String.prototype.insertAt=function(index: number, strText: string):string {
-    var newStr = this.substr(0, index) + strText + this.substr(index-1+strText.length);
-    return newStr;//valueOf()
+    return this.substr(0, index) + strText + this.substr(index - 1 + strText.length);//valueOf()
 };
 
 String.prototype.replaceAt=function(index: number, count: number, strReplacement:string):string {
     if(count<0) throw "count cannot be less than 0";
-    var newStr = this.substr(0, index) + strReplacement + this.substr(index+(count)+strReplacement.length);
-    return newStr;//valueOf()
+    return this.substr(0, index) + strReplacement + this.substr(index + (count) + strReplacement.length);//valueOf()
 };
 
 /**
@@ -207,28 +205,28 @@ interface Array<T> {
      * @param fnMatch {function} if defined this function will be used to match two models, other wise object reference will be used. firstItem come from array and second is searchItem
      * @returns {*|null} returns matched item
      */
-    contains: <Y>(searchItem:Y, fnMatch?:Function)=>boolean;
+    contains: <TY>(searchItem:TY, fnMatch?:Function)=>boolean;
     /**
-     * returns true if the matched item exists within the array, otherwise returns false
+     * Find item using Match function.
      * @param searchItem {*} item we use to match data
      * @param fnMatch {function} if defined this function will be used to match two models, other wise object reference will be used. firstItem come from array and second is searchItem
-     * @returns {boolean}
+     * @returns {*|null} returns matched item
      */
-    find: <Y>(searchItem:Y, fnMatch?:Function)=>T;
+    find: <TY>(searchItem:TY, fnMatch?:Function)=>T;
     /**
      * returns index of searched item at first found position, otherwise returns -1
      * @param searchItem {*|null} item we use to match data / null if want to match with global or other accessible data
      * @param fnMatch {function} if defined this function will be used to match two models, other wise object reference will be used. firstItem come from array and second is searchItem
      * @returns {number}
      */
-    indexOfMatch: <Y>(searchItem:Y, fnMatch?:Function)=>number;
+    indexOfMatch: <TY>(searchItem:TY, fnMatch?:Function)=>number;
     /**
      * returns index of searched item at last found position, otherwise returns -1
      * @param searchItem {*|null} item we use to match data / null if want to match with global or other accessible data
      * @param fnMatch {function} if defined this function will be used to match two models, other wise object reference will be used. firstItem come from array and second is searchItem
      * @returns {number}
      */
-    lastIndexOfMatch: <Y>(searchItem:Y, fnMatch?:Function)=>number;
+    lastIndexOfMatch: <TY>(searchItem:TY, fnMatch?:Function)=>number;
     /**
      * Remove Item From Array, And Returns List Of Deleted Items
      * @param searchItem {*} item we use to match data
@@ -254,7 +252,7 @@ interface Array<T> {
  * @param fnMatch {function} if defined this function will be used to match two models, other wise object reference will be used. firstItem come from array and second is searchItem
  * @returns {*|null} returns matched item
  */
-Array.prototype.find=function<Y>(searchItem:Y, fnMatch?:Function) {
+Array.prototype.find=function<TY>(searchItem:TY, fnMatch?:Function):any {
     return Util.Utility.find(this, searchItem, fnMatch);
 };
 
@@ -264,7 +262,7 @@ Array.prototype.find=function<Y>(searchItem:Y, fnMatch?:Function) {
  * @param fnMatch {function} if defined this function will be used to match two models, other wise object reference will be used. firstItem come from array and second is searchItem
  * @returns {boolean}
  */
-Array.prototype.contains= function <Y>(searchItem: Y, fnMatch?:Function) {
+Array.prototype.contains= function <TY>(searchItem: TY, fnMatch?:Function) {
     return Util.Utility.contains(this, searchItem, fnMatch);
 };
 
@@ -275,7 +273,7 @@ Array.prototype.contains= function <Y>(searchItem: Y, fnMatch?:Function) {
  * @param startIndex {number} the starting index where the search start from within the array
  * @returns {number}
  */
-Array.prototype.indexOfMatch = function<Y>(searchItem: Y, fnMatch?:Function, startIndex?:number) {
+Array.prototype.indexOfMatch = function<TY>(searchItem: TY, fnMatch?:Function, startIndex?:number) {
     return Util.Utility.indexOf(this, searchItem, fnMatch, startIndex);
 };
 
@@ -286,8 +284,8 @@ Array.prototype.indexOfMatch = function<Y>(searchItem: Y, fnMatch?:Function, sta
  * @param startIndex {number} the starting index where the search start from within the array
  * @returns {number}
  */
-Array.prototype.lastIndexOfMatch = function<Y>(searchItem: Y, fnMatch?:Function, startIndex?:number) {
-    return Util.Utility.lastIndexOf(this, searchItem, fnMatch);
+Array.prototype.lastIndexOfMatch = function<TY>(searchItem: TY, fnMatch?:Function, startIndex?:number) {
+    return Util.Utility.lastIndexOf(this, searchItem, fnMatch, startIndex);
 };
 
 /**
