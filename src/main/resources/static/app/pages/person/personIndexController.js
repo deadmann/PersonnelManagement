@@ -3,9 +3,14 @@
  */
 (function () {
 
-    var controller = function ($location, ngDialog, personnelService, toaster) {
+    var controller = function ($location, ngDialog, personnelService, sharedService, toaster) {
         var self = this;
         var logger = ErrorHandler.getInstance();
+
+        var privateData={
+            /** @type {SharedModel} */
+            sharedData:null
+        };
 
         self.view={
             personnel: []
@@ -102,6 +107,9 @@
         };
 
         function initialize() {
+            privateData.sharedData = sharedService.getSharedData();
+            privateData.sharedData.title = "مدیریت اشخاص";
+
             personnelService.query().$promise
                 .then(function (data) {
                     self.view.personnel = data;
@@ -117,7 +125,7 @@
         initialize();
     };
 
-    controller.$inject = ["$location", "ngDialog", "personnelService", "toaster"];
+    controller.$inject = ["$location", "ngDialog", "personnelService", "sharedService", "toaster"];
 
     angular.module("personnelManagement")
         .controller("personIndexController", controller);

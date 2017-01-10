@@ -5,9 +5,14 @@
 (function(){
     "use strict";
 
-    var controller = function ($location, $timeout, ngDialog, buildingsService, toaster) {
+    var controller = function ($location, $timeout, ngDialog, buildingsService, sharedService, toaster, blockUI) {
         var self = this;
         var logger = ErrorHandler.getInstance();
+
+        var privateData={
+            /** @type {SharedModel} */
+            sharedData:null
+        };
 
         self.view={
             buildings: []
@@ -104,6 +109,11 @@
         };
 
         function initialize() {
+            privateData.sharedData = sharedService.getSharedData();
+            privateData.sharedData.title = "مدیریت پروژه ها";
+
+            // blockUI.start();  //Auto Block UI Do This For Us
+
             buildingsService.query().$promise
                 .then(function (data) {
                     self.view.buildings = data;
@@ -113,14 +123,17 @@
                         "خطا",
                         "در هنگام دریافت اطلاعات ساختمان یک خطا رخ داده است"
                     ));
-                });
+                })
+                // .finally(function () {
+                //     blockUI.stop();
+                // });
 
         }
 
         initialize();
     };
 
-    controller.$inject = ["$location", "$timeout", "ngDialog", "buildingsService", "toaster"];
+    controller.$inject = ["$location", "$timeout", "ngDialog", "buildingsService", "sharedService", "toaster", "blockUI"];
 
     angular.module("personnelManagement")
         .controller("buildingIndexController", controller);

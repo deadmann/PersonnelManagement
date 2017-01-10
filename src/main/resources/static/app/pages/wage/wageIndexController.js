@@ -3,9 +3,14 @@
  */
 (function () {
 
-    var controller = function ($location, wagesService, toaster) {
+    var controller = function ($location, wagesService, sharedService, toaster) {
         var self = this;
         var logger = ErrorHandler.getInstance();
+
+        var privateData={
+            /** @type {SharedModel} */
+            sharedData:null
+        };
 
         self.view={
             wages: []
@@ -22,6 +27,9 @@
         };
 
         function initialize() {
+            privateData.sharedData = sharedService.getSharedData();
+            privateData.sharedData.title = "مدیریت دستمزد ها";
+
             wagesService.query().$promise
                 .then(function (data) {
                     self.view.wages = data;
@@ -37,7 +45,7 @@
         initialize();
     };
 
-    controller.$inject = ["$location", "wagesService", "toaster"];
+    controller.$inject = ["$location", "wagesService", "sharedService", "toaster"];
 
     angular.module("personnelManagement")
         .controller("wageIndexController", controller);

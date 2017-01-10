@@ -1,0 +1,20 @@
+{
+  "name": "personnel-management",
+  "description": "manage personnel working time and calculate results",
+  "main": "index.js",
+  "authors": [
+    "Hassan <mimosh_pisholack@hotmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/deadmann/PersonnelManagement",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-block-ui": "^0.2.2"
+  }
+}

@@ -1,56 +1,54 @@
 <div class="clearfix">
-    <div class="row">
-        <table class="table table-bordered table-responsive table-striped table-concede">
-            <thead>
-            <tr class="active">
-                <th>
+    <table class="table table-striped table-bordered table-condensed table-responsive table-hover">
+        <thead>
+        <tr class="active">
+            <th>
 
-                </th>
-                <th>
-                    نام
-                </th>
-                <th>
-                    نام خانوادگی
-                </th>
-                <th>
-                    سمت
-                </th>
-                <th>
-                    <button class="btn btn-primary btn-sm" ng-click="ctrl.event.showInsertDialog()">
-                        ایجاد
-                    </button>
-                    <!--<button class="btn btn-primary btn-sm" ng-click="ctrl.event.insert()">create</button>-->
-                </th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr ng-repeat="row in ctrl.view.personnel">
+            </th>
+            <th>
+                نام
+            </th>
+            <th>
+                نام خانوادگی
+            </th>
+            <th>
+                سمت
+            </th>
+            <th>
+                <button class="btn btn-primary btn-sm" ng-click="ctrl.event.showInsertDialog()">
+                    ایجاد
+                </button>
+                <!--<button class="btn btn-primary btn-sm" ng-click="ctrl.event.insert()">create</button>-->
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="row in ctrl.view.personnel">
 
-                <td>
-                    {{$index + 1}}
-                </td>
-                <td>
-                    {{row.firstname}}
-                </td>
-                <td>
-                    {{row.lastname}}
-                </td>
-                <td>
-                    {{row.position.title}}
-                </td>
-                <td>
-                    <!--<button class="btn btn-danger btn-sm" ng-click="ctrl.event.remove(row.id)">-->
-                        <!--delete-->
-                    <!--</button>-->
-                    <button class="btn btn-danger btn-sm" ng-click="ctrl.event.showRemoveDialog(row.id)">
-                        حذف
-                    </button>
-                    <button class="btn btn-warning btn-sm" ng-click="ctrl.event.showUpdateDialog(row.id)">
-                        ویرایش
-                    </button>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
+            <td>
+                {{$index + 1}}
+            </td>
+            <td>
+                {{row.firstname}}
+            </td>
+            <td>
+                {{row.lastname}}
+            </td>
+            <td>
+                {{row.position.title}}
+            </td>
+            <td>
+                <!--<button class="btn btn-danger btn-sm" ng-click="ctrl.event.remove(row.id)">-->
+                    <!--delete-->
+                <!--</button>-->
+                <button class="btn btn-danger btn-sm" ng-click="ctrl.event.showRemoveDialog(row.id)">
+                    حذف
+                </button>
+                <button class="btn btn-warning btn-sm" ng-click="ctrl.event.showUpdateDialog(row.id)">
+                    ویرایش
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>

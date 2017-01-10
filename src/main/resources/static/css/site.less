@@ -1,0 +1,166 @@
+@font-face {
+  font-family: IRANSans;
+  font-style: normal;
+  font-weight: bold;
+  src: url('../fonts/eot/IRANSansWeb(FaNum)_Bold.eot');
+  src: url('../fonts/eot/IRANSansWeb(FaNum)_Bold.eot?#iefix') format('embedded-opentype'),  /* IE6-8 */
+  url('../fonts/woff2/IRANSansWeb(FaNum)_Bold.woff2') format('woff2'),  /* FF39+,Chrome36+, Opera24+*/
+  url('../fonts/woff/IRANSansWeb(FaNum)_Bold.woff') format('woff'),  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+  url('../fonts/ttf/IRANSansWeb(FaNum)_Bold.ttf') format('truetype');
+}
+@font-face {
+  font-family: IRANSans;
+  font-style: normal;
+  font-weight: 500;
+  src: url('../fonts/eot/IRANSansWeb(FaNum)_Medium.eot');
+  src: url('../fonts/eot/IRANSansWeb(FaNum)_Medium.eot?#iefix') format('embedded-opentype'),  /* IE6-8 */
+  url('../fonts/woff2/IRANSansWeb(FaNum)_Medium.woff2') format('woff2'),  /* FF39+,Chrome36+, Opera24+*/
+  url('../fonts/woff/IRANSansWeb(FaNum)_Medium.woff') format('woff'),  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+  url('../fonts/ttf/IRANSansWeb(FaNum)_Medium.ttf') format('truetype');
+}
+@font-face {
+  font-family: IRANSans;
+  font-style: normal;
+  font-weight: 300;
+  src: url('../fonts/eot/IRANSansWeb(FaNum)_Light.eot');
+  src: url('../fonts/eot/IRANSansWeb(FaNum)_Light.eot?#iefix') format('embedded-opentype'),  /* IE6-8 */
+  url('../fonts/woff2/IRANSansWeb(FaNum)_Light.woff2') format('woff2'),  /* FF39+,Chrome36+, Opera24+*/
+  url('../fonts/woff/IRANSansWeb(FaNum)_Light.woff') format('woff'),  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+  url('../fonts/ttf/IRANSansWeb(FaNum)_Light.ttf') format('truetype');
+}
+@font-face {
+  font-family: IRANSans;
+  font-style: normal;
+  font-weight: 200;
+  src: url('../fonts/eot/IRANSansWeb(FaNum)_UltraLight.eot');
+  src: url('../fonts/eot/IRANSansWeb(FaNum)_UltraLight.eot?#iefix') format('embedded-opentype'),  /* IE6-8 */
+  url('../fonts/woff2/IRANSansWeb(FaNum)_UltraLight.woff2') format('woff2'),  /* FF39+,Chrome36+, Opera24+*/
+  url('../fonts/woff/IRANSansWeb(FaNum)_UltraLight.woff') format('woff'),  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+  url('../fonts/ttf/IRANSansWeb(FaNum)_UltraLight.ttf') format('truetype');
+}
+@font-face {
+  font-family: IRANSans;
+  font-style: normal;
+  font-weight: normal;
+  src: url('../fonts/eot/IRANSansWeb(FaNum).eot');
+  src: url('../fonts/eot/IRANSansWeb(FaNum).eot?#iefix') format('embedded-opentype'),  /* IE6-8 */
+  url('../fonts/woff2/IRANSansWeb(FaNum).woff2') format('woff2'),  /* FF39+,Chrome36+, Opera24+*/
+  url('../fonts/woff/IRANSansWeb(FaNum).woff') format('woff'),  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+  url('../fonts/ttf/IRANSansWeb(FaNum).ttf') format('truetype');
+}
+
+@font-family: 'IRANSans';
+body{
+  font-family: @font-family  ~'!Important';
+}
+
+.no-break{
+  white-space: nowrap;
+}
+
+/*override for jquery-datepicker*/
+select.ui-datepicker-year,
+select.ui-datepicker-month{
+  color: black;
+}
+
+/*override and new classes for ndDialog*/
+.ngdialog-content{
+  font-family: @font-family ~'!Important';
+}
+
+.ngdialog .btn {
+  border: 0;
+  border-radius: 3px;
+  font-family: inherit;
+  font-size: .8em;
+  letter-spacing: .1em;
+  line-height: 1em;
+  margin: 0 0 0 .5em;
+  padding: .75em 2em;
+  text-transform: uppercase;
+}
+
+.ng-dialog-header {
+  margin: -1em -1em 0 -1em;
+  border-radius: 5px 5px 0 0;
+  min-height: 16.42857143px;
+  padding: 15px;
+  border-bottom: 1px solid #e5e5e5;
+
+  &.ng-dialog-default{
+    background-color:#ffffff;
+    color: #000;
+  }
+  &.ng-dialog-primary{
+    background-color: #337ab7;
+    color: #fff;
+  }
+  &.ng-dialog-danger{
+    background-color: #c71e1e;
+    color: #fff;
+  }
+  &.ng-dialog-warning{
+    background-color: #ec971f;
+    color: #fff;
+  }
+
+  .close {
+    margin-top: -2px;
+  }
+}
+
+.ng-dialog-title {
+  margin: 0 22px 0 0;
+  line-height: 1.42857143;
+  font-weight: bold;
+}
+
+.ng-dialog-body {
+  position: relative;
+  padding: 15px;
+}
+
+.ng-dialog-footer {
+  margin: 0 -1em -1em -1em;
+  border-radius: 0 0 5px 5px;
+  padding: 10px;
+  text-align: right;
+  border-top: 1px solid #e5e5e5;
+
+  .btn + .btn {
+    margin-bottom: 0;
+    margin-right: 5px;
+  }
+  .btn-group .btn + .btn {
+    margin-right: -1px;
+  }
+  .btn-block + .btn-block {
+    margin-left: 0;
+  }
+}
+
+html{
+  height:100%;
+}
+
+footer{ //css -> footer {...}
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  .container{ //css -> footer .container {...} container dakhele footer, na container mamooli
+    background-color: #101010;
+    color: #aaa;
+    border-radius: 4px;
+    padding: 10px 20px;
+  }
+}
+
+body{
+  min-height: 100%;
+  >.container{
+    padding-bottom: 60px;
+  }
+}

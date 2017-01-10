@@ -2,14 +2,15 @@
  * Created by Hassan on 11/20/2016.
  */
 (function () {
-    var controller = function ($scope, baseDataService, buildingsService, personnelService, positionsService, worksService, toaster) {
+    var controller = function ($scope, baseDataService, buildingsService, personnelService, positionsService, worksService, sharedService, toaster) {
         //Basic Definition
         var self = this;
         var logger = ErrorHandler.getInstance();
         var DatePickerConfig = AngularUtility.DatePickerConfig;
 
-
         var privateData = {
+            /** @type {SharedModel} */
+            sharedData:null,
             /** @type {number|null} */
             startYear:null,
             /** @type {number|null}*/
@@ -468,6 +469,43 @@
                             'در هنگام دریافت اطلاعات خطایی رخ داده است.' + err
                         ));
                     });
+            },
+            toExcel: function ($event) {
+                //getting values of current time for generating the file name
+                var dt = new Date();
+                var day = dt.getDate();
+                var month = dt.getMonth() + 1;
+                var year = dt.getFullYear();
+                var hour = dt.getHours();
+                var mins = dt.getMinutes();
+                var postfix = day + "." + month + "." + year + "_" + hour + "." + mins;
+
+                var uri = 'data:application/vnd.ms-excel;base64,'
+                    , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><meta charset="utf-8" /><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body style="text-align:center;direction:rtl"><table>{table}</table></body></html>'
+                    , base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))) }
+                    , format = function (s, c) { return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; }) }
+
+                var name = "Report";
+                var table = angular.element(".report-table")[0]; //document.getElementById(table)
+                var ctx = { worksheet: name || 'Worksheet', table: table.innerHTML };
+                window.location.href = uri + base64(format(template, ctx));
+
+
+                /*//creating a temporary HTML link element (they support setting file names)
+                var a = document.createElement('a');
+                //getting data from our div that contains the HTML table
+                var data_type = 'data:application/vnd.ms-excel';
+                var table_div = angular.element(".report-table")[0];
+                var table_html = table_div.outerHTML.replace(/ /g, '%20');
+                a.href = data_type + ', ' + table_html;
+                //setting the file name
+                a.download = 'exported_table_' + postfix + '.xls';
+                //triggering the function
+                a.click();*/
+
+
+                //just in case, prevent default behaviour
+                $event.preventDefault();
             }
         };
 
@@ -506,6 +544,9 @@
         );
 
         function initialize() {
+            privateData.sharedData = sharedService.getSharedData();
+            privateData.sharedData.title = "گزارش کارکرد پرسنل";
+
             //Keep Track Of Running Async Service, And Provide Ability To Run A Method After All Async Finished.
             var afterInitializeAsyncRunnerCounter = 5;
 
@@ -616,7 +657,7 @@
         initialize();
     };
 
-    controller.$inject = ["$scope", "baseDataService", "buildingsService", "personnelService", "positionsService", "worksService", "toaster"];
+    controller.$inject = ["$scope", "baseDataService", "buildingsService", "personnelService", "positionsService", "worksService", "sharedService", "toaster"];
 
     angular.module("personnelManagement")
         .controller("workIndexController", controller);

@@ -2,11 +2,13 @@
  * Created by Hassan on 11/20/2016.
  */
 (function () {
-    var controller = function (baseDataService, buildingsService, personnelService, worksService, toaster) {
+    var controller = function (baseDataService, buildingsService, personnelService, worksService, sharedService, toaster) {
         var self = this;
         var logger = ErrorHandler.getInstance();
 
         var privateData = {
+            /** @type {SharedModel} */
+            sharedData:null,
             /** @type {number|null} */
             startYear:null,
             /** @type {number|null}*/
@@ -272,6 +274,9 @@
         };
 
         function initialize() {
+            privateData.sharedData = sharedService.getSharedData();
+            privateData.sharedData.title = "ویرایش کارکرد پرسنل";
+
             //Keep Track Of Running Async Service, And Provide Ability To Run A Method After All Async Finished.
             var afterInitializeAsyncRunnerCounter = 4;
 
@@ -350,7 +355,7 @@
         initialize();
     };
 
-    controller.$inject = ["baseDataService", "buildingsService", "personnelService", "worksService", "toaster"];
+    controller.$inject = ["baseDataService", "buildingsService", "personnelService", "worksService", "sharedService", "toaster"];
 
     angular.module("personnelManagement")
         .controller("workInsertController", controller);

@@ -1,45 +1,43 @@
 <div class="clearfix">
-    <div class="row">
-        <form ng-submit="ctrl.event.save()">
-            <div class="row">
-                <div class="col-md-4">
-                    نام
-                </div>
-                <div class="col-md-8">
-                    <input class="form-control" type="text" ng-model="ctrl.view.personInsert.firstname"/>
-                </div>
+    <form ng-submit="ctrl.event.save()">
+        <div class="row">
+            <div class="col-md-4">
+                نام
             </div>
-            <br>
-            <div class="row">
-                <div class="col-md-4">
-                    نام خانوادگی
-                </div>
-                <div class="col-md-8">
-                    <input class="form-control" type="text" ng-model="ctrl.view.personInsert.lastname"/>
-                </div>
+            <div class="col-md-8">
+                <input class="form-control" type="text" ng-model="ctrl.view.personInsert.firstname"/>
             </div>
-            <br>
-            <div class="row">
-                <div class="col-md-4">
-                    سمت
-                </div>
-                <div class="col-md-8">
-                    <select class="form-control" ng-options="position as position.title for position in ctrl.view.positions" ng-model="ctrl.view.personInsert.position   ">
-                        <option disabled selected>یک مورد را انتخاب کنید</option>
-                    </select>
-                </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-4">
+                نام خانوادگی
             </div>
-            <br>
-            <div class="row">
-                <div class="col-md-12">
-                    <button type="submit" class="btn btn-primary">
-                        Save
-                    </button>
-                    <button type="button" class="btn btn-default btn-sm" ng-click="ctrl.event.cancel()">
-                        Cancel
-                    </button>
-                </div>
+            <div class="col-md-8">
+                <input class="form-control" type="text" ng-model="ctrl.view.personInsert.lastname"/>
             </div>
-        </form>
-    </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-4">
+                سمت
+            </div>
+            <div class="col-md-8">
+                <select class="form-control" ng-options="position as position.title for position in ctrl.view.positions" ng-model="ctrl.view.personInsert.position   ">
+                    <option disabled selected>یک مورد را انتخاب کنید</option>
+                </select>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-12">
+                <button type="submit" class="btn btn-primary">
+                    Save
+                </button>
+                <button type="button" class="btn btn-default btn-sm" ng-click="ctrl.event.cancel()">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </form>
 </div>

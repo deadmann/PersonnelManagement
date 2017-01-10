@@ -1,5 +1,5 @@
 <div class="clearfix">
-    <div class="row" ng-if="ctrl.view.mode == ctrl.type.PageMode.SELECT">
+    <div ng-if="ctrl.view.mode == ctrl.type.PageMode.SELECT">
         <form ng-submit="ctrl.event.toEditWorks()">
             <div class="col-md-3">
                 <select class="form-control" ng-model="ctrl.view.headerSelections.year"
@@ -30,7 +30,7 @@
         </form>
     </div>
 
-    <div class="row" ng-if="ctrl.view.mode == ctrl.type.PageMode.EDIT">
+    <div ng-if="ctrl.view.mode == ctrl.type.PageMode.EDIT">
         <div class="col-md-4">
             <span>برج:</span>
             <span ng-bind="ctrl.view.headerSelections.month.key +' - '+ ctrl.view.headerSelections.month.value"></span>
@@ -46,7 +46,7 @@
         <form ng-submit="ctrl.event.save()">
             <!-- inside clear fix with100 with overflow is require to display content -->
             <!--<div  style="overflow-x: auto; width:100%">-->
-            <table class="table table-bordered table-condensed table-striped table-hower">
+            <table class="table table-striped table-bordered table-condensed table-responsive table-hover">
                 <thead>
                     <tr>
                         <th>
@@ -72,14 +72,14 @@
                         </td>
                         <td ng-repeat="building in ctrl.view.tableSelections.selectedBuildings">
                             <label style="display:none" for="{{building.id}}-{{day}}"></label>
-                            <input style="width: 150px"
+                            <input style="width: 160px"
                                     id="{{building.id}}-{{day}}" type="number" min="0" max="20" step="any"
                                    class="form-control input-sm" ng-model="ctrl.view.buildingDayWorks[building.id][day]"
                             placeholder="
 {{ctrl.view.headerSelections.year}}/{{ctrl.view.headerSelections.month.key}}/{{day}} {{building.name}}" />
                         </td>
                         <td>
-                            <span class="text-success" ng-bind="ctrl.method.getSumDays(day)|workTime"></span>
+                            <span class="text-success no-break" ng-bind="ctrl.method.getSumDays(day)|workTime"></span>
                         </td>
                     </tr>
                     <tr>
@@ -87,10 +87,10 @@
                             مجموع
                         </td>
                         <td ng-repeat="building in ctrl.view.tableSelections.selectedBuildings">
-                            <span class="text-success" ng-bind="ctrl.method.getSumBuildings(building)|workTime"></span>
+                            <span class="text-success no-break" ng-bind="ctrl.method.getSumBuildings(building)|workTime"></span>
                         </td>
                         <td>
-                            <span class="text-danger" ng-bind="ctrl.method.getSumTotal()|workTime"></span>
+                            <span class="text-danger no-break" ng-bind="ctrl.method.getSumTotal()|workTime"></span>
                         </td>
                     </tr>
                 </tbody>

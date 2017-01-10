@@ -1,0 +1,6 @@
+1. Installing the Less transpiler globally
+npm install -g less
+
+2. Install File Watcher Plugin
+
+3. Add Less File Watcher

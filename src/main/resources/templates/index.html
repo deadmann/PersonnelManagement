@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="personnelManagement">
+<html lang="en" ng-app="personnelManagement" ng-controller="mainController as mctrl">
 <head>
     <meta charset="UTF-8"/>
-    <title>Title</title>
+    <title ng-bind="mctrl.view.sharedData.title">نرم افزار مدیریت کارکرد پرسنل</title>
     <link href="/css/lib/bootstrap-rtl.min.css" rel="stylesheet" type="text/css"/>
     <link href="/css/lib/jquery-ui/jquery-ui.min.css" rel="stylesheet" type="text/css"/>
     <link href="/css/lib/jquery-ui/theme/blitzer/jquery-ui.theme.css" rel="stylesheet" type="text/css"/>
@@ -11,36 +11,46 @@
     <link href="/css/lib/ngDialog-theme-default.min.css" rel="stylesheet" type="text/css"/>
     <link href="/css/lib/toaster.min.css" rel="stylesheet" type="text/css"/>
 
+    <link href="/css/lib/angular-block-ui.min.css" rel="stylesheet" type="text/css"/>
+
     <link href="/css/site.css" rel="stylesheet" type="text/css"/>
 </head>
-<body>
+<body style="position: relative">
 
-<nav class="navbar navbar-default">
     <div class="container">
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-                <!--<li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>-->
-                <li><a href="#/building">پروژه ها</a></li>
-                <li><a href="#/position">سمت ها</a></li>
-                <li><a href="#/person">پرسنل</a></li>
-                <!--<li><a href="#/wage"  class="btn btn-default">دستمزد ها</a></li>-->
-                <li><a href="#/work/insert">کارکرد</a></li>
-                <li><a href="#/work">گزارش کارکرد</a></li>
-                <li><a href="/rest/database-manager/get-backup">دانلود فایل پشتیبان</a></li>
-            </ul>
-        </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
-</nav>
-    <div class="container">
+
+        <nav class="navbar navbar-inverse"><!-- navbar-default -->
+            <div class="container">
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <!--<li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>-->
+                        <li><a href="#/building">پروژه ها</a></li>
+                        <li><a href="#/position">سمت ها</a></li>
+                        <li><a href="#/person">پرسنل</a></li>
+                        <!--<li><a href="#/wage"  class="btn btn-default">دستمزد ها</a></li>-->
+                        <li><a href="#/work/insert">کارکرد</a></li>
+                        <li><a href="#/work">گزارش کارکرد</a></li>
+                        <li><a href="/rest/database-manager/get-backup">دانلود فایل پشتیبان</a></li>
+                    </ul>
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+        </nav>
+
         <!-- SINGLE PAGE CONTAINER -->
         <div ng-view=""></div>
 
         <toaster-container toaster-options="{'post-modification-ready':true, 'position-class': 'toast-bottom-left'}"></toaster-container>
+
+
+
     </div>
-
-
-
+    <footer>
+        <div class="container">
+            <span class="pull-right">کلیه حقوق این سایت متعلق به شرکت X می باشد.</span>
+            <span class="pull-left">Copyright © <span class="tahoma">2017</span> by X. All rights reserved</span>
+        </div>
+    </footer>
 
 
 
@@ -61,12 +71,16 @@
     <!--<script src="/js/lib/toaster.min.js"></script> &lt;!&ndash; https://github.com/jirikavi/AngularJS-Toaster &ndash;&gt;-->
     <script src="/js/customized/toaster.js"></script>
 
+    <script src="/js/lib/angular-block-ui.min.js"></script>
+
     <script src="/js/lib/jquery-migrate-1to2-for-datepicker.js"></script>
     <script src="/js/lib/jquery-ui.min.js"></script>
     <script src="/js/lib/jquery.ui.datepicker-cc-fa.min.js"></script><!--Localize JQuery-->
 
     <script src="/js/lib/moment/moment-last.min.js"></script>
     <script src="/js/lib/moment/moment-jalali-last.js"></script>
+
+    <script src="/js/lib/print-div.js"></script>
 
     <!-- Utility -->
     <script src="/js/TypedUtility.js"></script>
@@ -97,6 +111,9 @@
     <script src="/app/models/unbind/types/pageMode.js"></script>
     <script src="/app/models/unbind/types/reportType.js"></script>
 
+    <!-- App/Models/Unbind -->
+    <script src="/app/models/unbind/sharedModel.js"></script>
+
     <!-- App/Models/Other -->
 
 
@@ -112,6 +129,7 @@
     <script src="/app/models/dto/workPerDayDto.js"></script>
 
     <!-- App/Services -->
+    <script src="/app/services/sharedService.js"></script>
     <script src="/app/services/baseDataService.js"></script>
     <script src="/app/services/buildingsService.js"></script>
     <script src="/app/services/personnelService.js"></script>
@@ -141,6 +159,8 @@
     <script src="/app/pages/wage/wageUpdateDialogController.js"></script>
 
     <!-- App/Pages (Controllers) -->
+    <script src="/app/mainController.js"></script>
+
     <script src="/app/pages/building/buildingIndexController.js"></script>
     <script src="/app/pages/building/buildingInsertController.js"></script>
 

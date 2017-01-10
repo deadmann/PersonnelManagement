@@ -4,7 +4,10 @@
 (function(){
     'use strict';
 
-    var config = function ($routeProvider, $httpProvider) {
+    var config = function ($routeProvider, $httpProvider, blockUIConfig) {
+        blockUIConfig.message="در حال بارگذاری"; //DEFAULT Loading ...
+        blockUIConfig.delay = 0; //DEFAULT 250
+
         $routeProvider
             .when("/", {
                 templateUrl: "/app/pages/home/index.html"
@@ -64,7 +67,7 @@
             });
     };
 
-    config.$inject = ['$routeProvider','$httpProvider'];
+    config.$inject = ['$routeProvider', '$httpProvider', 'blockUIConfig'];
 
     angular.module('personnelManagement')
         .config(config);

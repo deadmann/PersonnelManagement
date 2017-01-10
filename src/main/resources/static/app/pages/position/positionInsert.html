@@ -1,34 +1,32 @@
 <div class="clearfix">
-    <div class="row">
-        <form ng-submit="ctrl.event.save()">
-            <div class="row">
-                <div class="col-md-4">
-                    عنوان سمت
-                </div>
-                <div class="col-md-8">
-                    <input class="form-control" type="text" ng-model="ctrl.view.positionInsert.title"/>
-                </div>
+    <form ng-submit="ctrl.event.save()">
+        <div class="row">
+            <div class="col-md-4">
+                عنوان سمت
             </div>
-            <br>
-            <div class="row">
-                <div class="col-md-4">
-                    مبلغ دستمزد (بر حسب روز)
-                </div>
-                <div class="col-md-8">
-                    <input class="form-control" type="text" ng-model="ctrl.view.positionInsert.startPayment"/>
-                </div>
+            <div class="col-md-8">
+                <input class="form-control" type="text" ng-model="ctrl.view.positionInsert.title"/>
             </div>
-            <br>
-            <div class="row">
-                <div class="col-md-12">
-                    <button type="submit" class="btn btn-primary btn-sm">
-                        ذخیره اطلاعات
-                    </button>
-                    <button type="button" class="btn btn-default btn-sm" ng-click="ctrl.event.cancel()">
-                        انصراف
-                    </button>
-                </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-4">
+                مبلغ دستمزد (بر حسب روز)
             </div>
-        </form>
-    </div>
+            <div class="col-md-8">
+                <input class="form-control" type="text" ng-model="ctrl.view.positionInsert.startPayment"/>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-12">
+                <button type="submit" class="btn btn-primary btn-sm">
+                    ذخیره اطلاعات
+                </button>
+                <button type="button" class="btn btn-default btn-sm" ng-click="ctrl.event.cancel()">
+                    انصراف
+                </button>
+            </div>
+        </div>
+    </form>
 </div>
