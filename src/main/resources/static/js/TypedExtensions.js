@@ -3,14 +3,12 @@
  */
 /// <reference path="TypedUtility.ts" />
 String.prototype.insertAt = function (index, strText) {
-    var newStr = this.substr(0, index) + strText + this.substr(index - 1 + strText.length);
-    return newStr; //valueOf()
+    return this.substr(0, index) + strText + this.substr(index - 1 + strText.length); //valueOf()
 };
 String.prototype.replaceAt = function (index, count, strReplacement) {
     if (count < 0)
         throw "count cannot be less than 0";
-    var newStr = this.substr(0, index) + strReplacement + this.substr(index + (count) + strReplacement.length);
-    return newStr; //valueOf()
+    return this.substr(0, index) + strReplacement + this.substr(index + (count) + strReplacement.length); //valueOf()
 };
 /**
  *
@@ -166,7 +164,7 @@ Array.prototype.indexOfMatch = function (searchItem, fnMatch, startIndex) {
  * @returns {number}
  */
 Array.prototype.lastIndexOfMatch = function (searchItem, fnMatch, startIndex) {
-    return Util.Utility.lastIndexOf(this, searchItem, fnMatch);
+    return Util.Utility.lastIndexOf(this, searchItem, fnMatch, startIndex);
 };
 /**
  * Remove Item From Array, And Returns List Of Deleted Items
