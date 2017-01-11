@@ -1,14 +1,11 @@
-/**
- * Created by Hassan Faghihi on 7/25/2015.
- */
 /// <reference path="TypedUtility.ts" />
 String.prototype.insertAt = function (index, strText) {
-    return this.substr(0, index) + strText + this.substr(index - 1 + strText.length); //valueOf()
+    return this.substr(0, index) + strText + this.substr(index - 1 + strText.length);
 };
 String.prototype.replaceAt = function (index, count, strReplacement) {
     if (count < 0)
         throw "count cannot be less than 0";
-    return this.substr(0, index) + strReplacement + this.substr(index + (count) + strReplacement.length); //valueOf()
+    return this.substr(0, index) + strReplacement + this.substr(index + (count) + strReplacement.length);
 };
 /**
  *
@@ -18,11 +15,11 @@ String.prototype.replaceAt = function (index, count, strReplacement) {
 String.prototype.trimStart = function (strTrim) {
     var result = this;
     if (strTrim == undefined) {
-        result = this.replace(/\s+$/, '');
+        result = this.replace(/\s+$/, "");
     }
     else {
-        while (result.indexOf(strTrim) == 0 && result.length != 0) {
-            result = result.replaceAt(0, 1, '');
+        while (result.indexOf(strTrim) === 0 && result.length !== 0) {
+            result = result.replaceAt(0, 1, "");
         }
     }
     return result.valueOf();
@@ -38,8 +35,8 @@ String.prototype.trimEnd = function (strTrim) {
         result = this.replace(/^\s+/, '');
     }
     else {
-        while (result.indexOf(strTrim) == result.length - strTrim.length && result.length != 0) {
-            result = result.replaceAt(result.length - strTrim.length, strTrim.length, '');
+        while (result.indexOf(strTrim) === result.length - strTrim.length && result.length !== 0) {
+            result = result.replaceAt(result.length - strTrim.length, strTrim.length, "");
         }
     }
     return result.valueOf();
@@ -53,14 +50,14 @@ String.prototype.fullTrim = function (strTrim) {
     return this.trimStart(strTrim).trimEnd(strTrim).valueOf();
 };
 String.prototype.startWith = function (strStart) {
-    if (this.lastIndexOf(strStart) == -1)
+    if (this.lastIndexOf(strStart) === -1)
         return false;
-    return this.indexOf(strStart) == 0;
+    return this.indexOf(strStart) === 0;
 };
 String.prototype.endWith = function (strEnd) {
-    if (this.lastIndexOf(strEnd) == -1)
+    if (this.lastIndexOf(strEnd) === -1)
         return false;
-    return this.lastIndexOf(strEnd) == this.length - strEnd.length;
+    return this.lastIndexOf(strEnd) === this.length - strEnd.length;
 };
 /**
  * Padding the string value with specified character

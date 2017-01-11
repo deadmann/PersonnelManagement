@@ -1,8 +1,8 @@
+/// <reference path="TypedUtility.ts" />
+
 /**
  * Created by Hassan Faghihi on 7/25/2015.
  */
-/// <reference path="TypedUtility.ts" />
-
 interface String {
     insertAt:(index:number, strText:string)=>string;
     replaceAt:(index:number, count:number, strReplacement:string)=>string;
@@ -49,12 +49,12 @@ interface String {
 }
 
 String.prototype.insertAt=function(index: number, strText: string):string {
-    return this.substr(0, index) + strText + this.substr(index - 1 + strText.length);//valueOf()
+    return this.substr(0, index) + strText + this.substr(index - 1 + strText.length);
 };
 
 String.prototype.replaceAt=function(index: number, count: number, strReplacement:string):string {
     if(count<0) throw "count cannot be less than 0";
-    return this.substr(0, index) + strReplacement + this.substr(index + (count) + strReplacement.length);//valueOf()
+    return this.substr(0, index) + strReplacement + this.substr(index + (count) + strReplacement.length);
 };
 
 /**
@@ -65,10 +65,10 @@ String.prototype.replaceAt=function(index: number, count: number, strReplacement
 String.prototype.trimStart=function(strTrim:string):string{
     var result = this;
     if(strTrim == undefined){
-        result = this.replace(/\s+$/,'');
+        result = this.replace(/\s+$/,"");
     } else {
-        while (result.indexOf(strTrim) == 0 && result.length != 0) {
-            result = result.replaceAt(0, 1, '');
+        while (result.indexOf(strTrim) === 0 && result.length !== 0) {
+            result = result.replaceAt(0, 1, "");
         }
     }
     return result.valueOf();
@@ -84,8 +84,8 @@ String.prototype.trimEnd=function(strTrim:string):string{
     if(strTrim==undefined){
         result = this.replace(/^\s+/,'');
     } else {
-        while(result.indexOf(strTrim)==result.length - strTrim.length && result.length!=0){
-            result = result.replaceAt(result.length - strTrim.length, strTrim.length, '');
+        while(result.indexOf(strTrim) === result.length - strTrim.length && result.length !== 0){
+            result = result.replaceAt(result.length - strTrim.length, strTrim.length, "");
         }
     }
     return result.valueOf();
@@ -101,15 +101,15 @@ String.prototype.fullTrim=function(strTrim:string):string {
 };
 
 String.prototype.startWith=function(strStart:string):boolean{
-    if(this.lastIndexOf(strStart) == -1)
+    if(this.lastIndexOf(strStart) === -1)
         return false;
-    return this.indexOf(strStart) == 0;
+    return this.indexOf(strStart) === 0;
 };
 
 String.prototype.endWith=function(strEnd:string):boolean{
-    if(this.lastIndexOf(strEnd) == -1)
+    if(this.lastIndexOf(strEnd) === -1)
         return false;
-    return this.lastIndexOf(strEnd) == this.length-strEnd.length;
+    return this.lastIndexOf(strEnd) === this.length-strEnd.length;
 };
 
 /**
@@ -312,6 +312,7 @@ Array.prototype.replace=function <T>(searchItem: T, replaceWith:T, fnMatch?:Func
 };
 
 //// Add To Extensions
+
 //// ReSharper disable once NativeTypePrototypeExtending
 //String.prototype.toDate = function () {
 //    "use strict";

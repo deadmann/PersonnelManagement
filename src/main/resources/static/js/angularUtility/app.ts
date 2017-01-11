@@ -1,3 +1,5 @@
+///<reference path="./outerReferences.ts"/>
+
 /**
  * Created by Hassan on 11/21/2016.
  */
@@ -5,5 +7,5 @@
 module AngularUtility{
         "use strict";
 
-        angular.module("angularUtility", []);
+    angular.module("angularUtility", []);
 }

@@ -3,11 +3,13 @@
  */
 module Util {
     export class Utility {
+        //noinspection JSUnusedGlobalSymbols
         public static isNullOrUndefined(obj:Object):boolean {
             //return obj == null //juggling-check
             return typeof obj === 'undefined' || obj === null; //strict-check
         }
 
+        //noinspection JSUnusedGlobalSymbols
         public static isNullOrUndefinedOrEmpty(obj:Object):boolean {
             if (Utility.isNullOrUndefined(obj))
                 return true;
@@ -20,15 +22,18 @@ module Util {
             throw "Not Supported Exception";
         }
 
+        //noinspection JSUnusedGlobalSymbols
         public static isNullOrUndefinedOrWhiteSpace(obj:Object):boolean {
             return Utility.isNullOrUndefined(obj) || (<String>obj).valueOf().trim() === "";
         }
 
+        //noinspection JSUnusedGlobalSymbols
         public static isNumeric(obj:any) {
             //From JQuery
             return !isNaN(parseFloat(obj)) && isFinite(obj);
         }
 
+        //noinspection JSUnusedGlobalSymbols
         public static tryParseInt(str:any, defaultValue:any) {
             var retValue = defaultValue;
             if (str !== null) {
@@ -41,6 +46,7 @@ module Util {
             return retValue;
         }
 
+        //noinspection JSUnusedGlobalSymbols
         public static tryParseFloat(str:any, defaultValue:any) {
             var retValue = defaultValue;
             if (str !== null) {
@@ -53,6 +59,7 @@ module Util {
             return retValue;
         }
 
+        //noinspection JSUnusedGlobalSymbols
         /**
          * Compare two string return 0 if both are equal, 1 if first one is greater, and -1 if second one is greater
          * @param string1
@@ -66,9 +73,10 @@ module Util {
             return string1.localeCompare(string2,"enUs");
         }
 
+        //noinspection JSUnusedGlobalSymbols
         /**
          * Remove Item From Array, And Returns List Of Deleted Items
-         * @param itemList{Array<any>} list of items that we want to search in
+         * @param itemList{Array<*>} list of items that we want to search in
          * @param searchItem {*} item we use to match data
          * @param fnMatch {function} if defined this function will be used to match two models, other wise object reference will be used. firstItem come from array and second is searchItem
          * @param removeOption {string} 'first' (default), 'last', 'all'
@@ -94,9 +102,10 @@ module Util {
             }
         }
 
+        //noinspection JSUnusedGlobalSymbols
         /**
          * Remove Item From Array, And Returns List Of Deleted Items
-         * @param itemList{Array<any>} list of items that we want to search in
+         * @param itemList{Array<*>} list of items that we want to search in
          * @param searchItem {*} item we use to match data
          * @param replaceWith {*} the item that should be replaced with searching item
          * @param fnMatch {function} if defined this function will be used to match two models, other wise object reference will be used. firstItem come from array and second is searchItem
@@ -128,9 +137,10 @@ module Util {
             }
         }
 
+        //noinspection JSUnusedGlobalSymbols
         /**
          * Find item using Match function.
-         * @param arr{Array<any>} list of items that we want to search in
+         * @param arr{Array<*>} list of items that we want to search in
          * @param searchItem {*} item we use to match data
          * @param fnMatch {function} if defined this function will be used to match two models, other wise object reference will be used. firstItem come from array and second is searchItem
          * @returns {*|null} returns matched item
@@ -151,12 +161,14 @@ module Util {
             return null;
         }
 
+        //noinspection JSUnusedGlobalSymbols
         public static forEach(arr:Array<any>, callBack:Function) {
             for (var i = 0; i < arr.length; i++) {
                 callBack(arr[i]);
             }
         }
 
+        //noinspection JSUnusedGlobalSymbols
         public static hasDuplicates(arr:Array<any>) {
             var x = {}, len = arr.length;
             for (var i = 0; i < len; i++) {
@@ -168,13 +180,14 @@ module Util {
             return false;
         }
 
+        //noinspection JSUnusedGlobalSymbols
         public static isDistinct(arr:Array<any>) {
             return !Utility.hasDuplicates(arr);
         }
 
         /**
          * returns true if the matched item exists within the array, otherwise returns false
-         * @param items {Array<any>} list of items that we want to search in
+         * @param items {Array<*>} list of items that we want to search in
          * @param searchItem {*} item we use to match data
          * @param fnMatch {function} if defined this function will be used to match two models, other wise object reference will be used. firstItem come from array and second is searchItem
          * @returns {boolean}
@@ -195,9 +208,10 @@ module Util {
             return flag;
         }
 
+        //noinspection JSUnusedGlobalSymbols
         /**
          * returns index of searched item at first found position, otherwise returns -1
-         * @param items {Array<any>} list of items that we want to search in
+         * @param items {Array<*>} list of items that we want to search in
          * @param searchItem {*|null} item we use to match data / null if want to match with global or other accessible data
          * @param fnMatch {function} if defined this function will be used to match two models, other wise object reference will be used. firstItem come from array and second is searchItem
          * @param startIndex {number} the starting index where the search start from within the array
@@ -222,9 +236,10 @@ module Util {
             return -1;
         }
 
+        //noinspection JSUnusedGlobalSymbols
         /**
          * returns index of searched item at last found position, otherwise returns -1
-         * @param items {Array<any>} list of items that we want to search in
+         * @param items {Array<*>} list of items that we want to search in
          * @param searchItem {*|null} item we use to match data / null if want to match with global or other accessible data
          * @param fnMatch {function} if defined this function will be used to match two models, other wise object reference will be used. firstItem come from array and second is searchItem
          * @param startIndex {number} the starting index where the search start from within the array
@@ -249,6 +264,7 @@ module Util {
             return -1;
         }
 
+        //noinspection JSUnusedGlobalSymbols
         /**
          * Padding desired value with specified character
          * @param val {string} Value to pad
@@ -260,6 +276,7 @@ module Util {
             return Array(len - String(val).length + 1).join(sign || "0") + val;
         }
 
+        //noinspection JSUnusedGlobalSymbols
         /**
          * Padding desired value with specified character
          * @param val {string} Value to pad
@@ -271,6 +288,7 @@ module Util {
             return val + Array(len - String(val).length + 1).join(sign || "0");
         }
 
+        //noinspection JSUnusedGlobalSymbols
         /**
          * Generate array of numbers that are within the given range
          * @param start {number} start number
@@ -290,15 +308,17 @@ module Util {
             return result;
         }
 
+        //noinspection JSUnusedGlobalSymbols
         /**
          * Escape a regex string
          * @param str
-         * @return {any|string|void|ILocationService}
+         * @return {*|string|void|ILocationService}
          */
         public static escapeRegExp(str) {
             return str.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
         }
 
+        //noinspection JSUnusedGlobalSymbols
         /**
          * Turn String To Numerical Data, and Compare It, 0 if equal, 1 if first is greater, -1 if second is greater
          * @param date1
@@ -313,10 +333,12 @@ module Util {
                 : -1);
         }
 
+        //noinspection JSUnusedGlobalSymbols
         public static isBetweenDates(date:string, startDate:string, endDate:string):boolean {
             return (this.compareDates(date, startDate) >= 0 && this.compareDates(date, endDate) <= 0);
         }
 
+        //noinspection JSUnusedGlobalSymbols
         /**
          * (Slow) Generate Random Distinguishable Human Readable Color
          * @param number
@@ -328,7 +350,7 @@ module Util {
              Each time you create a color:
              Create a random, but attractive, color{
              Red, Green, and Blue are set to random luminosity.
-             One random value is reduced significantly to prevent grayscale.
+             One random value is reduced significantly to prevent greyscale.
              Another is increased by a random amount up to 100%.
              They are mapped to a random total luminosity in a medium-high range (bright but not white).
              }
@@ -342,7 +364,7 @@ module Util {
              }
              Output array of all colors generated
              */
-            //if we've passed preloaded colors and they're in hex format
+            //if we've passed preload colors and they're in hex format
             if (typeof(arguments[1]) != 'undefined' && arguments[1].constructor == Array && arguments[1][0] && arguments[1][0].constructor != Array) {
                 for (var i = 0; i < arguments[1].length; i++) { //for all the passed colors
                     var vals = /^#?([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i.exec(arguments[1][i]); //get RGB values
@@ -358,6 +380,7 @@ module Util {
                     if (delta == 0)s = 0; else s = delta / (1 - Math.abs(2 * l - 1));
                     return [h, s, l]
                 }, hslToRGB = function (hsl) {//converts [h,s,l] into [r,g,b]
+                    //noinspection JSUnusedLocalSymbols
                     var h = hsl[0], s = hsl[1], l = hsl[2], c = (1 - Math.abs(2 * l - 1)) * s, x = c * (1 - Math.abs(h / 60 % 2 - 1)), m = l - c / 2, r, g, b;
                     if (h < 60) {
                         r = c;
@@ -500,6 +523,7 @@ module Util {
             });
         };
 
+        //noinspection JSUnusedGlobalSymbols
         /**
          * (Fast) Generate Random Color
          * @param number {number}
@@ -519,6 +543,7 @@ module Util {
             return colors;
         };
 
+        //noinspection JSUnusedGlobalSymbols
         /**
          * Converts an HSL color value to RGB. Conversion formula
          * adapted from http://en.wikipedia.org/wiki/HSL_color_space.
@@ -555,6 +580,7 @@ module Util {
             return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
         }
 
+        //noinspection JSUnusedGlobalSymbols
         /**
          * Converts an RGB color value to HSL. Conversion formula
          * adapted from http://en.wikipedia.org/wiki/HSL_color_space.
@@ -567,7 +593,9 @@ module Util {
          * @return  {Array}           The HSL representation
          */
         public static rgbToHsl(r, g, b) {
-            r /= 255, g /= 255, b /= 255;
+            r /= 255;
+            g /= 255;
+            b /= 255;
             var max = Math.max(r, g, b), min = Math.min(r, g, b);
             var h, s, l = (max + min) / 2;
 
@@ -593,6 +621,7 @@ module Util {
             return [h, s, l];
         }
 
+        //noinspection JSUnusedGlobalSymbols
         /**
          * Convert RGB to Hex
          * @param r
@@ -608,6 +637,7 @@ module Util {
             return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
         }
 
+        //noinspection JSUnusedGlobalSymbols
         /**
          * Convert Hex to RGB
          * @param hex
@@ -622,6 +652,7 @@ module Util {
             } : null;
         }
 
+        //noinspection JSUnusedGlobalSymbols
         /**
          * Return all values within passed enum
          * @param enumeration {Enumerator}
@@ -638,6 +669,7 @@ module Util {
             return result;
         }
 
+        //noinspection JSUnusedGlobalSymbols
         /**
          * Return all values within passed enum
          * @param enumeration {Enumerator}

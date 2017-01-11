@@ -1,3 +1,5 @@
+///<reference path="../outerReferences.ts"/>
+
 /**
  * Created by Hassan on 11/21/2016.
  */
