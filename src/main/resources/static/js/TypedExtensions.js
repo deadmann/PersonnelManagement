@@ -1,3 +1,6 @@
+/**
+ * Created by Hassan Faghihi on 7/25/2015.
+ */
 /// <reference path="TypedUtility.ts" />
 String.prototype.insertAt = function (index, strText) {
     return this.substr(0, index) + strText + this.substr(index - 1 + strText.length);
@@ -167,7 +170,7 @@ Array.prototype.lastIndexOfMatch = function (searchItem, fnMatch, startIndex) {
  * Remove Item From Array, And Returns List Of Deleted Items
  * @param searchItem {*} item we use to match data
  * @param fnMatch {function} if defined this function will be used to match two models, other wise object reference will be used. firstItem come from array and second is searchItem
- * @param removeOption {string} 'first' (default), 'last', 'all'
+ * @param removeOption {IterationOption|IterationOptionString} can be either of enum IterationOption or one of following values 'first' (default), 'last', 'all'
  * @returns {*[]} returns Deleted Items
  */
 Array.prototype.remove = function (searchItem, fnMatch, removeOption) {
@@ -179,7 +182,7 @@ Array.prototype.remove = function (searchItem, fnMatch, removeOption) {
  * @param searchItem {*} item we use to match data
  * @param replaceWith {*} the item that should be replaced with searching item
  * @param fnMatch {function} if defined this function will be used to match two models, other wise object reference will be used. firstItem come from array and second is searchItem
- * @param replaceOption {string} 'first' (default), 'last', 'all'
+ * @param replaceOption {IterationOption|IterationOptionString} can be either of enum IterationOption or one of following values 'first' (default), 'last', 'all'
  * @returns {*[]} returns Deleted Items
  */
 Array.prototype.replace = function (searchItem, replaceWith, fnMatch, replaceOption) {

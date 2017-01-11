@@ -1,3 +1,4 @@
+///<reference path="UtilityTypes.ts"/>
 /**
  * Created by Hassan Faghihi on 7/25/2015.
  */
@@ -74,21 +75,21 @@ var Util;
          * @param itemList{Array<*>} list of items that we want to search in
          * @param searchItem {*} item we use to match data
          * @param fnMatch {function} if defined this function will be used to match two models, other wise object reference will be used. firstItem come from array and second is searchItem
-         * @param removeOption {string} 'first' (default), 'last', 'all'
+         * @param removeOption {IterationOption|IterationOptionString} can be either of enum IterationOption or one of following values 'first' (default), 'last', 'all'
          * @returns {*[]} returns Deleted Items
          */
         Utility.remove = function (itemList, searchItem, fnMatch, removeOption) {
             if (removeOption === void 0) { removeOption = 'first'; }
             var index;
-            if (removeOption == 'first') {
+            if (removeOption === 'first' || removeOption == IterationOption.First) {
                 index = this.indexOf(itemList, searchItem, fnMatch);
                 return itemList.splice(index, 1);
             }
-            else if (removeOption == 'last') {
+            else if (removeOption === 'last' || removeOption == IterationOption.Last) {
                 index = this.lastIndexOf(itemList, searchItem, fnMatch);
                 return itemList.splice(index, 1);
             }
-            else if (removeOption == 'all') {
+            else if (removeOption === 'all' || removeOption == IterationOption.All) {
                 var deletedItems = [];
                 var index = 0; //We pass index as reference so we don't repeat the whole search (0=> we don't plus by 1 as deleted item wont be inside list any more, and we need to recheck the index)
                 while ((index = this.indexOf(itemList, searchItem, fnMatch, index)) != -1) {
@@ -107,25 +108,25 @@ var Util;
          * @param searchItem {*} item we use to match data
          * @param replaceWith {*} the item that should be replaced with searching item
          * @param fnMatch {function} if defined this function will be used to match two models, other wise object reference will be used. firstItem come from array and second is searchItem
-         * @param replaceOption {string} 'first' (default), 'last', 'all'
+         * @param replaceOption {IterationOption|IterationOptionString} can be either of enum IterationOption or one of following values 'first' (default), 'last', 'all'
          * @returns {*[]} returns Deleted Items
          */
         Utility.replace = function (itemList, searchItem, replaceWith, fnMatch, replaceOption) {
             if (replaceOption === void 0) { replaceOption = 'first'; }
             var index;
-            if (replaceOption == 'first') {
+            if (replaceOption === 'first' || replaceOption == IterationOption.First) {
                 index = this.indexOf(itemList, searchItem, fnMatch);
                 var oldItem = itemList[index];
                 itemList[index] = replaceWith;
                 return oldItem;
             }
-            else if (replaceOption == 'last') {
+            else if (replaceOption === 'last' || replaceOption == IterationOption.Last) {
                 index = this.lastIndexOf(itemList, searchItem, fnMatch);
                 var oldItem = itemList[index];
                 itemList[index] = replaceWith;
                 return oldItem;
             }
-            else if (replaceOption == 'all') {
+            else if (replaceOption === 'all' || replaceOption == IterationOption.All) {
                 var oldItems = [];
                 var index = -1; //We pass index as reference so we don't repeat the whole search (-1=> 1. item doesn't delete, 2. we do plus by to bypass current item)
                 while ((index = this.indexOf(itemList, searchItem, fnMatch, index + 1)) != -1) {

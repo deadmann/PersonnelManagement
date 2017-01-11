@@ -1,16 +1,18 @@
+///<reference path="UtilityTypes.ts"/>
+
 /**
  * Created by Hassan Faghihi on 7/25/2015.
  */
 module Util {
     export class Utility {
         //noinspection JSUnusedGlobalSymbols
-        public static isNullOrUndefined(obj: Object): boolean {
+        public static isNullOrUndefined(obj:Object):boolean {
             //return obj == null //juggling-check
             return typeof obj === 'undefined' || obj === null; //strict-check
         }
 
         //noinspection JSUnusedGlobalSymbols
-        public static isNullOrUndefinedOrEmpty(obj: Object): boolean {
+        public static isNullOrUndefinedOrEmpty(obj:Object):boolean {
             if (Utility.isNullOrUndefined(obj))
                 return true;
 
@@ -23,18 +25,18 @@ module Util {
         }
 
         //noinspection JSUnusedGlobalSymbols
-        public static isNullOrUndefinedOrWhiteSpace(obj: Object): boolean {
+        public static isNullOrUndefinedOrWhiteSpace(obj:Object):boolean {
             return Utility.isNullOrUndefined(obj) || (<String>obj).valueOf().trim() === "";
         }
 
         //noinspection JSUnusedGlobalSymbols
-        public static isNumeric(obj: any) {
+        public static isNumeric(obj:any) {
             //From JQuery
             return !isNaN(parseFloat(obj)) && isFinite(obj);
         }
 
         //noinspection JSUnusedGlobalSymbols
-        public static tryParseInt(str: any, defaultValue: any) {
+        public static tryParseInt(str:any, defaultValue:any) {
             var retValue = defaultValue;
             if (str !== null) {
                 if (str.length > 0) {
@@ -47,7 +49,7 @@ module Util {
         }
 
         //noinspection JSUnusedGlobalSymbols
-        public static tryParseFloat(str: any, defaultValue: any) {
+        public static tryParseFloat(str:any, defaultValue:any) {
             var retValue = defaultValue;
             if (str !== null) {
                 if (str.length > 0) {
@@ -65,12 +67,12 @@ module Util {
          * @param string1
          * @param string2
          */
-        public static compareString(string1: string, string2: string): number {
-            if (this.isNullOrUndefined(string1))
+        public static compareString(string1:string, string2:string):number{
+            if(this.isNullOrUndefined(string1))
                 throw new Error("string1 cannot be null");
-            if (this.isNullOrUndefined(string2))
+            if(this.isNullOrUndefined(string2))
                 throw new Error("string2 cannot be null");
-            return string1.localeCompare(string2, "enUs");
+            return string1.localeCompare(string2,"enUs");
         }
 
         //noinspection JSUnusedGlobalSymbols
@@ -79,20 +81,20 @@ module Util {
          * @param itemList{Array<*>} list of items that we want to search in
          * @param searchItem {*} item we use to match data
          * @param fnMatch {function} if defined this function will be used to match two models, other wise object reference will be used. firstItem come from array and second is searchItem
-         * @param removeOption {string} 'first' (default), 'last', 'all'
+         * @param removeOption {IterationOption|IterationOptionString} can be either of enum IterationOption or one of following values 'first' (default), 'last', 'all'
          * @returns {*[]} returns Deleted Items
          */
-        public static remove(itemList: Array<any>, searchItem: any, fnMatch?: Function, removeOption: string = 'first'): Array<any> {
-            var index: number;
-            if (removeOption == 'first') {
+        public static remove(itemList:Array<any>, searchItem:any, fnMatch?:Function, removeOption:IterationOption|IterationOptionString = 'first'):Array<any> {
+            var index:number;
+            if (removeOption === 'first' || removeOption == IterationOption.First) {
                 index = this.indexOf(itemList, searchItem, fnMatch);
                 return itemList.splice(index, 1);
-            } else if (removeOption == 'last') {
+            } else if (removeOption === 'last' || removeOption == IterationOption.Last) {
                 index = this.lastIndexOf(itemList, searchItem, fnMatch);
                 return itemList.splice(index, 1);
-            } else if (removeOption == 'all') {
+            } else if (removeOption === 'all' || removeOption == IterationOption.All) {
                 var deletedItems = [];
-                var index = 0;//We pass index as reference so we don't repeat the whole search (0=> we don't plus by 1 as deleted item wont be inside list any more, and we need to recheck the index)
+                var index=0;//We pass index as reference so we don't repeat the whole search (0=> we don't plus by 1 as deleted item wont be inside list any more, and we need to recheck the index)
                 while ((index = this.indexOf(itemList, searchItem, fnMatch, index)) != -1) {
                     deletedItems.push(itemList.splice(index, 1)[0]);
                 }
@@ -109,27 +111,27 @@ module Util {
          * @param searchItem {*} item we use to match data
          * @param replaceWith {*} the item that should be replaced with searching item
          * @param fnMatch {function} if defined this function will be used to match two models, other wise object reference will be used. firstItem come from array and second is searchItem
-         * @param replaceOption {string} 'first' (default), 'last', 'all'
+         * @param replaceOption {IterationOption|IterationOptionString} can be either of enum IterationOption or one of following values 'first' (default), 'last', 'all'
          * @returns {*[]} returns Deleted Items
          */
-        public static replace(itemList: Array<any>, searchItem: any, replaceWith: any, fnMatch?: Function, replaceOption: string = 'first'): Array<any> {
-            var index: number;
-            if (replaceOption == 'first') {
+        public static replace(itemList:Array<any>, searchItem:any, replaceWith:any, fnMatch?:Function, replaceOption:IterationOption|IterationOptionString = 'first'):Array<any> {
+            var index:number;
+            if (replaceOption === 'first' || replaceOption == IterationOption.First) {
                 index = this.indexOf(itemList, searchItem, fnMatch);
                 var oldItem = itemList[index];
-                itemList[index] = replaceWith;
+                itemList[index]=replaceWith;
                 return oldItem;
-            } else if (replaceOption == 'last') {
+            } else if (replaceOption === 'last' || replaceOption == IterationOption.Last) {
                 index = this.lastIndexOf(itemList, searchItem, fnMatch);
                 var oldItem = itemList[index];
-                itemList[index] = replaceWith;
+                itemList[index]=replaceWith;
                 return oldItem;
-            } else if (replaceOption == 'all') {
+            } else if (replaceOption === 'all' || replaceOption == IterationOption.All) {
                 var oldItems = [];
                 var index = -1;//We pass index as reference so we don't repeat the whole search (-1=> 1. item doesn't delete, 2. we do plus by to bypass current item)
-                while ((index = this.indexOf(itemList, searchItem, fnMatch, index + 1)) != -1) {
+                while ((index = this.indexOf(itemList, searchItem, fnMatch, index+1)) != -1) {
                     oldItems.push(itemList[index]);
-                    itemList[index] = replaceWith;
+                    itemList[index]=replaceWith;
                 }
                 return oldItems;
             } else {
@@ -145,7 +147,7 @@ module Util {
          * @param fnMatch {function} if defined this function will be used to match two models, other wise object reference will be used. firstItem come from array and second is searchItem
          * @returns {*|null} returns matched item
          */
-        public static find(arr: Array<any>, searchItem: any, fnMatch?: Function) {
+        public static find(arr:Array<any>, searchItem:any, fnMatch?:Function) {
             for (var i = 0; i < arr.length; i++) {
                 if (fnMatch) {
                     if (fnMatch(arr[i], searchItem)) {
@@ -162,14 +164,14 @@ module Util {
         }
 
         //noinspection JSUnusedGlobalSymbols
-        public static forEach(arr: Array<any>, callBack: Function) {
+        public static forEach(arr:Array<any>, callBack:Function) {
             for (var i = 0; i < arr.length; i++) {
                 callBack(arr[i]);
             }
         }
 
         //noinspection JSUnusedGlobalSymbols
-        public static hasDuplicates(arr: Array<any>) {
+        public static hasDuplicates(arr:Array<any>) {
             var x = {}, len = arr.length;
             for (var i = 0; i < len; i++) {
                 if (x[arr[i]] === true) {
@@ -181,7 +183,7 @@ module Util {
         }
 
         //noinspection JSUnusedGlobalSymbols
-        public static isDistinct(arr: Array<any>) {
+        public static isDistinct(arr:Array<any>) {
             return !Utility.hasDuplicates(arr);
         }
 
@@ -192,9 +194,9 @@ module Util {
          * @param fnMatch {function} if defined this function will be used to match two models, other wise object reference will be used. firstItem come from array and second is searchItem
          * @returns {boolean}
          */
-        public static contains(items: any[], searchItem: any, fnMatch?: Function) {
-            var flag: boolean = false;
-            for (var i: number = 0; i < items.length; i++) {
+        public static contains(items:any[], searchItem:any, fnMatch?:Function) {
+            var flag:boolean = false;
+            for (var i:number = 0; i < items.length; i++) {
                 if (fnMatch) {
                     if (fnMatch(items[i], searchItem)) {
                         flag = true;
@@ -217,12 +219,12 @@ module Util {
          * @param startIndex {number} the starting index where the search start from within the array
          * @returns {number}
          */
-        public static indexOf(items: any[], searchItem: any, fnMatch?: Function, startIndex: number = 0) {
+        public static indexOf(items:any[], searchItem:any, fnMatch?:Function, startIndex:number=0) {
             //If we don't have specific match function, we can use array indexOf if exists
             if (!fnMatch && Array.prototype.indexOf) {
                 return items.indexOf(searchItem);
             }
-            for (var i: number = startIndex; i < items.length; i++) {
+            for (var i:number = startIndex; i < items.length; i++) {
                 if (fnMatch) {
                     if (fnMatch(items[i], searchItem)) {
                         return i;
@@ -245,12 +247,12 @@ module Util {
          * @param startIndex {number} the starting index where the search start from within the array
          * @returns {number}
          */
-        public static lastIndexOf(items: any[], searchItem: any, fnMatch?: Function, startIndex: number = (items.length - 1)) {
+        public static lastIndexOf(items:any[], searchItem:any, fnMatch?:Function, startIndex:number=(items.length-1)) {
             //If we don't have specific match function, we can use array lastIndexOf if exists
             if (!fnMatch && Array.prototype.lastIndexOf) {
                 return items.lastIndexOf(searchItem);
             }
-            for (var i: number = startIndex; i > 0; i--) {
+            for (var i:number = startIndex; i > 0; i--) {
                 if (fnMatch) {
                     if (fnMatch(items[i], searchItem)) {
                         return i;
@@ -272,7 +274,7 @@ module Util {
          * @param sign {string} the sign to used for padding (default '0')
          * @returns {string}
          */
-        public static padLeft(val: string, len: number, sign?: string) {
+        public static padLeft(val:string, len:number, sign?:string) {
             return Array(len - String(val).length + 1).join(sign || "0") + val;
         }
 
@@ -284,7 +286,7 @@ module Util {
          * @param sign {string} the sign to used for padding (default '0')
          * @returns {string}
          */
-        public static padRight(val: string, len: number, sign?: string) {
+        public static padRight(val:string, len:number, sign?:string) {
             return val + Array(len - String(val).length + 1).join(sign || "0");
         }
 
@@ -296,7 +298,7 @@ module Util {
          * @param includeEnd {boolean} true if we want to include last number, otherwise we generate until the end number
          * @return {Array<number>} Array of numbers that are within the range
          */
-        public static generateRange(start: number, end: number, includeEnd): Array<number> {
+        public static generateRange(start:number, end:number, includeEnd):Array<number> {
             var result = [];
             for (var i = start
                 ; (start <= end)
@@ -325,7 +327,7 @@ module Util {
          * @param date2
          * @returns {number}
          */
-        public static compareDates(date1: string, date2: string): number {
+        public static compareDates(date1:string, date2:string):number {
             var dateNum1 = parseInt(date1.replace(/\D/g, ''));
             var dateNum2 = parseInt(date2.replace(/\D/g, ''));
             return (dateNum1 == dateNum2) ? 0
@@ -334,7 +336,7 @@ module Util {
         }
 
         //noinspection JSUnusedGlobalSymbols
-        public static isBetweenDates(date: string, startDate: string, endDate: string): boolean {
+        public static isBetweenDates(date:string, startDate:string, endDate:string):boolean {
             return (this.compareDates(date, startDate) >= 0 && this.compareDates(date, endDate) <= 0);
         }
 
@@ -437,7 +439,7 @@ module Util {
                             loadedColorLuminosity = loadedColors[i].reduce(sumFunction), //get the total luminosity of the already generated color
                             currentColorLuminosity = color.reduce(sumFunction), //get the total luminosity of the current color
                             lumDifference = Math.abs(loadedColorLuminosity - currentColorLuminosity), //get the difference in luminosity between the two
-                            //how close are these two colors to being the same luminosity and saturation?
+                        //how close are these two colors to being the same luminosity and saturation?
                             differenceRange = Math.max.apply(null, difference) - Math.min.apply(null, difference),
                             luminosityFactor = 50, //how much difference in luminosity the human eye should be able to detect easily
                             rangeFactor = 75; //how much difference in luminosity and saturation the human eye should be able to dect easily
@@ -473,18 +475,18 @@ module Util {
                         blue = randVal(),
                         rescale, //we'll define this later
                         thisColor = [red, green, blue], //an array of the random values
-                        /*
-                         #ff0 and #9e0 are not the same colors, but they are on the same range of the spectrum, namely without blue.
-                         Try to choose colors such that consecutive colors are on different ranges of the spectrum.
-                         This shouldn't always happen, but it should happen more often then not.
-                         Using a factor of 2.3, we'll only get the same range of spectrum 15% of the time.
-                         */
+                    /*
+                     #ff0 and #9e0 are not the same colors, but they are on the same range of the spectrum, namely without blue.
+                     Try to choose colors such that consecutive colors are on different ranges of the spectrum.
+                     This shouldn't always happen, but it should happen more often then not.
+                     Using a factor of 2.3, we'll only get the same range of spectrum 15% of the time.
+                     */
                         valueToReduce = Math.floor(lastLoadedReduction + 1 + Math.random() * 2.3) % 3, //which value to reduce
-                        /*
-                         Because 300 and 510 are fairly close in reference to zero,
-                         increase one of the remaining values by some arbitrary percent betweeen 0% and 100%,
-                         so that our remaining two values can be somewhat different.
-                         */
+                    /*
+                     Because 300 and 510 are fairly close in reference to zero,
+                     increase one of the remaining values by some arbitrary percent betweeen 0% and 100%,
+                     so that our remaining two values can be somewhat different.
+                     */
                         valueToIncrease = Math.floor(valueToIncrease + 1 + Math.random() * 2) % 3, //which value to increase (not the one we reduced)
                         increaseBy = Math.random() + 1; //how much to increase it by
                     lastLoadedReduction = valueToReduce; //next time we make a color, try not to reduce the same one
@@ -508,7 +510,7 @@ module Util {
                     }
                     return thisColor;
                 };
-            for (var i: number = loadedColors.length; i < number; i++) { //Start with our predefined colors or 0, and generate the correct number of colors.
+            for (var i:number = loadedColors.length; i < number; i++) { //Start with our predefined colors or 0, and generate the correct number of colors.
                 loadedColors.push(color().map(function (value) { //for each new color
                     return Math.round(value); //round RGB values to integers
                 }));
@@ -658,11 +660,11 @@ module Util {
          * @param enumeration {Enumerator}
          * @returns {Array<string>}
          */
-        public static getEnumValues(enumeration): Array<string> {
-            var result: Array<string> = [];
-            for (var item in enumeration) {
-                var isValueProperty = parseInt(item, 10) >= 0;//parse int in system of base 10 (normal human numerical language)
-                if (!isValueProperty) {
+        public static getEnumValues(enumeration):Array<string>{
+            var result:Array<string>=[];
+            for(var item in enumeration){
+                var isValueProperty = parseInt(item,10)>=0;//parse int in system of base 10 (normal human numerical language)
+                if(! isValueProperty){
                     result.push(item);
                 }
             }
@@ -675,12 +677,12 @@ module Util {
          * @param enumeration {Enumerator}
          * @returns {Array<number>}
          */
-        public static getEnumKeys(enumeration): Array<number> {
-            var result: Array<number> = [];
-            var value: number;
-            for (var item in enumeration) {
-                var isValueProperty = (value = parseInt(item, 10)) >= 0;//parse int in system of base 10 (normal human numerical language)
-                if (isValueProperty) {
+        public static getEnumKeys(enumeration):Array<number>{
+            var result:Array<number>=[];
+            var value:number;
+            for(var item in enumeration){
+                var isValueProperty = (value = parseInt(item,10))>=0;//parse int in system of base 10 (normal human numerical language)
+                if(isValueProperty){
                     result.push(value);
                 }
             }

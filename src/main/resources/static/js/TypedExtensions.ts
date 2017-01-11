@@ -1,8 +1,8 @@
-/// <reference path="TypedUtility.ts" />
-
 /**
  * Created by Hassan Faghihi on 7/25/2015.
  */
+/// <reference path="TypedUtility.ts" />
+
 interface String {
     insertAt:(index:number, strText:string)=>string;
     replaceAt:(index:number, count:number, strReplacement:string)=>string;
@@ -231,19 +231,19 @@ interface Array<T> {
      * Remove Item From Array, And Returns List Of Deleted Items
      * @param searchItem {*} item we use to match data
      * @param fnMatch {function} if defined this function will be used to match two models, other wise object reference will be used. firstItem come from array and second is searchItem
-     * @param removeOption {string} 'first' (default), 'last', 'all'
+     * @param removeOption {IterationOption|IterationOptionString} can be either of enum IterationOption or one of following values 'first' (default), 'last', 'all'
      * @returns {*[]} returns Deleted Items
      */
-    remove: (searchItem: T, fnMatch:Function, removeOption:string)=>Array<T>;
+    remove: (searchItem: T, fnMatch:Function, removeOption:IterationOption|IterationOptionString)=>Array<T>;
     /**
      * Replace Item Inside Array, And Returns List Of Deleted Items
      * @param searchItem {*} item we use to match data
      * @param replaceWith {*} the item that should be replaced with searching item
      * @param fnMatch {function} if defined this function will be used to match two models, other wise object reference will be used. firstItem come from array and second is searchItem
-     * @param replaceOption {string} 'first' (default), 'last', 'all'
+     * @param replaceOption {IterationOption|IterationOptionString} can be either of enum IterationOption or one of following values 'first' (default), 'last', 'all'
      * @returns {*[]} returns Deleted Items
      */
-    replace: (searchItem: T, replaceWith: T, fnMatch:Function, replaceOption:string)=>Array<T>;
+    replace: (searchItem: T, replaceWith: T, fnMatch:Function, replaceOption:IterationOption|IterationOptionString)=>Array<T>;
 }
 
 /**
@@ -292,10 +292,10 @@ Array.prototype.lastIndexOfMatch = function<TY>(searchItem: TY, fnMatch?:Functio
  * Remove Item From Array, And Returns List Of Deleted Items
  * @param searchItem {*} item we use to match data
  * @param fnMatch {function} if defined this function will be used to match two models, other wise object reference will be used. firstItem come from array and second is searchItem
- * @param removeOption {string} 'first' (default), 'last', 'all'
+ * @param removeOption {IterationOption|IterationOptionString} can be either of enum IterationOption or one of following values 'first' (default), 'last', 'all'
  * @returns {*[]} returns Deleted Items
  */
-Array.prototype.remove=function <T>(searchItem: T, fnMatch?:Function, removeOption:string='first'):Array<T> {
+Array.prototype.remove=function <T>(searchItem: T, fnMatch?:Function, removeOption:IterationOption|IterationOptionString='first'):Array<T> {
     return Util.Utility.remove(this, searchItem, fnMatch, removeOption);
 };
 
@@ -304,10 +304,10 @@ Array.prototype.remove=function <T>(searchItem: T, fnMatch?:Function, removeOpti
  * @param searchItem {*} item we use to match data
  * @param replaceWith {*} the item that should be replaced with searching item
  * @param fnMatch {function} if defined this function will be used to match two models, other wise object reference will be used. firstItem come from array and second is searchItem
- * @param replaceOption {string} 'first' (default), 'last', 'all'
+ * @param replaceOption {IterationOption|IterationOptionString} can be either of enum IterationOption or one of following values 'first' (default), 'last', 'all'
  * @returns {*[]} returns Deleted Items
  */
-Array.prototype.replace=function <T>(searchItem: T, replaceWith:T, fnMatch?:Function, replaceOption:string='first'):Array<T> {
+Array.prototype.replace=function <T>(searchItem: T, replaceWith:T, fnMatch?:Function, replaceOption:IterationOption|IterationOptionString='first'):Array<T> {
     return Util.Utility.replace(this, searchItem, replaceWith, fnMatch, replaceOption);
 };
 
