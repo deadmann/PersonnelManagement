@@ -19,32 +19,33 @@
 
     <div class="container">
 
-        <nav class="navbar navbar-inverse"><!-- navbar-default -->
-            <div class="container">
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav">
-                        <!--<li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>-->
-                        <li><a href="#/building">پروژه ها</a></li>
-                        <li><a href="#/position">سمت ها</a></li>
-                        <li><a href="#/person">پرسنل</a></li>
-                        <!--<li><a href="#/wage"  class="btn btn-default">دستمزد ها</a></li>-->
-                        <li><a href="#/work/insert">کارکرد</a></li>
-                        <li><a href="#/work">گزارش کارکرد</a></li>
-                        <li><a href="/rest/database-manager/get-backup">دانلود فایل پشتیبان</a></li>
-                    </ul>
-                </div><!-- /.navbar-collapse -->
-            </div><!-- /.container-fluid -->
-        </nav>
+        <div class="row">
+            <nav class="navbar navbar-inverse"><!-- navbar-default -->
+                <div class="container">
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            <!--<li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>-->
+                            <li><a href="#/building">پروژه ها</a></li>
+                            <li><a href="#/position">سمت ها</a></li>
+                            <li><a href="#/person">پرسنل</a></li>
+                            <!--<li><a href="#/wage"  class="btn btn-default">دستمزد ها</a></li>-->
+                            <li><a href="#/work/insert">کارکرد</a></li>
+                            <li><a href="#/work">گزارش کارکرد</a></li>
+                            <li><a href="/rest/database-manager/get-backup">دانلود فایل پشتیبان</a></li>
+                        </ul>
+                    </div><!-- /.navbar-collapse -->
+                </div><!-- /.container-fluid -->
+            </nav>
 
-        <!-- SINGLE PAGE CONTAINER -->
-        <div ng-view=""></div>
+            <!-- SINGLE PAGE CONTAINER -->
+            <div ng-view=""></div>
 
-        <toaster-container toaster-options="{'post-modification-ready':true, 'position-class': 'toast-bottom-left'}"></toaster-container>
-
-
+            <toaster-container toaster-options="{'post-modification-ready':true, 'position-class': 'toast-bottom-left'}"></toaster-container>
+        </div>
 
     </div>
+
     <footer>
         <div class="container">
             <span class="pull-right">کلیه حقوق این سایت متعلق به شرکت X می باشد.</span>
