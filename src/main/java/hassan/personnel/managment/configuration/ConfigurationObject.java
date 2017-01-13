@@ -4,13 +4,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.PropertySources;
 import org.springframework.core.env.Environment;
 
 /**
  * Created by Hassan on 11/21/2016.
  */
 @Configuration
-@PropertySource(value = "classpath:/appConfig.properties")
+//LOWER PRIORITY
+@PropertySource(value = "classpath:/appConfig.properties", ignoreResourceNotFound = true)
+@PropertySource(value = "classpath:/config/appConfig.properties", ignoreResourceNotFound = true)
+@PropertySource(value = "file:./appConfig.properties", ignoreResourceNotFound = true)
+@PropertySource(value = "file:./config/appConfig.properties", ignoreResourceNotFound = true)
+//HIGHER PRIORITY
 public class ConfigurationObject {
     //One Way
     @Autowired

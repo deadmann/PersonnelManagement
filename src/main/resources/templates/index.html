@@ -48,8 +48,25 @@
 
     <footer>
         <div class="container">
-            <span class="pull-right">کلیه حقوق این سایت متعلق به شرکت {{mctrl.view.copyRightInfo.namePersian}} می باشد.</span>
-            <span class="pull-left">Copyright © <span class="tahoma">{{mctrl.view.copyRightInfo.yearEnglish}}</span> by {{mctrl.view.copyRightInfo.nameEnglish}}. All rights reserved</span>
+            <div ng-if="mctrl.view.copyRightInfo == null">
+                <span style="text-align: center">
+                     در حال بار گذاری اطلاعات حق کپی...
+                </span>
+            </div>
+            <div ng-if="mctrl.view.copyRightInfo != null">
+                <span class="pull-right">
+                    کلیه حقوق این سایت متعلق به شرکت
+                    <span ng-bind="mctrl.view.copyRightInfo.namePersian"></span>
+                    می باشد.
+                </span>
+                <span class="pull-left">
+                    Copyright ©
+                    <span class="tahoma" ng-bind="mctrl.view.copyRightInfo.yearEnglish"></span>
+                    by
+                    <span ng-bind="mctrl.view.copyRightInfo.nameEnglish"></span>
+                    . All rights reserved
+                </span>
+            </div>
         </div>
     </footer>
 
