@@ -3,6 +3,7 @@ package hassan.personnel.managment.rests;
 import com.ibm.icu.util.Calendar;
 import com.ibm.icu.util.ULocale;
 import hassan.personnel.managment.configuration.ConfigurationObject;
+import hassan.personnel.managment.models.dto.CopyRightInfo;
 import hassan.personnel.managment.utility.CalendarHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,17 @@ public class BaseDataController {
     @Autowired
     public BaseDataController(ConfigurationObject configurationObject) {
         this.configurationObject=configurationObject;
+    }
+
+    @RequestMapping(value="/copy-right-info")
+    private ResponseEntity<CopyRightInfo> getCopyRightInfo(){
+        CopyRightInfo cri = new CopyRightInfo();
+        cri.setYearEnglish(configurationObject.getCopyRightYearEnglish());
+        cri.setNameEnglish(configurationObject.getCopyRightNameEnglish());
+        cri.setYearPersian(configurationObject.getCopyRightYearPersian());
+        cri.setNamePersian(configurationObject.getCopyRightNamePersian());
+
+        return ResponseEntity.ok(cri);
     }
 
     @RequestMapping(value = "/start-year", method = RequestMethod.GET)

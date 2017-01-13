@@ -8,5 +8,6 @@ var ModelType;
     ModelType[ModelType["Position"] = 2] = "Position";
     ModelType[ModelType["Wage"] = 3] = "Wage";
     ModelType[ModelType["Work"] = 4] = "Work";
-    ModelType[ModelType["WorkPerDayDto"] = 5] = "WorkPerDayDto";
+    ModelType[ModelType["CopyRightInfo"] = 5] = "CopyRightInfo";
+    ModelType[ModelType["WorkPerDayDto"] = 6] = "WorkPerDayDto";
 })(ModelType || (ModelType = {}));

@@ -1,9 +1,4 @@
-///<reference path="modelType.ts"/>
-///<reference path="../models/entities/buildingVm.ts"/>
-///<reference path="../models/entities/personVm.ts"/>
-///<reference path="../models/entities/positionVm.ts"/>
-///<reference path="../models/entities/wageVm.ts"/>
-///<reference path="../models/entities/workVm.ts"/>
+///<reference path="../innerReferences.ts"/>
 /**
  * Created by Hassan on 11/18/2016.
  */
@@ -43,6 +38,9 @@ var ModelHelper = (function () {
         var building = ModelHelper.toBuilding(obj.building);
         return new WorkVm(obj.id, obj.workPerDay, obj.date, person, building);
     };
+    ModelHelper.toCopyRightInfo = function (obj) {
+        return new CopyRightInfo(obj.yearEnglish, obj.nameEnglish, obj.yearPersian, obj.namePersian);
+    };
     ModelHelper.toWorkPerDayDto = function (obj) {
         return new WorkPerDayDto(obj.id, obj.personId, obj.year, obj.month, obj.day, obj.buildingId, obj.workingHours);
     };
@@ -67,6 +65,9 @@ var ModelHelper = (function () {
                     break;
                 case ModelType.Work:
                     transform = ModelHelper.toWork(obj[i]);
+                    break;
+                case ModelType.CopyRightInfo:
+                    transform = ModelHelper.toCopyRightInfo(obj[i]);
                     break;
                 case ModelType.WorkPerDayDto:
                     transform = ModelHelper.toWorkPerDayDto(obj[i]);

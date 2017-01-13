@@ -1,12 +1,13 @@
 /**
  * Created by Hassan on 11/18/2016.
  */
-enum ModelType{
+enum ModelType {
     Building,
     Person,
     Position,
     Wage,
     Work,
 
+    CopyRightInfo,
     WorkPerDayDto,
 }

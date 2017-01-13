@@ -388,6 +388,19 @@
                 /** @type {WageVm} */
                 var equivalentWage = LesserWageEnumerable.orderByDescending("o=>o.startDate").first();
                 return (work.workPerDay/8) * equivalentWage.price;
+            },
+            /**
+             * postfix for a file
+             * @returns {string}
+             */
+            getFileNamePostfix: function(){
+                var dt = new Date();
+                var day = dt.getDate();
+                var month = dt.getMonth() + 1;
+                var year = dt.getFullYear();
+                var hour = dt.getHours();
+                var minutes = dt.getMinutes();
+                return day + "." + month + "." + year + "_" + hour + "." + minutes;
             }
         };
 
@@ -471,14 +484,7 @@
                     });
             },
             toExcel: function ($event) {
-                //getting values of current time for generating the file name
-                var dt = new Date();
-                var day = dt.getDate();
-                var month = dt.getMonth() + 1;
-                var year = dt.getFullYear();
-                var hour = dt.getHours();
-                var mins = dt.getMinutes();
-                var postfix = day + "." + month + "." + year + "_" + hour + "." + mins;
+                var postfix = self.method.getFileNamePostfix();
 
                 var uri = 'data:application/vnd.ms-excel;base64,'
                     , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><meta charset="utf-8" /><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body style="text-align:center;direction:rtl"><table>{table}</table></body></html>'
@@ -506,6 +512,33 @@
 
                 //just in case, prevent default behaviour
                 $event.preventDefault();
+            },
+            toPrint: function($event){
+                angular.element(".report-content").print();
+            },
+            /**
+             * @file jspdf.debug.js
+             * @see https://github.com/MrRio/jsPDF
+             * @see http://stackoverflow.com/questions/17293135/download-a-div-in-a-html-page-as-pdf-using-javascript
+             * @param $event
+             */
+            toPdf: function($event){
+                var doc = new jsPDF();
+
+                // We'll make our own renderer to skip this editor
+                var specialElementHandlers = {
+                    '#editor': function(element, renderer){
+                        return true;
+                    }
+                };
+
+                // All units are in the set measurement for the document
+                // This can be changed to "pt" (points), "mm" (Default), "cm", "in"
+                doc.fromHTML(angular.element('.report-content').get(0), 15, 15, {
+                    'width': 170,
+                    'elementHandlers': specialElementHandlers
+                });
+                doc.save("report_"+self.method.getFileNamePostfix()+".pdf");
             }
         };
 

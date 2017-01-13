@@ -2,11 +2,20 @@
 jQuery.fn.print = function () {
     // NOTE: We are trimming the jQuery collection down to the
     // first element in the collection.
-    if (this.size() > 1) {
-        this.eq(0).print();
-        return;
-    } else if (!this.size()) {
-        return;
+    if (this.size) { //JQuery 3-
+        if (this.size() > 1) {
+            this.eq(0).print();
+            return;
+        } else if (!this.size()) {
+            return;
+        }
+    } else { // JQuery 3+
+        if (this.length > 1) {
+            this.eq(0).print();
+            return;
+        } else if (!this.length) {
+            return;
+        }
     }
 
     // ASSERT: At this point, we know that the current jQuery
@@ -51,13 +60,14 @@ jQuery.fn.print = function () {
     objDoc.open();
     objDoc.write("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">");
     objDoc.write("<html>");
-    objDoc.write("<body>");
     objDoc.write("<head>");
     objDoc.write("<title>");
     objDoc.write(document.title);
     objDoc.write("</title>");
     objDoc.write(jStyleDiv.html());
     objDoc.write("</head>");
+    objDoc.write("<body>");
+    //objDoc.write(this.html());
     objDoc.write(this.html());
     objDoc.write("</body>");
     objDoc.write("</html>");
@@ -75,4 +85,4 @@ jQuery.fn.print = function () {
         },
         (60 * 1000)
         );
-}
+};

@@ -36,6 +36,9 @@
 body {
   font-family: 'IRANSans' !Important;
 }
+.tahoma {
+  font-family: 'tahoma';
+}
 .no-break {
   white-space: nowrap;
 }

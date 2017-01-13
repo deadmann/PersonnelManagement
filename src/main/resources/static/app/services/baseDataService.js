@@ -10,6 +10,15 @@
             // "param2" : "@param2",
             // "param3" : "@param3"
         },{
+            "getCopyRightInfo": {
+                method: "GET",
+                params:{
+                    param1: "copy-right-info"
+                },
+                transformResult: function (data) {
+                    return ModelHelper.toCopyRightInfo(data);
+                }
+            },
             "getDaysInMonth": {
                 method: "GET",
                 params: {

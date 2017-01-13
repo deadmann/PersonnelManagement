@@ -64,30 +64,149 @@
 
 
 
-    <div class="report-content" ng-if="ctrl.view.mode == ctrl.type.PageMode.VIEW">
-        <div ng-if="ctrl.view.headerSelections.reportType == ctrl.type.ReportType.BY_PERSON">
-            <div class="col-xs-12">
-                <div class="row">
-                    <div class="col-md-4">
-                        <span>از تاریخ:</span>
-                        <span ng-bind="ctrl.view.headerSelections.startDate"></span>
-                    </div>
-                    <div class="col-md-4">
-                        <span>تا:</span>
-                        <span ng-bind="ctrl.view.headerSelections.endDate"></span>
-                    </div>
-                    <div class="col-md-4">
-                        <span>نام پرسنل:</span>
-                        <span ng-bind="(ctrl.view.headerSelections.person.firstname | emptyForNull) + ' ' + (ctrl.view.headerSelections.person.lastname | emptyForNull)"></span>
-                    </div>
-                </div>
+    <div ng-if="ctrl.view.mode == ctrl.type.PageMode.VIEW">
 
-                <table class="report-table table table-striped table-bordered table-condensed table-responsive table-hover">
-                    <thead>
+        <div class="report-content">
+            <style type="text/css" media="print">
+                body {
+                    direction: rtl;
+                    text-align: center;
+                }
+
+                .table-bordered {
+                    width: 100%;
+                    text-align: center;
+                    border-collapse: collapse !important;
+                }
+
+                .table-bordered th,
+                .table-bordered td {
+                    border: 1px solid #ddd !important;
+                }
+
+                .table-bordered {
+                    border: 1px solid #dddddd;
+                    font-size: 11px;
+                }
+
+                .table-bordered > thead > tr > th,
+                .table-bordered > tbody > tr > th,
+                .table-bordered > tfoot > tr > th,
+                .table-bordered > thead > tr > td,
+                .table-bordered > tbody > tr > td,
+                .table-bordered > tfoot > tr > td {
+                    border: 1px solid #dddddd;
+                }
+
+                .table-bordered > thead > tr > th,
+                .table-bordered > thead > tr > td {
+                    border-bottom-width: 2px;
+                }
+
+                .table-bordered th {
+                    text-align: center;
+                    background-color: whitesmoke;
+                    font-weight: bold;
+                    cursor: pointer;
+                }
+            </style>
+
+
+            <div ng-if="ctrl.view.headerSelections.reportType == ctrl.type.ReportType.BY_PERSON">
+                <div class="col-xs-12">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <span>از تاریخ:</span>
+                            <span ng-bind="ctrl.view.headerSelections.startDate"></span>
+                        </div>
+                        <div class="col-md-4">
+                            <span>تا:</span>
+                            <span ng-bind="ctrl.view.headerSelections.endDate"></span>
+                        </div>
+                        <div class="col-md-4">
+                            <span>نام پرسنل:</span>
+                            <span ng-bind="(ctrl.view.headerSelections.person.firstname | emptyForNull) + ' ' + (ctrl.view.headerSelections.person.lastname | emptyForNull)"></span>
+                        </div>
+                    </div>
+
+                    <table class="report-table table table-striped table-bordered table-condensed table-responsive table-hover">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <span>
+                                    پروژه
+                                    </span>
+                                </th>
+                                <th>
+                                    <span>
+                                    کارکرد
+                                    </span>
+                                </th>
+                                <th>
+                                    <span>
+                                    بها
+                                    </span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in ctrl.view.workBuildingsByPerson">
+                                <td>
+                                    <span ng-bind="item.building.name"></span>
+                                </td>
+                                <td>
+                                    <span class="no-break" ng-bind="item.sum|workTime"></span>
+                                </td>
+                                <td>
+                                    <span class="no-break" ng-bind="item.sumMoney|rials"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="color: seagreen;">
+                                    <span>
+                                    مجموع
+                                    </span>
+                                </td>
+                                <td style="color: seagreen;">
+                                    <span class="no-break" ng-bind="ctrl.view.totalSum|workTime"></span>
+                                </td>
+                                <td style="color: seagreen;">
+                                    <span class="no-break" ng-bind="ctrl.view.totalSumMoney|rials"></span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+
+
+
+
+            <div ng-if="ctrl.view.headerSelections.reportType == ctrl.type.ReportType.BY_BUILDING">
+                <div class="col-xs-12">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <span>از تاریخ:</span>
+                            <span ng-bind="ctrl.view.headerSelections.startDate"></span>
+                        </div>
+                        <div class="col-md-4">
+                            <span>تا:</span>
+                            <span ng-bind="ctrl.view.headerSelections.endDate"></span>
+                        </div>
+                        <div class="col-md-4">
+                            <span>نام پروژه:</span>
+                            <span ng-bind="ctrl.view.headerSelections.building.name"></span>
+                        </div>
+                    </div>
+
+                    <table class="report-table table table-striped table-bordered table-condensed table-responsive table-hover">
+                        <thead>
                         <tr>
                             <th>
                                 <span>
-                                پروژه
+                                کارگر
                                 </span>
                             </th>
                             <th>
@@ -101,11 +220,11 @@
                                 </span>
                             </th>
                         </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="item in ctrl.view.workBuildingsByPerson">
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="item in ctrl.view.workPersonsByBuilding">
                             <td>
-                                <span ng-bind="item.building.name"></span>
+                                <span ng-bind="(item.person.firstname|emptyForNull) + ' ' + (item.person.lastname | emptyForNull)"></span>
                             </td>
                             <td>
                                 <span class="no-break" ng-bind="item.sum|workTime"></span>
@@ -117,7 +236,7 @@
                         <tr>
                             <td style="color: seagreen;">
                                 <span>
-                                مجموع
+                                    مجموع
                                 </span>
                             </td>
                             <td style="color: seagreen;">
@@ -127,178 +246,112 @@
                                 <span class="no-break" ng-bind="ctrl.view.totalSumMoney|rials"></span>
                             </td>
                         </tr>
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
 
-            </div>
-        </div>
-
-
-
-
-
-        <div ng-if="ctrl.view.headerSelections.reportType == ctrl.type.ReportType.BY_BUILDING">
-            <div class="col-xs-12">
-                <div class="row">
-                    <div class="col-md-4">
-                        <span>از تاریخ:</span>
-                        <span ng-bind="ctrl.view.headerSelections.startDate"></span>
-                    </div>
-                    <div class="col-md-4">
-                        <span>تا:</span>
-                        <span ng-bind="ctrl.view.headerSelections.endDate"></span>
-                    </div>
-                    <div class="col-md-4">
-                        <span>نام پروژه:</span>
-                        <span ng-bind="ctrl.view.headerSelections.building.name"></span>
-                    </div>
                 </div>
-
-                <table class="report-table table table-striped table-bordered table-condensed table-responsive table-hover">
-                    <thead>
-                    <tr>
-                        <th>
-                            <span>
-                            کارگر
-                            </span>
-                        </th>
-                        <th>
-                            <span>
-                            کارکرد
-                            </span>
-                        </th>
-                        <th>
-                            <span>
-                            بها
-                            </span>
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat="item in ctrl.view.workPersonsByBuilding">
-                        <td>
-                            <span ng-bind="(item.person.firstname|emptyForNull) + ' ' + (item.person.lastname | emptyForNull)"></span>
-                        </td>
-                        <td>
-                            <span class="no-break" ng-bind="item.sum|workTime"></span>
-                        </td>
-                        <td>
-                            <span class="no-break" ng-bind="item.sumMoney|rials"></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="color: seagreen;">
-                            <span>
-                                مجموع
-                            </span>
-                        </td>
-                        <td style="color: seagreen;">
-                            <span class="no-break" ng-bind="ctrl.view.totalSum|workTime"></span>
-                        </td>
-                        <td style="color: seagreen;">
-                            <span class="no-break" ng-bind="ctrl.view.totalSumMoney|rials"></span>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-
             </div>
-        </div>
 
 
 
 
 
 
-        <div ng-if="ctrl.view.headerSelections.reportType == ctrl.type.ReportType.BY_POSITION">
-            <div class="col-xs-12">
-                <div class="row">
-                    <div class="col-md-4">
-                        <span>از تاریخ:</span>
-                        <span ng-bind="ctrl.view.headerSelections.startDate"></span>
+            <div ng-if="ctrl.view.headerSelections.reportType == ctrl.type.ReportType.BY_POSITION">
+                <div class="col-xs-12">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <span>از تاریخ:</span>
+                            <span ng-bind="ctrl.view.headerSelections.startDate"></span>
+                        </div>
+                        <div class="col-md-4">
+                            <span>تا:</span>
+                            <span ng-bind="ctrl.view.headerSelections.endDate"></span>
+                        </div>
+                        <div class="col-md-4">
+                            <span>عنوان سمت:</span>
+                            <span ng-bind="ctrl.view.headerSelections.position.title"></span>
+                        </div>
                     </div>
-                    <div class="col-md-4">
-                        <span>تا:</span>
-                        <span ng-bind="ctrl.view.headerSelections.endDate"></span>
-                    </div>
-                    <div class="col-md-4">
-                        <span>عنوان سمت:</span>
-                        <span ng-bind="ctrl.view.headerSelections.position.title"></span>
-                    </div>
+
+                    <table class="report-table table table-striped table-bordered table-condensed table-responsive table-hover">
+                        <thead>
+                        <tr>
+                            <th>
+                                <span>
+                                کارگر
+                                </span>
+                            </th>
+                            <th ng-repeat="building in ctrl.view.buildingsForWorksByPosition">
+                                <span ng-bind="building.name"></span>
+                            </th>
+                            <th style="color: seagreen;">
+                                <span>
+                                 مجموع
+                                </span>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="item in ctrl.view.workPersonBuildingsByPosition">
+                            <td style="font-weight: bold">
+                                <span ng-bind="(item.person.firstname|emptyForNull) + ' ' +  (item.person.lastname|emptyForNull)"></span>
+                            </td>
+                            <td ng-repeat="building in ctrl.view.buildingsForWorksByPosition">
+                                <span class="no-break"
+                                      ng-bind="ctrl.method.getGroupingByPersonAndBuilding(item.person,building).sum|workTime"></span>
+                                <br/>
+                                <span class="no-break"
+                                      ng-bind="ctrl.method.getGroupingByPersonAndBuilding(item.person,building).sumMoney|rials"></span>
+                            </td>
+                            <td style="color: seagreen;">
+                                <span class="no-break" ng-bind="item.sum|workTime"></span>
+                                <br/>
+                                <span class="no-break" ng-bind="item.sumMoney|rials"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="color: seagreen;font-weight: bold;">
+                                <span>
+                                    مجموع
+                                </span>
+                            </td>
+                            <td style="color: seagreen;"
+                                ng-repeat="building in ctrl.view.buildingsForWorksByPosition">
+                                <span class="no-break"
+                                      ng-bind="ctrl.method.getGroupingByBuilding(building).sum|workTime"></span>
+                                <br/>
+                                <span class="no-break"
+                                      ng-bind="ctrl.method.getGroupingByBuilding(building).sumMoney|rials"></span>
+                            </td>
+                            <td style="color: #d9534f;">
+                                <span class="no-break" ng-bind="ctrl.view.totalSum|workTime"></span>
+                                <br/>
+                                <span class="no-break" ng-bind="ctrl.view.totalSumMoney|rials"></span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
                 </div>
-
-                <table class="report-table table table-striped table-bordered table-condensed table-responsive table-hover">
-                    <thead>
-                    <tr>
-                        <th>
-                            <span>
-                            کارگر
-                            </span>
-                        </th>
-                        <th ng-repeat="building in ctrl.view.buildingsForWorksByPosition">
-                            <span ng-bind="building.name"></span>
-                        </th>
-                        <th style="color: seagreen;">
-                            <span>
-                             مجموع
-                            </span>
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat="item in ctrl.view.workPersonBuildingsByPosition">
-                        <td style="font-weight: bold">
-                            <span ng-bind="(item.person.firstname|emptyForNull) + ' ' +  (item.person.lastname|emptyForNull)"></span>
-                        </td>
-                        <td ng-repeat="building in ctrl.view.buildingsForWorksByPosition">
-                            <span class="no-break"
-                                  ng-bind="ctrl.method.getGroupingByPersonAndBuilding(item.person,building).sum|workTime"></span>
-                            <br/>
-                            <span class="no-break"
-                                  ng-bind="ctrl.method.getGroupingByPersonAndBuilding(item.person,building).sumMoney|rials"></span>
-                        </td>
-                        <td style="color: seagreen;">
-                            <span class="no-break" ng-bind="item.sum|workTime"></span>
-                            <br/>
-                            <span class="no-break" ng-bind="item.sumMoney|rials"></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="color: seagreen;font-weight: bold;">
-                            <span>
-                                مجموع
-                            </span>
-                        </td>
-                        <td style="color: seagreen;"
-                            ng-repeat="building in ctrl.view.buildingsForWorksByPosition">
-                            <span class="no-break"
-                                  ng-bind="ctrl.method.getGroupingByBuilding(building).sum|workTime"></span>
-                            <br/>
-                            <span class="no-break"
-                                  ng-bind="ctrl.method.getGroupingByBuilding(building).sumMoney|rials"></span>
-                        </td>
-                        <td style="color: #d9534f;">
-                            <span class="no-break" ng-bind="ctrl.view.totalSum|workTime"></span>
-                            <br/>
-                            <span class="no-break" ng-bind="ctrl.view.totalSumMoney|rials"></span>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-
             </div>
+
         </div>
-
-
 
 
         <div>
             <div class="col-md-12">
-                <button class="btn btn-default" ng-click="ctrl.event.toExcel($event)">
-                    خروجی اکسل
-                </button>
                 <button class="btn btn-primary" ng-click="ctrl.event.toSelect()">
                     بازگشت
+                </button>
+                <button class="btn btn-default" ng-click="ctrl.event.toExcel($event)">
+                    خروجی Excel
+                </button>
+                <!--<button class="btn btn-default" ng-click="ctrl.event.toPdf($event)">
+                    خروجی PDF
+                </button>-->
+                <button class="btn btn-default" ng-click="ctrl.event.toPrint($event)">
+                    Print
                 </button>
             </div>
         </div>

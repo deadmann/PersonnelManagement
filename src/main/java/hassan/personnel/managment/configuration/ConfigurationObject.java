@@ -24,7 +24,23 @@ public class ConfigurationObject {
     @Value("${application.start-year}")
     private int startYear;
 
+    @Value("${application.copyright.en.year}")
+    private String copyRightYearEnglish;
+
+    @Value("${application.copyright.en.name}")
+    private String copyRightNameEnglish;
+
+    @Value("${application.copyright.fa.year}")
+    private String copyRightYearPersian;
+
+    @Value("${application.copyright.fa.name}")
+    private String copyRightNamePersian;
+
     public int getStartYear() {
         return startYear;
     }
+    public String getCopyRightYearEnglish(){return copyRightYearEnglish;}
+    public String getCopyRightNameEnglish(){return copyRightNameEnglish;}
+    public String getCopyRightYearPersian(){return copyRightYearPersian;}
+    public String getCopyRightNamePersian(){return copyRightNamePersian;}
 }
