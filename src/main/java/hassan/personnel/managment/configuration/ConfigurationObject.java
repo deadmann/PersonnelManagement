@@ -12,10 +12,10 @@ import org.springframework.core.env.Environment;
  */
 @Configuration
 //LOWER PRIORITY
-@PropertySource(value = "classpath:/appConfig.properties", ignoreResourceNotFound = true)
-@PropertySource(value = "classpath:/config/appConfig.properties", ignoreResourceNotFound = true)
-@PropertySource(value = "file:./appConfig.properties", ignoreResourceNotFound = true)
-@PropertySource(value = "file:./config/appConfig.properties", ignoreResourceNotFound = true)
+@PropertySource(value = "classpath:/appConfig.properties", encoding = "UTF-8")
+@PropertySource(value = "classpath:/config/appConfig.properties", ignoreResourceNotFound = true, encoding = "UTF-8")
+@PropertySource(value = "file:./appConfig.properties", ignoreResourceNotFound = true, encoding = "UTF-8")
+@PropertySource(value = "file:./config/appConfig.properties", ignoreResourceNotFound = true, encoding = "UTF-8")
 //HIGHER PRIORITY
 public class ConfigurationObject {
     //One Way
