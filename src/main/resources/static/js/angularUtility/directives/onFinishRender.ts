@@ -14,7 +14,11 @@ module AngularUtility {
 
     export interface IFinishRenderAttributes extends ng.IAttributes {
         commandName: string;
+        dataCommandName: string;
         modelObject: any;
+        dataModelObject: any;
+        onRepeaterFinishRender:string;
+        dataOnRepeaterFinishRender:string;
     }
 
     // export interface IDatePickerScope extends ng.IScope {
@@ -40,13 +44,23 @@ module AngularUtility {
 
             this.link = function (scope: IRepeatScope, element: IAugmentedJQuery, attrs: IFinishRenderAttributes) {
                 if (scope.$last === true) {
-                    $timeout(function () {
-                        var commandName = attrs.commandName;
-                        var modelObject = scope.$eval(attrs.modelObject);
+                    this.$timeout(function () {
+                        //Get Command Name
+                        var commandName = (attrs.commandName!= undefined)?attrs.commandName:attrs.dataCommandName;
+                        //Get Model Object
+                        var modelObjectAttr = (attrs.modelObject!=undefined)?attrs.modelObject:attrs.dataModelObject;
+                        var modelObject = scope.$eval(modelObjectAttr);
+                        //Get Emit Name
+                        var emitName = 'onRepeaterFinishRender';
+                        if(attrs.onRepeaterFinishRender != undefined || attrs.onRepeaterFinishRender!=null){
+                            emitName = attrs.onRepeaterFinishRender;
+                        }else if(attrs.dataOnRepeaterFinishRender != undefined || attrs.dataOnRepeaterFinishRender!=null){
+                            emitName = attrs.dataOnRepeaterFinishRender;
+                        }
 
                         var repeatFinishedArgs = new RepeaterFinishedArguments(commandName, modelObject, element[0], attrs);
 
-                        scope.$emit('ngRepeatFinished', repeatFinishedArgs);
+                        scope.$emit(emitName, repeatFinishedArgs);
                     });
                 }
             }
@@ -61,6 +75,6 @@ module AngularUtility {
     }
 
     angular.module("angularUtility")
-        .directive("onRepeaterFinishRender", OnRepeaterFinishRender.instance)
-        .directive("dataOnRepeaterFinishRender", OnRepeaterFinishRender.instance);
+        .directive("onRepeaterFinishRender", <any>OnRepeaterFinishRender.instance())
+        .directive("dataOnRepeaterFinishRender", <any>OnRepeaterFinishRender.instance());
 }
