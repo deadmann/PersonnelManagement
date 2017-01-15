@@ -128,6 +128,26 @@ Number.prototype.padLeft = function (len, sign) {
 Number.prototype.putThousandComma = function () {
     return this.toString().putThousandComma();
 };
+Date.prototype.getDayName = function () {
+    switch (this.getDay()) {
+        case 0:
+            return "Sunday";
+        case 1:
+            return "Monday";
+        case 2:
+            return "Tuesday";
+        case 3:
+            return "Wednesday";
+        case 4:
+            return "Thursday";
+        case 5:
+            return "Friday";
+        case 6:
+            return "Saturday";
+        default:
+            throw new Error("Day Out Of Range Exception");
+    }
+};
 /**
  * Find item using Match function.
  * @param searchItem {*} item we use to match data
