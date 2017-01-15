@@ -244,6 +244,59 @@ interface Array<T> {
      * @returns {*[]} returns Deleted Items
      */
     replace: (searchItem: T, replaceWith: T, fnMatch:Function, replaceOption:IterationOption|IterationOptionString)=>Array<T>;
+    //Since We Have Overloaded These Function, The Other Way of Defining Method, Doesn't Works for These Types
+    /**
+     * Add an Item to the End of This Array
+     * @param item {*}
+     * @returns {void}
+     */
+    addToEnd(item:T):void;
+    /**
+     * Add an Item to the begin of This Array
+     * @param item {*}
+     * @returns {void}
+     */
+    addToBegin(item:T):void;
+    /**
+     * Add an Item to the End of This Array While Modifying the Item
+     * @param item {*}
+     * @param fnConvert {Function} Provide a Method That Modify Object Inside Itself
+     * @returns {void}
+     */
+    addToEnd(item:T, fnConvert:Function):void;
+    /**
+     * Add an Item to the begin of This Array While Modifying the Item
+     * @param item {*}
+     * @param fnConvert {Function} Provide a Method That Modify Object Inside Itself
+     * @returns {void}
+     */
+    addToBegin(item:T, fnConvert:Function):void;
+    /**
+     * Add Another Array Of Items to the End of This Array
+     * @param items {Array<*>}
+     * @returns {void}
+     */
+    addRangeToEnd(items:Array<T>):void;
+    /**
+     * Add Another Array Of Items to the begin of This Array
+     * @param items {Array<*>}
+     * @returns {void}
+     */
+    addRangeToBegin(items:Array<T>):void;
+    /**
+     * Add Another Array Of Items to the End of This Array While Modifying Its Item
+     * @param items {Array<*>}
+     * @param fnConvert {Function} Provide a Method That Modify Object Inside Itself
+     * @returns {void}
+     */
+    addRangeToEnd(items:Array<T>, fnConvert:Function):void;
+    /**
+     * Add Another Array Of Items to the begin of This Array While Modifying Its Item
+     * @param items {Array<*>}
+     * @param fnConvert {Function} Provide a Method That Modify Object Inside Itself
+     * @returns {void}
+     */
+    addRangeToBegin(items:Array<T>, fnConvert:Function):void;
 }
 
 /**
@@ -309,6 +362,66 @@ Array.prototype.remove=function <T>(searchItem: T, fnMatch?:Function, removeOpti
  */
 Array.prototype.replace=function <T>(searchItem: T, replaceWith:T, fnMatch?:Function, replaceOption:IterationOption|IterationOptionString='first'):Array<T> {
     return Util.Utility.replace(this, searchItem, replaceWith, fnMatch, replaceOption);
+};
+
+/**
+ * Add Another Array Of Items to the End of This Array While Modifying Its Item
+ * @param items {Array<*>} New List of Items
+ * @param fnConvert {Function?} If Provided, Can Be Used to Modify Object Within the Provided Method
+ * @returns {void}
+ */
+Array.prototype.addRangeToBegin=function<T>(items:Array<T>, fnConvert?:Function):void {
+    for (var i = items.length - 1; i >= 0; i--) {
+        this.unshift(
+            (fnConvert != undefined)
+                ? fnConvert(items[i])
+                : items[i]
+        );
+    }
+};
+
+/**
+ * Add Another Array Of Items to the begin of This Array While Modifying Its Item
+ * @param items {Array<*>} New List of Items
+ * @param fnConvert {Function?} If Provided, Can Be Used to Modify Object Within the Provided Method
+ * @returns {void}
+ */
+Array.prototype.addRangeToEnd=function <T>(items:Array<T>, fnConvert?:Function):void {
+    for (var i = items.length - 1; i >= 0; i--) {
+        this.push(
+            (fnConvert != undefined)
+                ? fnConvert(items[i])
+                : items[i]
+        );
+    }
+};
+
+/**
+ * Add an Item to the End of This Array While Modifying the Item
+ * @param item {*} The New Item
+ * @param fnConvert {Function?} If Provided, Can Be Used to Modify Object Within the Provided Method
+ * @returns {void}
+ */
+Array.prototype.addRangeToBegin=function<T>(item:T, fnConvert?:Function):void {
+    this.unshift(
+        (fnConvert != undefined)
+            ? fnConvert(item)
+            : item
+    );
+};
+
+/**
+ * Add an Item to the begin of This Array While Modifying Its Item
+ * @param item {*} New List of Items
+ * @param fnConvert {Function?} If Provided, Can Be Used to Modify Object Within the Provided Method
+ * @returns {void}
+ */
+Array.prototype.addRangeToEnd=function <T>(item:T, fnConvert?:Function):void {
+    this.push(
+        (fnConvert != undefined)
+            ? fnConvert(item)
+            : item
+    );
 };
 
 //// Add To Extensions

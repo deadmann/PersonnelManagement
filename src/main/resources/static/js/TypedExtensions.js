@@ -189,6 +189,54 @@ Array.prototype.replace = function (searchItem, replaceWith, fnMatch, replaceOpt
     if (replaceOption === void 0) { replaceOption = 'first'; }
     return Util.Utility.replace(this, searchItem, replaceWith, fnMatch, replaceOption);
 };
+/**
+ * Add Another Array Of Items to the End of This Array While Modifying Its Item
+ * @param items {Array<*>} New List of Items
+ * @param fnConvert {Function?} If Provided, Can Be Used to Modify Object Within the Provided Method
+ * @returns {void}
+ */
+Array.prototype.addRangeToBegin = function (items, fnConvert) {
+    for (var i = items.length - 1; i >= 0; i--) {
+        this.unshift((fnConvert != undefined)
+            ? fnConvert(items[i])
+            : items[i]);
+    }
+};
+/**
+ * Add Another Array Of Items to the begin of This Array While Modifying Its Item
+ * @param items {Array<*>} New List of Items
+ * @param fnConvert {Function?} If Provided, Can Be Used to Modify Object Within the Provided Method
+ * @returns {void}
+ */
+Array.prototype.addRangeToEnd = function (items, fnConvert) {
+    for (var i = items.length - 1; i >= 0; i--) {
+        this.push((fnConvert != undefined)
+            ? fnConvert(items[i])
+            : items[i]);
+    }
+};
+/**
+ * Add an Item to the End of This Array While Modifying the Item
+ * @param item {*} The New Item
+ * @param fnConvert {Function?} If Provided, Can Be Used to Modify Object Within the Provided Method
+ * @returns {void}
+ */
+Array.prototype.addRangeToBegin = function (item, fnConvert) {
+    this.unshift((fnConvert != undefined)
+        ? fnConvert(item)
+        : item);
+};
+/**
+ * Add an Item to the begin of This Array While Modifying Its Item
+ * @param item {*} New List of Items
+ * @param fnConvert {Function?} If Provided, Can Be Used to Modify Object Within the Provided Method
+ * @returns {void}
+ */
+Array.prototype.addRangeToEnd = function (item, fnConvert) {
+    this.push((fnConvert != undefined)
+        ? fnConvert(item)
+        : item);
+};
 //// Add To Extensions
 //// ReSharper disable once NativeTypePrototypeExtending
 //String.prototype.toDate = function () {
