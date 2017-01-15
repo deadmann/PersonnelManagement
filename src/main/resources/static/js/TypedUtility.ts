@@ -6,12 +6,22 @@
 module Util {
     export class Utility {
         //noinspection JSUnusedGlobalSymbols
+        /**
+         * Returns False If Incoming Variable Is Not Null or Undefined, Otherwise True
+         * @param obj {object}
+         * @returns {boolean}
+         */
         public static isNullOrUndefined(obj:Object):boolean {
             //return obj == null //juggling-check
             return typeof obj === 'undefined' || obj === null; //strict-check
         }
 
         //noinspection JSUnusedGlobalSymbols
+        /**
+         * Returns False If Incoming Variable Contains Data, Otherwise True
+         * @param obj {object}
+         * @returns {boolean}
+         */
         public static isNullOrUndefinedOrEmpty(obj:Object):boolean {
             if (Utility.isNullOrUndefined(obj))
                 return true;
@@ -25,36 +35,39 @@ module Util {
         }
 
         //noinspection JSUnusedGlobalSymbols
+        /**
+         * Returns False If Incoming Variable Contains Some Non-Whitespace Data, Otherwise True
+         * @param obj {object}
+         * @returns {boolean}
+         */
         public static isNullOrUndefinedOrWhiteSpace(obj:Object):boolean {
             return Utility.isNullOrUndefined(obj) || (<String>obj).valueOf().trim() === "";
         }
 
         //noinspection JSUnusedGlobalSymbols
+        /**
+         * Returns True If the Object Contains a Numeric Value
+         * @param obj {*} The Incoming Object
+         * @returns {boolean}
+         */
         public static isNumeric(obj:any) {
             //From JQuery
             return !isNaN(parseFloat(obj)) && isFinite(obj);
         }
 
         //noinspection JSUnusedGlobalSymbols
-        public static tryParseInt(str:any, defaultValue:any) {
+        /**
+         * Try parse incoming value to Integer
+         * @param value {*} the value to parse
+         * @param defaultValue {*} value to return in case nothing is parsed
+         * @returns {number} If parsed returns the parsed value, otherwise returns the default value
+         */
+        public static tryParseInt(value:any, defaultValue:any) {
             var retValue = defaultValue;
-            if (str !== null) {
-                if (str.length > 0) {
-                    if (!isNaN(str)) {
-                        retValue = parseInt(str);
-                    }
-                }
-            }
-            return retValue;
-        }
-
-        //noinspection JSUnusedGlobalSymbols
-        public static tryParseFloat(str:any, defaultValue:any) {
-            var retValue = defaultValue;
-            if (str !== null) {
-                if (str.length > 0) {
-                    if (!isNaN(str)) {
-                        retValue = parseFloat(str);
+            if (value !== null) {
+                if (value.length > 0) {
+                    if (!isNaN(value)) {
+                        retValue = parseInt(value);
                     }
                 }
             }
@@ -63,9 +76,28 @@ module Util {
 
         //noinspection JSUnusedGlobalSymbols
         /**
-         * Compare two string return 0 if both are equal, 1 if first one is greater, and -1 if second one is greater
-         * @param string1
-         * @param string2
+         * Try parse incoming value to float
+         * @param value {*} the value to parse
+         * @param defaultValue {*} value to return in case nothing is parsed
+         * @returns {number} If parsed returns the parsed value, otherwise returns the default value
+         */
+        public static tryParseFloat(value:any, defaultValue:any) {
+            var retValue = defaultValue;
+            if (value !== null) {
+                if (value.length > 0) {
+                    if (!isNaN(value)) {
+                        retValue = parseFloat(value);
+                    }
+                }
+            }
+            return retValue;
+        }
+
+        //noinspection JSUnusedGlobalSymbols
+        /**
+         * Compare two string in enUs Local, return 0 if both are equal, 1 if first one is greater, and -1 if second one is greater
+         * @param string1 {string}
+         * @param string2 {string}
          */
         public static compareString(string1:string, string2:string):number{
             if(this.isNullOrUndefined(string1))
@@ -164,6 +196,11 @@ module Util {
         }
 
         //noinspection JSUnusedGlobalSymbols
+        /**
+         * Iterate Per Item Within The Provided Array
+         * @param arr {*}
+         * @param callBack {Function} This Function Will Be Called Per Item While Iterating
+         */
         public static forEach(arr:Array<any>, callBack:Function) {
             for (var i = 0; i < arr.length; i++) {
                 callBack(arr[i]);
@@ -171,6 +208,11 @@ module Util {
         }
 
         //noinspection JSUnusedGlobalSymbols
+        /**
+         * Returns True If The Array Contains Duplicated Items
+         * @param arr {Array<*>}
+         * @returns {boolean}
+         */
         public static hasDuplicates(arr:Array<any>) {
             var x = {}, len = arr.length;
             for (var i = 0; i < len; i++) {
@@ -183,6 +225,11 @@ module Util {
         }
 
         //noinspection JSUnusedGlobalSymbols
+        /**
+         * Returns False If The Array Contains Duplicated Items
+         * @param arr {Array<*>}
+         * @returns {boolean}
+         */
         public static isDistinct(arr:Array<any>) {
             return !Utility.hasDuplicates(arr);
         }
@@ -320,11 +367,27 @@ module Util {
             return str.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
         }
 
+        /**
+         * Convert Incoming Data to Date, or Return it, if it Already is a Date Object
+         * @param date {number|string|Date}
+         */
+        public static toDate(date:number|string|Date):Date{
+            if(typeof date === 'number'){
+                return new Date(date);
+            } else if (typeof date === 'string'){
+                return new Date(date)
+            } else if (date instanceof Date){
+                return date;
+            } else {
+                throw new Error("Incoming 'date' Object, Is Not Convertible To Type 'Date'");
+            }
+        }
+
         //noinspection JSUnusedGlobalSymbols
         /**
          * Turn String To Numerical Data, and Compare It, 0 if equal, 1 if first is greater, -1 if second is greater
-         * @param date1
-         * @param date2
+         * @param date1 {string}
+         * @param date2 {string}
          * @returns {number}
          */
         public static compareDates(date1:string, date2:string):number {
@@ -336,8 +399,46 @@ module Util {
         }
 
         //noinspection JSUnusedGlobalSymbols
+        /**
+         * Return True if Provided Date String Is Between Of Two Other Dates
+         * @param date {string}
+         * @param startDate {string}
+         * @param endDate {string}
+         * @returns {boolean}
+         */
         public static isBetweenDates(date:string, startDate:string, endDate:string):boolean {
             return (this.compareDates(date, startDate) >= 0 && this.compareDates(date, endDate) <= 0);
+        }
+
+        //noinspection JSUnusedGlobalSymbols
+        /**
+         * Get Differences Between Two Dates
+         * @param date1 {string|number|Date}
+         * @param date2 {string|number|Date}
+         * @param by {DateDifferencesType}
+         */
+        public static getDateDifferences(date1:string|number|Date, date2:string|number|Date, by:DateDifferencesType){
+            var d1=this.toDate(date1);
+            var d2=this.toDate(date2);
+
+            var timeDiff = Math.abs(d1.getTime() - d2.getTime());
+            switch (by){
+                case DateDifferencesType.Milliseconds:
+                    return timeDiff;
+                case DateDifferencesType.Seconds:
+                    return Math.ceil(timeDiff/1000);
+                case DateDifferencesType.Minutes:
+                    return Math.ceil(timeDiff/(1000*60));
+                case DateDifferencesType.Hours:
+                    return Math.ceil(timeDiff/(1000*3600));
+                case DateDifferencesType.Days:
+                    return Math.ceil(timeDiff / (1000 * 3600 * 24));
+                case DateDifferencesType.Weeks:
+                    return Math.ceil(timeDiff / (1000 * 3600 * 24 * 7));
+                default:
+                    throw new Error("Not Implemented Exception")
+            }
+
         }
 
         //noinspection JSUnusedGlobalSymbols

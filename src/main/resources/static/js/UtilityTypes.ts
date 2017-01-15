@@ -7,3 +7,14 @@ enum IterationOption{
     Last,
     All
 }
+
+enum DateDifferencesType{
+    Milliseconds,
+    Seconds,
+    Minutes,
+    Hours,
+    Days,
+    Weeks,
+    Months,
+    Years,
+}
