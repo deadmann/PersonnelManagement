@@ -1,4 +1,5 @@
-///<reference path="../models/datePickerConfig.ts"/>
+///<reference path="../innerReferences.ts"/>
+///<reference path="../outerReferences.ts"/>
 /**
  * Created by Hassan on 12/6/2016.
  */

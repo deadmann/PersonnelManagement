@@ -7,6 +7,9 @@ app.directive('ncgRequestVerificationToken', ['$http', function ($http) {
     };
 }]);
 
+
+
+
 app.filter('jalaliDate', function () {
     return function (inputDate, format) {
         var date = moment(inputDate);

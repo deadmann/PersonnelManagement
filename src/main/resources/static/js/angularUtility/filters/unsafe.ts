@@ -14,5 +14,6 @@ module AngularUtility {
     unsafeFilter.$inject = ['$sce'];
 
     angular.module("angularUtility")
-        .filter("unsafe", unsafeFilter);
+        .filter("unsafe", unsafeFilter)
+        .filter("trustAsHtml", unsafeFilter);
 }

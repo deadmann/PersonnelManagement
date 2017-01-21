@@ -1,5 +1,6 @@
-//Since we use indexed typings files, we don't have to reference them.
-//->Add Here
+///<reference path="../../typings/index.d.ts"/>
+///<reference path="../TypedUtility.ts"/>
+///<reference path="../TypedExtensions.ts"/>
 
 /**
  * Created by Hassan on 1/1/2017.
