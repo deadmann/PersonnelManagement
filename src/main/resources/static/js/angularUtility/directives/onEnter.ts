@@ -13,7 +13,7 @@ module AngularUtility {
 
     export interface IEnterAttributes extends ng.IAttributes {
         onEnter: string;
-        dataOnEnter
+        dataOnEnter: string;
     }
 
     // export interface IDatePickerScope extends ng.IScope {
@@ -39,7 +39,7 @@ module AngularUtility {
 
             this.link = function (scope: IRepeatScope, element: IAugmentedJQuery, attrs: IEnterAttributes) {
                 element.on("keydown keypress", function (event) {//bind -> Deprecated on version 3.0
-                    if (event.which === 13) {
+                    if (event.which === 13 && !event.altKey && !event.ctrlKey && !event.shiftKey) {
                         scope.$apply(function () {
                             var req = (!Util.Utility.isNullOrUndefined(attrs.onEnter))? attrs.onEnter : attrs.dataOnEnter;
                             scope.$eval(req);

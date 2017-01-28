@@ -46,6 +46,7 @@ interface String {
     putThousandComma:()=> string;
     removeThousandComma:()=> string;
     filterNumbers:()=> string;
+    removeHtmlTags:()=>string;
 }
 
 String.prototype.insertAt=function(index: number, strText: string):string {
@@ -169,6 +170,10 @@ String.prototype.removeThousandComma = function():string {
 
 String.prototype.filterNumbers = function():string {
     return this.replace(/\D/g, '');
+};
+
+String.prototype.removeHtmlTags = function():string {
+    return Util.Utility.removeHtmlTags(this);
 };
 //Static Methods//
 //String["format"] = function(format: string, params: Array<string>):string {

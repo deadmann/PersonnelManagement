@@ -361,10 +361,20 @@ module Util {
         /**
          * Escape a regex string
          * @param str
-         * @return {*|string|void|ILocationService}
+         * @return {*|string|void}
          */
         public static escapeRegExp(str) {
             return str.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
+        }
+
+        //noinspection JSUnusedGlobalSymbols
+        /**
+         * Removing All Html Code From String, Replacing Html Tags With Spaces
+         * @param htmlStr
+         * @returns {*|string|void}
+         */
+        public static removeHtmlTags(htmlStr){
+            return htmlStr.replace(/<\/?[^>]+(>|$)/g, " ");
         }
 
         /**

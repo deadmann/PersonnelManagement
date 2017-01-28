@@ -354,10 +354,19 @@ var Util;
         /**
          * Escape a regex string
          * @param str
-         * @return {*|string|void|ILocationService}
+         * @return {*|string|void}
          */
         Utility.escapeRegExp = function (str) {
             return str.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
+        };
+        //noinspection JSUnusedGlobalSymbols
+        /**
+         * Removing All Html Code From String, Replacing Html Tags With Spaces
+         * @param htmlStr
+         * @returns {*|string|void}
+         */
+        Utility.removeHtmlTags = function (htmlStr) {
+            return htmlStr.replace(/<\/?[^>]+(>|$)/g, " ");
         };
         /**
          * Convert Incoming Data to Date, or Return it, if it Already is a Date Object

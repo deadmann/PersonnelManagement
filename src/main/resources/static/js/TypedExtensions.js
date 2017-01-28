@@ -118,6 +118,9 @@ String.prototype.removeThousandComma = function () {
 String.prototype.filterNumbers = function () {
     return this.replace(/\D/g, '');
 };
+String.prototype.removeHtmlTags = function () {
+    return Util.Utility.removeHtmlTags(this);
+};
 Number.prototype.padLeft = function (len, sign) {
     if (isNaN(this))
         return "NaN";

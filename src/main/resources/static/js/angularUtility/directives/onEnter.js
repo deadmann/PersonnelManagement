@@ -21,7 +21,7 @@ var AngularUtility;
             // };
             this.link = function (scope, element, attrs) {
                 element.on("keydown keypress", function (event) {
-                    if (event.which === 13) {
+                    if (event.which === 13 && !event.altKey && !event.ctrlKey && !event.shiftKey) {
                         scope.$apply(function () {
                             var req = (!Util.Utility.isNullOrUndefined(attrs.onEnter)) ? attrs.onEnter : attrs.dataOnEnter;
                             scope.$eval(req);

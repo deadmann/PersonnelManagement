@@ -16,5 +16,5 @@ enum DateDifferencesType{
     Days,
     Weeks,
     Months,
-    Years
+    Years,
 }
