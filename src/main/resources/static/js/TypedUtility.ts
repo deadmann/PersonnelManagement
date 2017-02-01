@@ -313,6 +313,76 @@ module Util {
             return -1;
         }
 
+        /**
+         * Generate a Shallow Copy Array from Existing Array
+         * @param list {Array<T>}
+         * @returns {Array<T>}
+         */
+        public static copyArray<T>(list: Array<T>):Array<T>{
+            var copyList:Array<T>=[];
+            for(var i = 0; i < list.length; i++)
+                copyList.push(list[i]);
+
+            return copyList;
+        }
+
+        /**
+         * Generate a Shallow Copy Array from Existing Array
+         * @param list {Array<T>} items will copy from this array
+         * @param target {Array<T>} items will copy to this array
+         * @returns {Array<T>}
+         */
+        public static copyArrayTo<T>(list: Array<T>, target: Array<T>){
+            target.length = 0; //Clear array by reference ... said to work, not sure...
+            for(var i = 0; i < list.length; i++)
+                target.push(list[i]);
+        }
+
+        /**
+         * Returns an Unordered Array From Given Array
+         * Need to get fixed, Relies on Heavy functions O^2
+         * @param list {Array<T>}
+         * @returns {Array<T>}
+         */
+        public static shuffleItems<T>(list:Array<T>):Array<T> {
+            var copyList = this.copyArray(list);
+            var newList:Array<T> = [];
+            do {
+                var randomIndex = this.getRandomInt(0, copyList.length);
+                newList.push(copyList[randomIndex]);
+
+                this.remove(copyList, copyList[randomIndex], null, IterationOption.First);
+            } while (copyList.length > 0);
+
+            return newList;
+        }
+
+        /**
+         * Same as shuffleItems
+         * Maybe less Accurate, And So Light Weight O
+         * @param list
+         * @returns {Array<T>}
+         */
+        public static shuffleItems2<T>(list:Array<T>):Array<T>{
+            var copyArray:Array<T>=this.copyArray(list);
+            var currentIndex = copyArray.length, temporaryValue, randomIndex;
+
+            // While there remain elements to shuffle...
+            while (0 !== currentIndex) {
+
+                // Pick a remaining element...
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex -= 1;
+
+                // And swap it with the current element.
+                temporaryValue = copyArray[currentIndex];
+                copyArray[currentIndex] = copyArray[randomIndex];
+                copyArray[randomIndex] = temporaryValue;
+            }
+
+            return copyArray;
+        }
+
         //noinspection JSUnusedGlobalSymbols
         /**
          * Padding desired value with specified character
@@ -763,6 +833,48 @@ module Util {
                 g: parseInt(result[2], 16),
                 b: parseInt(result[3], 16)
             } : null;
+        }
+
+        /**
+         * Getting a random number between 0 and 1, inclusive
+         * @returns {number}
+         */
+        public static getRandom() {
+            return Math.random();
+        }
+
+        /**
+         * Getting a random number between two values
+         * @param min
+         * @param max
+         * @returns {any}
+         */
+        public static getRandomArbitrary(min, max) {
+            return Math.random() * (max - min) + min;
+        }
+
+        /**
+         * Getting a random integer between two values
+         * @param min
+         * @param max
+         * @returns {any}
+         */
+        public static getRandomInt(min, max) {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            return Math.floor(Math.random() * (max - min)) + min;
+        }
+
+        /**
+         * Getting a random integer between two values, inclusive
+         * @param min
+         * @param max
+         * @returns {any}
+         */
+        public static getRandomIntInclusive(min, max) {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            return Math.floor(Math.random() * (max - min + 1)) + min;
         }
 
         //noinspection JSUnusedGlobalSymbols

@@ -213,6 +213,41 @@ Array.prototype.replace = function (searchItem, replaceWith, fnMatch, replaceOpt
     return Util.Utility.replace(this, searchItem, replaceWith, fnMatch, replaceOption);
 };
 /**
+ * Return a Shallow Copy From `this` Array
+ * @returns {Array<any>}
+ */
+Array.prototype.copyArray = function () {
+    return Util.Utility.copyArray(this);
+};
+/**
+ * Shallow Copy Items of Given Array to `this` Array
+ * @param sourceArray
+ */
+Array.prototype.copyArrayFrom = function (sourceArray) {
+    Util.Utility.copyArrayTo(sourceArray, this);
+};
+/**
+ * Shallow Copy Items of `this` Array to The Given Array
+ * @param targetArray
+ */
+Array.prototype.copyArrayTo = function (targetArray) {
+    Util.Utility.copyArrayTo(this, targetArray);
+};
+/**
+ * Returns Unordered List of Items
+ * Relays on Heavy Functions O^2
+ */
+Array.prototype.shuffleItems = function () {
+    return Util.Utility.shuffleItems(this);
+};
+/**
+ * Returns Unordered List of Items
+ * Maybe Less Accurate, And So Lightweight O
+ */
+Array.prototype.shuffleItems2 = function () {
+    return Util.Utility.shuffleItems2(this);
+};
+/**
  * Add Another Array Of Items to the End of This Array While Modifying Its Item
  * @param items {Array<*>} New List of Items
  * @param fnConvert {Function?} If Provided, Can Be Used to Modify Object Within the Provided Method

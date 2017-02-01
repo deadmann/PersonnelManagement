@@ -268,7 +268,7 @@ interface Array<T> {
      * @param removeOption {IterationOption|IterationOptionString} can be either of enum IterationOption or one of following values 'first' (default), 'last', 'all'
      * @returns {*[]} returns Deleted Items
      */
-    remove: (searchItem: T, fnMatch:Function, removeOption:IterationOption|IterationOptionString)=>Array<T>;
+    remove: <TY>(searchItem: TY, fnMatch:Function, removeOption:IterationOption|IterationOptionString)=>Array<T>;
     /**
      * Replace Item Inside Array, And Returns List Of Deleted Items
      * @param searchItem {*} item we use to match data
@@ -277,7 +277,31 @@ interface Array<T> {
      * @param replaceOption {IterationOption|IterationOptionString} can be either of enum IterationOption or one of following values 'first' (default), 'last', 'all'
      * @returns {*[]} returns Deleted Items
      */
-    replace: (searchItem: T, replaceWith: T, fnMatch:Function, replaceOption:IterationOption|IterationOptionString)=>Array<T>;
+    replace: <TY>(searchItem: TY, replaceWith: T, fnMatch:Function, replaceOption:IterationOption|IterationOptionString)=>Array<T>;
+    /**
+     * Return a Shallow Copy From `this` Array
+     */
+    copyArray: ()=>Array<T>;
+    /**
+     * Shallow Copy Items of Given Array to `this` Array
+     * @param sourceArray
+     */
+    copyArrayFrom: (sourceArray: Array<T>)=>void;
+    /**
+     * Shallow Copy Items of `this` Array to The Given Array
+     * @param targetArray
+     */
+    copyArrayTo: (targetArray: Array<T>)=>void;
+    /**
+     * Returns Unordered List of Items
+     * Relays on Heavy Functions
+     */
+    shuffleItems:()=>Array<T>;
+    /**
+     * Returns Unordered List of Items
+     * Maybe Less Accurate, And So Lightweight
+     */
+    shuffleItems2:()=>Array<T>;
     //Since We Have Overloaded These Function, The Other Way of Defining Method, Doesn't Works for These Types
     /**
      * Add an Item to the End of This Array
@@ -382,7 +406,7 @@ Array.prototype.lastIndexOfMatch = function<TY>(searchItem: TY, fnMatch?:Functio
  * @param removeOption {IterationOption|IterationOptionString} can be either of enum IterationOption or one of following values 'first' (default), 'last', 'all'
  * @returns {*[]} returns Deleted Items
  */
-Array.prototype.remove=function <T>(searchItem: T, fnMatch?:Function, removeOption:IterationOption|IterationOptionString='first'):Array<T> {
+Array.prototype.remove=function <TY, T>(searchItem: TY, fnMatch?:Function, removeOption:IterationOption|IterationOptionString='first'):Array<T> {
     return Util.Utility.remove(this, searchItem, fnMatch, removeOption);
 };
 
@@ -394,10 +418,45 @@ Array.prototype.remove=function <T>(searchItem: T, fnMatch?:Function, removeOpti
  * @param replaceOption {IterationOption|IterationOptionString} can be either of enum IterationOption or one of following values 'first' (default), 'last', 'all'
  * @returns {*[]} returns Deleted Items
  */
-Array.prototype.replace=function <T>(searchItem: T, replaceWith:T, fnMatch?:Function, replaceOption:IterationOption|IterationOptionString='first'):Array<T> {
+Array.prototype.replace=function <TY, T>(searchItem: TY, replaceWith:T, fnMatch?:Function, replaceOption:IterationOption|IterationOptionString='first'):Array<T> {
     return Util.Utility.replace(this, searchItem, replaceWith, fnMatch, replaceOption);
 };
 
+/**
+ * Return a Shallow Copy From `this` Array
+ * @returns {Array<any>}
+ */
+Array.prototype.copyArray=function <T>():Array<T> {
+    return Util.Utility.copyArray<T>(this);
+};
+/**
+ * Shallow Copy Items of Given Array to `this` Array
+ * @param sourceArray
+ */
+Array.prototype.copyArrayFrom=function <T>(sourceArray: Array<T>):void {
+    Util.Utility.copyArrayTo<T>(sourceArray, this);
+};
+/**
+ * Shallow Copy Items of `this` Array to The Given Array
+ * @param targetArray
+ */
+Array.prototype.copyArrayTo=function <T>(targetArray: Array<T>):void {
+    Util.Utility.copyArrayTo(this, targetArray);
+};
+/**
+ * Returns Unordered List of Items
+ * Relays on Heavy Functions O^2
+ */
+Array.prototype.shuffleItems=function<T>():Array<T>{
+    return Util.Utility.shuffleItems<T>(this);
+};
+/**
+ * Returns Unordered List of Items
+ * Maybe Less Accurate, And So Lightweight O
+ */
+Array.prototype.shuffleItems2=function<T>():Array<T>{
+    return Util.Utility.shuffleItems2<T>(this);
+};
 /**
  * Add Another Array Of Items to the End of This Array While Modifying Its Item
  * @param items {Array<*>} New List of Items
