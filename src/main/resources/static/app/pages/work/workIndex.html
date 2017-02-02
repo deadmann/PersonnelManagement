@@ -222,7 +222,14 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr ng-repeat="item in ctrl.view.workPersonsByBuilding">
+                        <!--Begin of NgRepeat-->
+                        <tr ng-repeat-start="($index, item) in ctrl.view.workPersonsByBuilding"
+                            ng-if="($index==0 || item.person.position.id != ctrl.view.workPersonsByBuilding[$index-1].person.position.id)">
+                            <td colspan="3" class="separator">
+                                {{item.person.position.title}}
+                            </td>
+                        </tr>
+                        <tr ng-repeat-end="">
                             <td>
                                 <span ng-bind="(item.person.firstname|emptyForNull) + ' ' + (item.person.lastname | emptyForNull)"></span>
                             </td>
@@ -233,6 +240,7 @@
                                 <span class="no-break" ng-bind="item.sumMoney|rials"></span>
                             </td>
                         </tr>
+                        <!--End of NgRepeat-->
                         <tr>
                             <td style="color: seagreen;">
                                 <span>

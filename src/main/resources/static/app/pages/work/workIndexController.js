@@ -210,6 +210,7 @@
                                 sumMoney: group.sum(/**@param s {WorkVm}*/function(s){return self.method.getPriceForWork(s)})
                             };
                         })
+                    .orderBy("x=>x.person.position.title")
                     .select("x=>x").toArray();
             },
             viewByPosition:function () {
