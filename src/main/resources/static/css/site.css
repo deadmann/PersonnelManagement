@@ -137,14 +137,14 @@ footer .container {
   padding: 1px 5px;
 }
 .table-hover > tbody > tr:hover {
-  background-color: #f0f0f0;
+  background-color: #e8e8e8;
 }
 .table-hover > tbody > tr > td.active:hover,
 .table-hover > tbody > tr > th.active:hover,
 .table-hover > tbody > tr.active:hover > td,
 .table-hover > tbody > tr:hover > .active,
 .table-hover > tbody > tr.active:hover > th {
-  background-color: #e8e8e8;
+  background-color: #e0e0e0;
 }
 .table-hover > tbody > tr > td.success:hover,
 .table-hover > tbody > tr > th.success:hover,
