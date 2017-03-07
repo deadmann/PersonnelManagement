@@ -6,3 +6,4 @@ var SharedModel = (function () {
     }
     return SharedModel;
 }());
+//# sourceMappingURL=sharedModel.js.map

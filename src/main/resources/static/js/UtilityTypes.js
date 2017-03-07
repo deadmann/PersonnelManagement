@@ -15,3 +15,4 @@ var DateDifferencesType;
     DateDifferencesType[DateDifferencesType["Months"] = 6] = "Months";
     DateDifferencesType[DateDifferencesType["Years"] = 7] = "Years";
 })(DateDifferencesType || (DateDifferencesType = {}));
+//# sourceMappingURL=UtilityTypes.js.map

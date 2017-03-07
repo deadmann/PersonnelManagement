@@ -19,3 +19,4 @@ var BuildingVm = (function () {
     };
     return BuildingVm;
 }());
+//# sourceMappingURL=buildingVm.js.map

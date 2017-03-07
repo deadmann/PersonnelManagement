@@ -17,3 +17,4 @@ var AngularUtility;
     angular.module("angularUtility")
         .filter("rials", rialsFilter);
 })(AngularUtility || (AngularUtility = {}));
+//# sourceMappingURL=rials.js.map

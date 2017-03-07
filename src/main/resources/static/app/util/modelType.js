@@ -11,3 +11,4 @@ var ModelType;
     ModelType[ModelType["CopyRightInfo"] = 5] = "CopyRightInfo";
     ModelType[ModelType["WorkPerDayDto"] = 6] = "WorkPerDayDto";
 })(ModelType || (ModelType = {}));
+//# sourceMappingURL=modelType.js.map

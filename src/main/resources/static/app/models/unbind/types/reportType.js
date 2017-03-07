@@ -8,3 +8,4 @@ var ReportType;
     ReportType[ReportType["BY_BUILDING"] = 2] = "BY_BUILDING";
     ReportType[ReportType["BY_POSITION"] = 3] = "BY_POSITION";
 })(ReportType || (ReportType = {}));
+//# sourceMappingURL=reportType.js.map

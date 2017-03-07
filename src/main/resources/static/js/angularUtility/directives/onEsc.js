@@ -12,18 +12,20 @@ var AngularUtility;
     //     datepicker:Function
     // }
     var OnEnterDirective = (function () {
-        //scope: boolean|{[boundProperty:string]:string};
         function OnEnterDirective() {
             this.restrict = 'A';
             // this.require = 'ngModel';
             // this.scope = {
-            //     datePickerConfig: '=?'
+            //     onEsc: '&?',
+            //     dataOnEsc: '&?',
+            //     onEscape: '&?',
+            //     dataOnEscape: '&?'
             // };
             this.link = function (scope, element, attrs) {
                 element.on("keydown keypress", function (event) {
-                    if (event.which === 13 && !event.altKey && !event.ctrlKey && !event.shiftKey) {
+                    if (event.which === 27 && !event.altKey && !event.ctrlKey && !event.shiftKey) {
                         scope.$apply(function () {
-                            var req = (!Util.Utility.isNullOrUndefined(attrs.onEnter)) ? attrs.onEnter : attrs.dataOnEnter;
+                            var req = attrs.onEsc || attrs.onEscape || attrs.dataOnEsc || attrs.dataOnEscape;
                             scope.$eval(req);
                         });
                         event.preventDefault();
@@ -40,7 +42,9 @@ var AngularUtility;
         return OnEnterDirective;
     }());
     angular.module("angularUtility")
-        .directive("onEnter", OnEnterDirective.instance)
-        .directive("dataOnEnter", OnEnterDirective.instance);
+        .directive("onEsc", OnEnterDirective.instance)
+        .directive("dataOnEsc", OnEnterDirective.instance)
+        .directive("onEscape", OnEnterDirective.instance)
+        .directive("dataOnEscape", OnEnterDirective.instance);
 })(AngularUtility || (AngularUtility = {}));
-//# sourceMappingURL=onEnter.js.map
+//# sourceMappingURL=onEsc.js.map

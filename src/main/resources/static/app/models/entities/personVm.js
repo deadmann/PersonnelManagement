@@ -40,3 +40,4 @@ var PersonVm = (function () {
     };
     return PersonVm;
 }());
+//# sourceMappingURL=personVm.js.map

@@ -66,3 +66,4 @@ var ErrorHandler = (function () {
 }());
 //Call static Constructor
 ErrorHandler.initialize();
+//# sourceMappingURL=errorHandler.js.map
