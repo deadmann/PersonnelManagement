@@ -61,7 +61,22 @@
                 /** @type {BuildingVm} */
                 building: null,
                 /** @type {PositionVm} */
-                position:null
+                position: null,
+                /**
+                 * @type {PersonVm}
+                 * Inline Cause InfDig Error (Object Created On Each Digest)
+                 */
+                personAllOption: null,
+                /**
+                 * @type {BuildingVm}
+                 * Inline Cause InfDig Error (Object Created On Each Digest)
+                 */
+                buildingAllOption: null,
+                /**
+                 * @type {PositionVm}
+                 * Inline Cause InfDig Error (Object Created On Each Digest)
+                 */
+                positionAllOption: null
             },
             /** @type {Array<number>} */
             years: null,
@@ -610,6 +625,10 @@
 
             self.view.startDateConfig = getDefaultDatePickerConfig();
             self.view.endDateConfig =  getDefaultDatePickerConfig();
+
+            self.view.headerSelections.personAllOption=new PersonVm(-1, "همه", null, null, null);
+            self.view.headerSelections.buildingAllOption=new BuildingVm(-1, "همه", null);
+            self.view.headerSelections.positionAllOption=new PositionVm(-1, "همه", null, null);
 
             //System Start Year
             baseDataService.getStartYear().$promise

@@ -114,10 +114,18 @@ public class WorksController {
         //Make pcEnd Inclusive
         pcEnd.add(Calendar.DAY_OF_MONTH, 1);
 
-        List<Work> workList =
-                workService.getWorksByPersonIdAndDateBetween(personId,
-                        CalendarHelper.toGregorian(pcStart),
-                        CalendarHelper.toGregorian(pcEnd));
+        List<Work> workList = null;
+        if(personId==-1) {
+            workList =
+                    workService.getWorksByDateBetween(
+                            CalendarHelper.toGregorian(pcStart),
+                            CalendarHelper.toGregorian(pcEnd));
+        }else{
+            workList =
+                    workService.getWorksByPersonIdAndDateBetween(personId,
+                            CalendarHelper.toGregorian(pcStart),
+                            CalendarHelper.toGregorian(pcEnd));
+        }
 
         List<WorkVm> workVms = workList.stream().map(Work::getViewModel).collect(Collectors.toList());
         return ResponseEntity.ok(workVms);
@@ -148,10 +156,19 @@ public class WorksController {
         //Make pcEnd Inclusive
         pcEnd.add(Calendar.DAY_OF_MONTH, 1);
 
-        List<Work> workList =
-                workService.getWorksByBuildingIdAndDateBetween(buildingId,
-                        CalendarHelper.toGregorian(pcStart),
-                        CalendarHelper.toGregorian(pcEnd));
+
+        List<Work> workList = null;
+        if(buildingId==-1) {
+            workList =
+                    workService.getWorksByDateBetween(
+                            CalendarHelper.toGregorian(pcStart),
+                            CalendarHelper.toGregorian(pcEnd));
+        }else{
+            workList =
+                    workService.getWorksByBuildingIdAndDateBetween(buildingId,
+                            CalendarHelper.toGregorian(pcStart),
+                            CalendarHelper.toGregorian(pcEnd));
+        }
 
         List<WorkVm> workVms = workList.stream().map(Work::getViewModel).collect(Collectors.toList());
         return ResponseEntity.ok(workVms);
@@ -182,10 +199,19 @@ public class WorksController {
         //Make pcEnd Inclusive
         pcEnd.add(Calendar.DAY_OF_MONTH, 1);
 
-        List<Work> workList =
-                workService.getWorksByPersonPositionIdAndDateBetween(positionId,
-                        CalendarHelper.toGregorian(pcStart),
-                        CalendarHelper.toGregorian(pcEnd));
+        List<Work> workList = null;
+        if(positionId==-1) {
+            workList =
+                    workService.getWorksByDateBetween(
+                            CalendarHelper.toGregorian(pcStart),
+                            CalendarHelper.toGregorian(pcEnd));
+        }else{
+            workList =
+                    workService.getWorksByPersonPositionIdAndDateBetween(positionId,
+                            CalendarHelper.toGregorian(pcStart),
+                            CalendarHelper.toGregorian(pcEnd));
+        }
+
 
         List<WorkVm> workVms = workList.stream().map(Work::getViewModel).collect(Collectors.toList());
         return ResponseEntity.ok(workVms);
