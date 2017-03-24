@@ -100,7 +100,7 @@
                 promise.then(/** @param data {PositionVm} */function (data) {
                     self.view.positions.replace(null, data, function (item, empty) {
                         return item.id == data.id;
-                    },undefined,'all');
+                    }, 'all');
                 }, function (err) {
                     //ignore
                 });

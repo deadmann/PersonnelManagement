@@ -99,7 +99,7 @@
                 promise.then(/** @param data {BuildingVm} */function (data) {
                     self.view.personnel.replace(null, data, function (item, empty) {
                         return item.id == data.id;
-                    },undefined,'all');
+                    }, 'all');
                 }, function (err) {
                     //ignore
                 });

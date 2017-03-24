@@ -101,7 +101,7 @@
                 promise.then(/** @param data {BuildingVm} */function (data) {
                     self.view.buildings.replace(null, data, function (item, empty) {
                         return item.id == data.id;
-                    },undefined,'all');
+                    }, 'all');
                 }, function (err) {
                     //ignore
                 });
