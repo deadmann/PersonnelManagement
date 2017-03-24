@@ -32,7 +32,7 @@
                 <select ng-if="ctrl.view.headerSelections.reportType == ctrl.type.ReportType.BY_PERSON" class="form-control"
                         id="selectReportValuePerson"
                         ng-model="ctrl.view.headerSelections.person"
-                        ng-options="person as (person.firstname | emptyForNull) + ' ' + (person.lastname | emptyForNull) for person in ctrl.view.personnel"
+                        ng-options="person as (person.firstname | emptyForNull) + ' ' + (person.lastname | emptyForNull) for person in ctrl.view.personnel |addSelectOption:ctrl.view.headerSelections.personAllOption"
                         required="required">
                     <option value="" disabled selected>لطفا شخص را انتخاب کنید</option>
                 </select>
@@ -40,17 +40,17 @@
                 <select ng-if="ctrl.view.headerSelections.reportType == ctrl.type.ReportType.BY_BUILDING" class="form-control"
                         id="selectReportValueBuilding"
                         ng-model="ctrl.view.headerSelections.building"
-                        ng-options="building as building.name for building in ctrl.view.buildings"
+                        ng-options="building as building.name for building in ctrl.view.buildings | addSelectOption:ctrl.view.headerSelections.buildingAllOption"
                         required="required">
-                    <option value="" disabled selected>لطفا شخص را انتخاب کنید</option>
+                    <option value="" disabled selected>لطفا پروژه را انتخاب کنید</option>
                 </select>
                 <label for="selectReportValuePosition" style="display:none"></label>
                 <select ng-if="ctrl.view.headerSelections.reportType == ctrl.type.ReportType.BY_POSITION" class="form-control"
                         id="selectReportValuePosition"
                         ng-model="ctrl.view.headerSelections.position"
-                        ng-options="position as position.title for position in ctrl.view.positions"
+                        ng-options="position as position.title for position in ctrl.view.positions | addSelectOption:ctrl.view.headerSelections.positionAllOption"
                         required="required">
-                    <option value="" disabled selected>لطفا شخص را انتخاب کنید</option>
+                    <option value="" disabled selected>لطفا سمت را انتخاب کنید</option>
                 </select>
             </div>
             <div class="col-md-2">

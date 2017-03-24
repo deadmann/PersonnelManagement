@@ -32,6 +32,16 @@ public class WorkService {
     }
 
     /**
+     * Returns All Work Data Between Specified Dates, Which the Start Date is Inclusive and the End Date is Exclusive
+     * @param inclusiveStartDate Inclusive
+     * @param exclusiveEndDate Exclusive
+     * @return Returns List of Work Entities
+     */
+    public List<Work> getWorksByDateBetween(Calendar inclusiveStartDate, Calendar exclusiveEndDate){
+        return workRepository.findByDateGreaterThanEqualAndDateLessThan(inclusiveStartDate, exclusiveEndDate);
+    }
+
+    /**
      * Returns All Work Data For A Specific Person Between Specified Dates, Which the Start Date is Inclusive and the End Date is Exclusive
      * @param personId Id of The Person
      * @param inclusiveStartDate Inclusive
