@@ -84,3 +84,4 @@ var AngularUtility;
         .directive("ncgRequestVerificationToken", NcgRequestVerificationTokenDirective.instance())
         .directive("dataNcgRequestVerificationToken", NcgRequestVerificationTokenDirective.instance());
 })(AngularUtility || (AngularUtility = {}));
+//# sourceMappingURL=ncgRequestVerificationToken.js.map

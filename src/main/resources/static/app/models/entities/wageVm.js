@@ -51,3 +51,4 @@ var WageVm = (function () {
     });
     return WageVm;
 }());
+//# sourceMappingURL=wageVm.js.map

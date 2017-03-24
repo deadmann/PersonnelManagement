@@ -41,3 +41,4 @@ var AngularUtility;
         .directive("onScroll", OnScrollDirective.instance)
         .directive("dataOnScroll", OnScrollDirective.instance);
 })(AngularUtility || (AngularUtility = {}));
+//# sourceMappingURL=onScroll.js.map

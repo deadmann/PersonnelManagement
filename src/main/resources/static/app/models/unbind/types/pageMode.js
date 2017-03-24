@@ -7,3 +7,4 @@ var PageMode;
     PageMode[PageMode["EDIT"] = 1] = "EDIT";
     PageMode[PageMode["VIEW"] = 2] = "VIEW";
 })(PageMode || (PageMode = {}));
+//# sourceMappingURL=pageMode.js.map

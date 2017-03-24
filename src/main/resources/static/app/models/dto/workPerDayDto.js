@@ -30,3 +30,4 @@ var WorkPerDayDto = (function () {
     };
     return WorkPerDayDto;
 }());
+//# sourceMappingURL=workPerDayDto.js.map

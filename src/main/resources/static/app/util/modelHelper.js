@@ -81,3 +81,4 @@ var ModelHelper = (function () {
     };
     return ModelHelper;
 }());
+//# sourceMappingURL=modelHelper.js.map

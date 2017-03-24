@@ -17,3 +17,4 @@ var CopyRightInfo = (function () {
     };
     return CopyRightInfo;
 }());
+//# sourceMappingURL=copyRightInfo.js.map
